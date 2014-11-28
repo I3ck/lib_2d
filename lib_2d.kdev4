@@ -1,0 +1,4 @@
+[Project]
+Name=lib_2d
+Manager=KDevCMakeManager
+VersionControl=kdevgit
