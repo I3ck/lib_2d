@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1417277690 source:/home/bugl/git/lib_2d/src/Point.cpp
+	"../inc/Point.h"
+
+1417277028 source:/home/bugl/git/lib_2d/main.cpp
+	<iostream>
+	"inc/Point.h"
+
+1417278287 /home/bugl/git/lib_2d/inc/Point.h
+
