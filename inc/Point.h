@@ -38,6 +38,32 @@ public:
         this->y+=other.get_y();
     }
 
+    /*
+    missing methods:
+    rotate
+    to_string
+    construction from string
+    setter for x and y
+    mirror anywhere
+    polar coords
+    steepness
+    angle towards
+    abs
+    distance to
+    set distance to
+    move to (instead of set?)
+
+    ops
+    == != << to pair / from pair
+
+    functions:
+    center between
+
+
+
+
+    */
+
 };
 
 
