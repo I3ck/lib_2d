@@ -1,6 +1,8 @@
 #ifndef POINT_H_INCLUDED
 #define POINT_H_INCLUDED
 
+#include <sstream>
+
 template <typename T>
 class Point {
 
@@ -38,10 +40,15 @@ public:
         this->y+=other.get_y();
     }
 
+    std::string to_string(const std::string &divider = " ") const {
+    std::stringstream ss;
+    ss << x << divider << y;
+    return ss.str();
+}
+
     /*
     missing methods:
     rotate
-    to_string
     construction from string
     setter for x and y
     mirror anywhere

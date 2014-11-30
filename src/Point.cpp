@@ -1,4 +1,3 @@
 #include "../inc/Point.h"
 
 
-

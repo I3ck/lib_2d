@@ -10,7 +10,7 @@ int main()
     cout << p.get_x() << endl;
     p.move_by(0.7, 7.9);
     cout << p.get_x() << endl;
-    cout << "Hello world!" << endl;
+    cout << p.to_string() << endl;
     return 0;
 }
 
