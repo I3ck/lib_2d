@@ -10,7 +10,9 @@ int main()
     try {
         const double
             X(0.3),
-            Y(4.5);
+            Y(4.5),
+            MOVE_X(0.5),
+            MOVE_Y(-10.0);
 
         Point <double> p(X, Y);
 
@@ -20,15 +22,19 @@ int main()
         if(p.get_y() != Y)
             throw runtime_error("y read incorrectly");
 
+        p.move_by(MOVE_X, MOVE_Y);
 
-        cout << p.get_x() << endl;
-        p.move_by(0.7, 7.9);
-        cout << p.get_x() << endl;
-        cout << p.to_string() << endl;
+        if(p.get_x() != X+MOVE_X)
+            throw runtime_error("moving by x failed");
+
+        if(p.get_y() != Y+MOVE_Y)
+            throw runtime_error("moving by y failed");
+
         return 0;
     }
     catch (runtime_error &e) {
         cout << e.what() << endl;
+        return 1;
     }
 }
 
