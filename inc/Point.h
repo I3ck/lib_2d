@@ -29,6 +29,14 @@ public:
         return y;
     }
 
+    void set_x(const T &x) {
+        this->x=x;
+    }
+
+    void set_y(const T &y) {
+        this->y=y;
+    }
+
 
     void move_by(const T &x, const T &y) {
         this->x+=x;
