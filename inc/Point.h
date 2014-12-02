@@ -13,13 +13,18 @@ public:
     Point() :
         Point(0, 0)
     {}
+
     Point(const T &x, const T &y) :
         x(x),
         y(y)
     {}
 
+//------------------------------------------------------------------------------
+
     ~Point() {
     }
+
+//------------------------------------------------------------------------------
 
     T get_x() const {
         return x;
@@ -29,6 +34,8 @@ public:
         return y;
     }
 
+//------------------------------------------------------------------------------
+
     void set_x(const T &x) {
         this->x=x;
     }
@@ -37,6 +44,7 @@ public:
         this->y=y;
     }
 
+//------------------------------------------------------------------------------
 
     void move_by(const T &x, const T &y) {
         this->x+=x;
@@ -48,17 +56,18 @@ public:
         this->y+=other.get_y();
     }
 
+//------------------------------------------------------------------------------
+
     std::string to_string(const std::string &divider = " ") const {
-    std::stringstream ss;
-    ss << x << divider << y;
-    return ss.str();
-}
+        std::stringstream ss;
+        ss << x << divider << y;
+        return ss.str();
+    }
 
     /*
     missing methods:
     rotate
     construction from string
-    setter for x and y
     mirror anywhere
     polar coords
     steepness
