@@ -95,6 +95,9 @@ public:
         return distance_to(Point(x,y));
     }
 
+//------------------------------------------------------------------------------
+
+
     /*
     missing methods:
     rotate
@@ -102,8 +105,6 @@ public:
     polar coords
     steepness
     angle towards
-    abs
-    distance to
     set distance to
     move to (instead of set?)
 
