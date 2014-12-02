@@ -85,6 +85,16 @@ public:
         return sqrt(  pow(x,2) + pow(y,2) );
     }
 
+//------------------------------------------------------------------------------
+
+    double distance_to(const Point &other) const {
+        return sqrt(  pow(x-other.x,2) + pow(y-other.y,2)  );
+    }
+
+    double distance_to(const T &x, const T &y) const {
+        return distance_to(Point(x,y));
+    }
+
     /*
     missing methods:
     rotate

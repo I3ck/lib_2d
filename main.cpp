@@ -45,6 +45,15 @@ int main()
         if (p.abs() != sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  ))
             throw runtime_error("absolute value failed");
 
+        if (p.distance_to(0.0, 0.0) != p.abs())
+            throw runtime_error("distance to 0/0 unequal to abs");
+
+        if (p.distance_to(p) != 0.0)
+            throw runtime_error("distance to point itself not 0");
+
+
+        cout << "everything working fine" << endl;
+
 
 
         return 0;
