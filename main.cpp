@@ -30,6 +30,18 @@ int main()
         if(p.get_y() != Y+MOVE_Y)
             throw runtime_error("moving by y failed");
 
+
+
+        std::string tmp = p.to_string();
+        p.set_x(17);
+        p.set_y(32);
+        p.from_string(tmp);
+
+        if(p.to_string() != tmp)
+            throw runtime_error("parsing from and to string failed");
+
+
+
         return 0;
     }
     catch (runtime_error &e) {

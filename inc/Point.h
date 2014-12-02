@@ -64,6 +64,18 @@ public:
         return ss.str();
     }
 
+    bool from_string(const std::string &input, const std::string &divider = " ") {
+        size_t pos = input.find(divider);
+        std::stringstream ss;
+        if(pos == std::string::npos)
+            return false;
+        ss << input.substr(0, pos);
+        ss >> x;
+        ss << input.substr(pos + divider.length(), std::string::npos);
+        ss >> y;
+        return true;
+    }
+
     /*
     missing methods:
     rotate
