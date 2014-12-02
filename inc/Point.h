@@ -2,6 +2,7 @@
 #define POINT_H_INCLUDED
 
 #include <sstream>
+#include <cmath>
 
 template <typename T>
 class Point {
@@ -76,10 +77,15 @@ public:
         return true;
     }
 
+//------------------------------------------------------------------------------
+
+    double abs() const {
+        return sqrt(  pow(x,2) + pow(y,2) );
+    }
+
     /*
     missing methods:
     rotate
-    construction from string
     mirror anywhere
     polar coords
     steepness

@@ -42,6 +42,11 @@ int main()
 
 
 
+        if (p.abs() != sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  ))
+            throw runtime_error("absolute value failed");
+
+
+
         return 0;
     }
     catch (runtime_error &e) {
