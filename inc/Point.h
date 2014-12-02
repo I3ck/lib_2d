@@ -72,7 +72,9 @@ public:
             return false;
         ss << input.substr(0, pos);
         ss >> x;
-        ss << input.substr(pos + divider.length(), std::string::npos);
+        ss.str("");
+        ss.clear();
+        ss << input.substr(pos + divider.length());
         ss >> y;
         return true;
     }
