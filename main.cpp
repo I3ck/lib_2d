@@ -86,7 +86,11 @@ int main()
 
 
 
+        p2 = p;
+        p.mirror_point();
 
+        if ( p.get_x() != -p2.get_x() || p.get_y() != -p2.get_y())
+            throw runtime_error("point mirroring doesn't work");
 
 
         cout << "everything working fine" << endl;

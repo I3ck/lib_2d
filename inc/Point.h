@@ -75,6 +75,15 @@ public:
         mirror_horizontally(other.y);
     }
 
+    void mirror_point(const Point &other) {
+        mirror_vertically(other);
+        mirror_horizontally(other);
+    }
+
+    void mirror_point(const T &xValue = 0, const T &yValue = 0) {
+        mirror_point(Point(xValue, yValue));
+    }
+
 
 //------------------------------------------------------------------------------
 
@@ -135,7 +144,6 @@ public:
 
     /*
     missing methods:
-    mirror anywhere
     polar coords
     steepness
     angle towards
