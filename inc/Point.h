@@ -53,8 +53,8 @@ public:
     }
 
     void move_by(const Point &other) {
-        this->x+=other.get_x();
-        this->y+=other.get_y();
+        this->x+=other.x;
+        this->y+=other.y;
     }
 
 //------------------------------------------------------------------------------
@@ -112,7 +112,6 @@ public:
 
     /*
     missing methods:
-    rotate
     mirror anywhere
     polar coords
     steepness
