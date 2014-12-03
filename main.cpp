@@ -77,6 +77,17 @@ int main()
             throw runtime_error("vertically mirroring doesn't work");
 
 
+
+        p2 = p;
+        p.mirror_horizontally();
+
+        if ( p.get_x() != p2.get_x() || p.get_y() != -p2.get_y())
+            throw runtime_error("vertically mirroring doesn't work");
+
+
+
+
+
         cout << "everything working fine" << endl;
 
 

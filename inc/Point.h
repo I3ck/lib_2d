@@ -67,6 +67,15 @@ public:
         mirror_vertically(other.x);
     }
 
+    void mirror_horizontally(const T &yValue = 0) {
+        y = 2 * yValue - y;
+    }
+
+    void mirror_horizontally(const Point &other) {
+        mirror_horizontally(other.y);
+    }
+
+
 //------------------------------------------------------------------------------
 
     void rotate(const T &radians, const Point &center = Point(0, 0)) {
