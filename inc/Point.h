@@ -59,6 +59,16 @@ public:
 
 //------------------------------------------------------------------------------
 
+    void mirror_vertically(const T &xValue = 0) {
+        x = 2 * xValue - x;
+    }
+
+    void mirror_vertically(const Point &other) {
+        mirror_vertically(other.x);
+    }
+
+//------------------------------------------------------------------------------
+
     void rotate(const T &radians, const Point &center = Point(0, 0)) {
         T newX, newY;
 
