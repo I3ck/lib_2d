@@ -69,6 +69,10 @@ public:
         y = newY;
     }
 
+    void rotate(const T &radians, const T &centerX, const T &centerY) {
+        rotate(radians, Point(centerX, centerY));
+    }
+
 //------------------------------------------------------------------------------
 
     std::string to_string(const std::string &divider = " ") const {
