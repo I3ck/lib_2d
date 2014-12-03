@@ -1,6 +1,8 @@
 #include <iostream>
 #include <stdexcept>
 
+#define PI 3.14159265358979323846
+
 #include "inc/Point.h"
 
 using namespace std;
@@ -12,9 +14,11 @@ int main()
             X(0.3),
             Y(4.5),
             MOVE_X(0.5),
-            MOVE_Y(-10.0);
+            MOVE_Y(-10.0),
+            MAX_DELTA(0.00001);
 
         Point <double> p(X, Y);
+        auto p2 = p;
 
         if(p.get_x() != X)
             throw runtime_error("x read incorrectly");
@@ -50,6 +54,20 @@ int main()
 
         if (p.distance_to(p) != 0.0)
             throw runtime_error("distance to point itself not 0");
+
+
+
+        p2 = p;
+        p.rotate(PI);
+
+        if (p.get_x() ==  p2.get_x() || p.get_y() ==  p2.get_y())
+            throw runtime_error("rotation does nothing");
+
+        p.rotate(PI);
+
+        if ( abs(p.get_x() - p2.get_x()) > MAX_DELTA || abs(p.get_y() - p2.get_y()) > MAX_DELTA)
+            throw runtime_error("rotation by 360 degree yields other results");
+
 
 
         cout << "everything working fine" << endl;

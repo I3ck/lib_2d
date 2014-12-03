@@ -59,12 +59,15 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void rotate(const T &degrees, const Point &center = Point(0, 0)) {
-        T tmpX, tmpY, radians;
-        radians = TODO
+    void rotate(const T &radians, const Point &center = Point(0, 0)) {
+        T newX, newY;
 
+        newX = center.x + cos(radians) * (x - center.x) - sin(radians) * (y - center.y);
+        newY = center.y + sin(radians) * (x - center.y) + cos(radians) * (y - center.y);
+
+        x = newX;
+        y = newY;
     }
-
 
 //------------------------------------------------------------------------------
 
