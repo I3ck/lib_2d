@@ -59,6 +59,15 @@ public:
 
 //------------------------------------------------------------------------------
 
+    void rotate(const T &degrees, const Point &center = Point(0, 0)) {
+        T tmpX, tmpY, radians;
+        radians = TODO
+
+    }
+
+
+//------------------------------------------------------------------------------
+
     std::string to_string(const std::string &divider = " ") const {
         std::stringstream ss;
         ss << x << divider << y;
