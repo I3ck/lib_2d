@@ -1,8 +1,6 @@
 #include <iostream>
 #include <stdexcept>
 
-#define PI 3.14159265358979323846
-
 #include "inc/Point.h"
 
 using namespace std;
@@ -15,7 +13,8 @@ int main()
             Y(4.5),
             MOVE_X(0.5),
             MOVE_Y(-10.0),
-            MAX_DELTA(0.00001);
+            MAX_DELTA(0.00001),
+            PI (3.14159265358979323846);
 
         Point <double> p(X, Y);
         auto p2 = p;
