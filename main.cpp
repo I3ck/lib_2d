@@ -151,6 +151,21 @@ int main()
 
 
 
+        p.set_x(0);
+        p.set_y(1);
+
+        if (abs( p.phi() - PI/2.0) > MAX_DELTA)
+            throw runtime_error("phi not calculated correctly");
+
+        p.set_x(-1);
+        p.set_y(0);
+
+        if (abs( p.phi() - PI) > MAX_DELTA)
+            throw runtime_error("phi not calculated correctly");
+
+
+
+
         cout << "everything working fine" << endl;
         return 0;
     }
