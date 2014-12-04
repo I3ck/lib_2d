@@ -35,7 +35,6 @@
 		</Compiler>
 		<Unit filename="inc/Point.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/Point.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
