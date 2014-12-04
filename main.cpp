@@ -187,6 +187,16 @@ int main()
 
 
 
+        Point <double> center, centerShould;
+
+        centerShould = Point <double> (1, 1.5);
+        center = p.center_between(p2);
+
+        if (!center.similar_to(centerShould, MAX_DELTA))
+            throw runtime_error("center calculation seems to be wrong");
+
+
+
 
         cout << "everything working fine" << endl;
         return 0;

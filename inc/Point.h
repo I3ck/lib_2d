@@ -162,6 +162,12 @@ public:
         return atan2(other.y - y, other.x - x);
     }
 
+//------------------------------------------------------------------------------
+
+    Point center_between(const Point &other) const {
+        return Point(x + (other.x - x) / 2.0, y + (other.y - y) / 2.0);
+    }
+
 
 //------------------------------------------------------------------------------
 
@@ -181,7 +187,6 @@ public:
 
 //------------------------------------------------------------------------------
 
-
     bool operator == (const Point &other) const {
         return equal_to(other);
     }
@@ -200,23 +205,6 @@ public:
     }
 
 //------------------------------------------------------------------------------
-
-    /*
-    missing methods:
-    angle towards
-    set distance to
-    move to (instead of set?)
-
-    ops
-    == != << to pair / from pair
-
-    functions:
-    center between
-
-
-
-
-    */
 
 };
 
