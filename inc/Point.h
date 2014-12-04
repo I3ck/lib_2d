@@ -190,7 +190,6 @@ public:
 
     /*
     missing methods:
-    polar coords
     steepness
     angle towards
     set distance to
