@@ -158,6 +158,13 @@ public:
 
 //------------------------------------------------------------------------------
 
+    double rad_to(const Point &other) const {
+        return atan2(other.y - y, other.x - x);
+    }
+
+
+//------------------------------------------------------------------------------
+
     bool similar_to(const Point &other, const T &maxDistance) const {
         if (distance_to(other) > maxDistance)
             return false;

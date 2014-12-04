@@ -176,6 +176,17 @@ int main()
 
 
 
+        p.set_x(1);
+        p.set_y(1);
+
+        p2.set_x(1);
+        p2.set_y(2);
+
+        if (abs( p.rad_to(p2) - PI/2.0) > MAX_DELTA)
+            throw runtime_error("radians between points calculated incorrectly");
+
+
+
 
         cout << "everything working fine" << endl;
         return 0;
