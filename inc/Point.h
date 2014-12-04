@@ -152,6 +152,12 @@ public:
 
 //------------------------------------------------------------------------------
 
+    double slope_to(const Point &other) const {
+        return (other.y - y) / (other.x - x);
+    }
+
+//------------------------------------------------------------------------------
+
     bool similar_to(const Point &other, const T &maxDistance) const {
         if (distance_to(other) > maxDistance)
             return false;
@@ -190,7 +196,6 @@ public:
 
     /*
     missing methods:
-    steepness
     angle towards
     set distance to
     move to (instead of set?)

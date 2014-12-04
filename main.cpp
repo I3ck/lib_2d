@@ -165,6 +165,17 @@ int main()
 
 
 
+        p.set_x(0);
+        p.set_y(0);
+
+        p2.set_x(1);
+        p2.set_y(2);
+
+        if (abs( p.slope_to(p2) - 2.0) > MAX_DELTA)
+            throw runtime_error("slope calculated incorrectly");
+
+
+
 
         cout << "everything working fine" << endl;
         return 0;
