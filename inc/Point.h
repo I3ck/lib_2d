@@ -20,6 +20,11 @@ public:
         y(y)
     {}
 
+    Point(const std::pair<T, T> &values) :
+        x(values.first),
+        y(values.second)
+    {}
+
 //------------------------------------------------------------------------------
 
     ~Point() {
@@ -141,6 +146,41 @@ public:
 
 //------------------------------------------------------------------------------
 
+    bool similar_to(const Point &other, const T &maxDistance) const {
+        if (distance_to(other) > maxDistance)
+            return false;
+        return true;
+    }
+
+//------------------------------------------------------------------------------
+
+    bool equal_to (const Point &other) const {
+        if (x == other.x && y == other.y)
+            return true;
+        return false;
+    }
+
+//------------------------------------------------------------------------------
+
+
+    bool operator == (const Point &other) const {
+        return equal_to(other);
+    }
+
+    bool operator != (const Point &other) const {
+        return !equal_to(other);
+    }
+
+    friend std::ostream &operator << (std::ostream &os, const Point &point) {
+        os << point.to_string();
+        return os;
+    }
+
+    operator std::pair<T, T> () const {
+        return std::pair<T, T> (x, y);
+    }
+
+//------------------------------------------------------------------------------
 
     /*
     missing methods:

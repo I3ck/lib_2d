@@ -92,16 +92,72 @@ int main()
             throw runtime_error("point mirroring doesn't work");
 
 
+
+
+
+
+        p2 = p;
+
+        if ( p2 != p)
+            throw runtime_error("equal points measured as unequal");
+
+        p.move_by(0.00000000001, 0.0);
+
+        if ( p2 == p)
+            throw runtime_error("unequal points measured as equal");
+
+
+
+        p2 = p;
+        pair <double, double> tmpPair = p;
+        p = Point <double> (tmpPair);
+
+        if (p2 != p)
+            throw runtime_error("conversion to and from pair yields new values");
+
+        tmpPair = pair <double,double> (0.3, 17.7);
+        p = Point <double> (tmpPair);
+
+        if (p == p2)
+            throw runtime_error("pair and point shouldn't be equal here");
+
+
+        std::stringstream tmpSs;
+        p2 = p;
+        tmpSs << p;
+        p.move_by(0.3, 7.9);
+        p.from_string(tmpSs.str());
+
+        if (p != p2)
+            throw runtime_error("stringstream overload doesn't work");
+
+
+
+        p2 = p;
+
+        if (!p.similar_to(p2, MAX_DELTA))
+            throw runtime_error("equal points should count as similar");
+
+        p.move_by(0.999 * MAX_DELTA,0);
+
+        if (!p.similar_to(p2, MAX_DELTA))
+            throw runtime_error("edge case for similarity not working");
+
+        p2 = p;
+        p.move_by(1.0001 * MAX_DELTA,0);
+
+        if (p.similar_to(p2, MAX_DELTA))
+            throw runtime_error("edge case for similarity not working");
+
+
+
         cout << "everything working fine" << endl;
-
-
-
         return 0;
     }
     catch (runtime_error &e) {
         cout << e.what() << endl;
-        return 1;
     }
+    return 1;
 }
 
 
