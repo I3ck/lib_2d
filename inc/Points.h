@@ -67,6 +67,17 @@ public:
             p.rotate(radians, centerX, centerY);
     }
 
+//------------------------------------------------------------------------------
+
+    std::string to_string(const std::string &divider = " ") const {
+        std::string output("");
+
+        for(const auto &p : ps)
+                output += p.to_string() + "\n";
+
+        return output;
+    }
+
 
 };
 
