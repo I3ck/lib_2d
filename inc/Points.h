@@ -96,6 +96,10 @@ public:
         ps.clear();
     }
 
+    void flip() {
+        ps.flip();
+    }
+
 };
 
 #endif // POINT_H_INCLUDED
