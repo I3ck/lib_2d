@@ -5,6 +5,8 @@
 
 #include "Point.h"
 
+namespace lib_2d {
+
 template <typename T>
 class Points {
 
@@ -101,5 +103,7 @@ public:
     }
 
 };
+
+} //lib_2d
 
 #endif // POINT_H_INCLUDED

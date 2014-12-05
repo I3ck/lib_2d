@@ -4,6 +4,8 @@
 #include <sstream>
 #include <cmath>
 
+namespace lib_2d {
+
 template <typename T>
 class Point {
 
@@ -207,6 +209,8 @@ public:
 //------------------------------------------------------------------------------
 
 };
+
+} //lib_2d
 
 
 #endif // POINT_H_INCLUDED

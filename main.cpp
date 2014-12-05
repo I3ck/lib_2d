@@ -5,6 +5,7 @@
 #include "inc/Points.h"
 
 using namespace std;
+using namespace lib_2d;
 
 int main()
 {
