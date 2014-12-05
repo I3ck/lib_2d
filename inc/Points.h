@@ -78,6 +78,11 @@ public:
         return output;
     }
 
+//------------------------------------------------------------------------------
+
+    void push_back(const Point<T> &point) {
+        ps.push_back(point);
+    }
 
 };
 
