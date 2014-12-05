@@ -25,6 +25,36 @@ public:
             p.move_by(other);
     }
 
+    void mirror_vertically(const T &xValue = 0) {
+        for(auto &p : ps)
+            p.mirror_vertically(xValue);
+    }
+
+    void mirror_vertically(const Point<T> &other) {
+        for(auto &p : ps)
+            p.mirror_vertically(other);
+    }
+
+    void mirror_horizontally(const T &yValue = 0) {
+        for(auto &p : ps)
+            p.mirror_horizontally(yValue);
+    }
+
+    void mirror_horizontally(const Point<T> &other) {
+        for(auto &p : ps)
+            p.mirror_horizontally(other);
+    }
+
+    void mirror_point(const Point<T> &other) {
+        for(auto &p : ps)
+            p.mirror_point(other);
+    }
+
+    void mirror_point(const T &xValue = 0, const T &yValue = 0) {
+        for(auto &p : ps)
+            p.mirror_point(xValue, yValue);
+    }
+
 
 };
 
