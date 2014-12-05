@@ -92,6 +92,10 @@ public:
         return ps.empty();
     }
 
+    void clear() {
+        ps.clear();
+    }
+
 };
 
 #endif // POINT_H_INCLUDED
