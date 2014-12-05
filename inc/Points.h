@@ -84,6 +84,10 @@ public:
         ps.push_back(point);
     }
 
+    size_t size() const {
+        return ps.size();
+    }
+
 };
 
 #endif // POINT_H_INCLUDED
