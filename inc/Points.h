@@ -88,6 +88,10 @@ public:
         return ps.size();
     }
 
+    bool empty() const {
+        return ps.empty();
+    }
+
 };
 
 #endif // POINT_H_INCLUDED
