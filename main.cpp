@@ -2,6 +2,7 @@
 #include <stdexcept>
 
 #include "inc/Point.h"
+#include "inc/Points.h"
 
 using namespace std;
 
@@ -15,6 +16,8 @@ int main()
             MOVE_Y(-10.0),
             MAX_DELTA(0.00001),
             PI (3.14159265358979323846);
+
+        cout << "testing Point" << endl;
 
         Point <double> p(X, Y);
         auto p2 = p;
@@ -196,7 +199,16 @@ int main()
             throw runtime_error("center calculation seems to be wrong");
 
 
+        cout << "Point working fine" << endl;
 
+
+
+
+
+        cout << "testing Points" << endl;
+
+
+        cout << "Points working fine" << endl;
 
         cout << "everything working fine" << endl;
         return 0;

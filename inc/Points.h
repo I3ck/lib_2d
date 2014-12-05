@@ -55,6 +55,18 @@ public:
             p.mirror_point(xValue, yValue);
     }
 
+//------------------------------------------------------------------------------
+
+    void rotate(const T &radians, const Point<T> &center = Point<T>(0, 0)) {
+        for(auto &p : ps)
+            p.rotate(radians, center);
+    }
+
+    void rotate(const T &radians, const T &centerX, const T &centerY) {
+        for(auto &p : ps)
+            p.rotate(radians, centerX, centerY);
+    }
+
 
 };
 
