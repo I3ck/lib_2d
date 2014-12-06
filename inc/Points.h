@@ -102,6 +102,16 @@ public:
         ps.flip();
     }
 
+    Point<T> operator [] (const unsigned int &i) const
+    {
+        return ps[i];
+    }
+
+    Point<T>& operator [] (const unsigned int &i)
+    {
+        return ps[i];
+    }
+
 };
 
 } //lib_2d
