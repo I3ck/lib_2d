@@ -86,6 +86,10 @@ public:
         ps.push_back(point);
     }
 
+    void push_back(const T &x, const T &y) {
+        push_back(Point<T>(x, y));
+    }
+
     size_t size() const {
         return ps.size();
     }
