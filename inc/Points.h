@@ -94,6 +94,10 @@ public:
         return ps.empty();
     }
 
+    void reserve(const size_t &i) {
+        ps.reserve(i);
+    }
+
     void clear() {
         ps.clear();
     }
