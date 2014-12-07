@@ -140,6 +140,11 @@ public:
         return ps[i];
     }
 
+    friend std::ostream &operator << (std::ostream &os, const Points &points) {
+        os << points.to_string();
+        return os;
+    }
+
 };
 
 } //lib_2d
