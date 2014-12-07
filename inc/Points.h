@@ -106,6 +106,10 @@ public:
         return false;
     }
 
+    bool has_point(const T &x, const T &y) {
+        return has_point(Point<T>(x, y));
+    }
+
 
     void reserve(const size_t &i) {
         ps.reserve(i);
