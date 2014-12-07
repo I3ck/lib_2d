@@ -98,6 +98,15 @@ public:
         return ps.empty();
     }
 
+    bool has_point(const Point<T> &point) {
+        for(const auto &p : ps) {
+            if(p.equal_to(point))
+                return true;
+        }
+        return false;
+    }
+
+
     void reserve(const size_t &i) {
         ps.reserve(i);
     }
