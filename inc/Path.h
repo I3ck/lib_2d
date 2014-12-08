@@ -17,6 +17,7 @@
 
 #include <vector>
 #include <fstream>
+#include <algorithm>
 
 #include "Point.h"
 
@@ -217,7 +218,7 @@ public:
 //------------------------------------------------------------------------------
 
     void reverse() {
-        ps.reverse();
+        std::reverse(ps.begin(), ps.end());
     }
 
 //------------------------------------------------------------------------------
