@@ -258,6 +258,32 @@ public:
 
 //------------------------------------------------------------------------------
 
+    typename std::vector <Point<T> >::iterator begin() {
+        return ps.begin();
+    }
+
+    typename std::vector <Point<T> >::iterator end() {
+        return ps.end();
+    }
+
+    typename std::vector <Point<T> >::const_iterator cbegin() {
+        return ps.cbegin();
+    }
+
+    typename std::vector <Point<T> >::const_iterator cend() {
+        return ps.cend();
+    }
+
+    typename std::vector <Point<T> >::reverse_iterator rbegin() {
+        return ps.rbegin();
+    }
+
+    typename std::vector <Point<T> >::reverse_iterator rend() {
+        return ps.rend();
+    }
+
+//------------------------------------------------------------------------------
+
     bool operator == (const Path &other) const {
         return equal_to(other);
     }
