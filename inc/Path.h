@@ -30,6 +30,8 @@ public:
     Path(){};
     ~Path(){};
 
+//------------------------------------------------------------------------------
+
     void move_by(const T &x, const T &y) {
         for(auto &p : ps)
             p.move_by(x, y);
@@ -39,6 +41,8 @@ public:
         for(auto &p : ps)
             p.move_by(other);
     }
+
+//------------------------------------------------------------------------------
 
     void mirror_vertically(const T &xValue = 0) {
         for(auto &p : ps)
@@ -93,6 +97,8 @@ public:
         return output;
     }
 
+//------------------------------------------------------------------------------
+
     bool to_file(const std::string &path) const {
         std::ofstream out(path.c_str());
         if(!out.good())
@@ -102,6 +108,7 @@ public:
         return true;
     }
 
+//------------------------------------------------------------------------------
 
     bool from_string(const std::string &input) {
         clear();
@@ -116,6 +123,8 @@ public:
             return false;
         return true;
     }
+
+//------------------------------------------------------------------------------
 
     bool from_file(const std::string &path) {
         std::ifstream in(path.c_str());
@@ -137,9 +146,13 @@ public:
         push_back(Point<T>(x, y));
     }
 
+//------------------------------------------------------------------------------
+
     size_t size() const {
         return ps.size();
     }
+
+//------------------------------------------------------------------------------
 
     T length() const {
         T l(0);
@@ -150,9 +163,13 @@ public:
         return l;
     }
 
+//------------------------------------------------------------------------------
+
     bool empty() const {
         return ps.empty();
     }
+
+//------------------------------------------------------------------------------
 
     bool has_point(const Point<T> &point) {
         for(const auto &p : ps) {
@@ -162,26 +179,37 @@ public:
         return false;
     }
 
+//------------------------------------------------------------------------------
+
     bool has_point(const T &x, const T &y) {
         return has_point(Point<T>(x, y));
     }
 
+//------------------------------------------------------------------------------
 
     void reserve(const size_t &i) {
         ps.reserve(i);
     }
 
+//------------------------------------------------------------------------------
+
     void clear() {
         ps.clear();
     }
+
+//------------------------------------------------------------------------------
 
     void reverse() {
         ps.reverse();
     }
 
+//------------------------------------------------------------------------------
+
     void flip() {
         ps.flip();
     }
+
+//------------------------------------------------------------------------------
 
     std::string to_string() const {
         std::string out("");
@@ -189,6 +217,8 @@ public:
             out += p.to_string() + "\n";
         return out;
     }
+
+//------------------------------------------------------------------------------
 
     Point<T> center() const {
         double
@@ -203,6 +233,8 @@ public:
         return Point<T>(sumX / size(), sumY / size());
     }
 
+//------------------------------------------------------------------------------
+
     Point<T> operator [] (const unsigned int &i) const
     {
         return ps[i];
@@ -212,6 +244,8 @@ public:
     {
         return ps[i];
     }
+
+//------------------------------------------------------------------------------
 
     friend std::ostream &operator << (std::ostream &os, const Path &path) {
         os << path.to_string();
