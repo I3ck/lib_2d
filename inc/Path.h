@@ -6,6 +6,21 @@
 
 #include "Point.h"
 
+/*
+    missing:
+        intersections (with sweep?)
+        sorting
+        reverse
+        closest / furthest
+        length
+        average point distance
+        center
+        convex hull
+        index of point
+        remove after/before  above/below  left/right
+        iteration overloads
+*/
+
 namespace lib_2d {
 
 template <typename T>
