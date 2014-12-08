@@ -1,5 +1,5 @@
-#ifndef POINTS_H_INCLUDED
-#define POINTS_H_INCLUDED
+#ifndef PATH_H_INCLUDED
+#define PATH_H_INCLUDED
 
 #include <vector>
 
@@ -8,14 +8,14 @@
 namespace lib_2d {
 
 template <typename T>
-class Points {
+class Path {
 
 private:
     std::vector < Point <T> > ps;
 
 public:
-    Points(){};
-    ~Points(){};
+    Path(){};
+    ~Path(){};
 
     void move_by(const T &x, const T &y) {
         for(auto &p : ps)
@@ -140,8 +140,8 @@ public:
         return ps[i];
     }
 
-    friend std::ostream &operator << (std::ostream &os, const Points &points) {
-        os << points.to_string();
+    friend std::ostream &operator << (std::ostream &os, const Path &path) {
+        os << path.to_string();
         return os;
     }
 

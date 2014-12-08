@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 #include "inc/Point.h"
-#include "inc/Points.h"
+#include "inc/Path.h"
 
 using namespace std;
 using namespace lib_2d;
