@@ -42,6 +42,9 @@ private:
 
 public:
     Path(){};
+    Path(const std::vector < Point <T> > &points) :
+        ps(points){}
+
     ~Path(){};
 
 //------------------------------------------------------------------------------
@@ -257,6 +260,10 @@ public:
     Point<T>& operator [] (const unsigned int &i)
     {
         return ps[i];
+    }
+
+    operator std::vector < Point <T> > () const {
+        return ps;
     }
 
 //------------------------------------------------------------------------------
