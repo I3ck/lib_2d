@@ -245,7 +245,7 @@ public:
 
     bool similar_to(const Path &other, const T &maxDistance) const {
         for(unsigned int i = 0; i < size(); ++i) {
-            if(!ps[i].similar_to(other[i]))
+            if(!ps[i].similar_to(other[i], maxDistance))
                 return false;
         }
         return true;
