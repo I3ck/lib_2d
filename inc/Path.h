@@ -2,6 +2,7 @@
 #define PATH_H_INCLUDED
 
 #include <vector>
+#include <fstream>
 
 #include "Point.h"
 
@@ -93,6 +94,14 @@ public:
         if(size() == 0)
             return false;
         return true;
+    }
+
+    bool from_file(const std::string &path) {
+        std::ifstream in(path.c_str());
+        std::stringstream buffer;
+        buffer << in.rdbuf();
+        in.close();
+        return from_string(buffer.str());
     }
 
 //------------------------------------------------------------------------------
