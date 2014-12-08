@@ -14,7 +14,6 @@
         closest / furthest
         length
         average point distance
-        center
         convex hull
         index of point
         remove after/before  above/below  left/right
@@ -178,6 +177,19 @@ public:
         for(const auto &p : ps)
             out += p.to_string() + "\n";
         return out;
+    }
+
+    Point<T> center() const {
+        double
+            sumX(0.0),
+            sumY(0.0);
+
+        for(const auto &i : ps) {
+            sumX += i.get_x();
+            sumY += i.get_y();
+        }
+
+        return Point<T>(sumX / size(), sumY / size());
     }
 
     Point<T> operator [] (const unsigned int &i) const
