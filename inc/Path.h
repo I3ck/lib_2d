@@ -81,6 +81,13 @@ public:
         return output;
     }
 
+    bool to_file(const std::string &path) const {
+        std::ofstream out(path.c_str());
+        out << to_string() << "\n";
+        out.close();
+        return true;
+    }
+
 
     bool from_string(const std::string &input) {
         clear();
