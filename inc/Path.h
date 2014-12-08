@@ -228,15 +228,6 @@ public:
 
 //------------------------------------------------------------------------------
 
-    std::string to_string() const {
-        std::string out("");
-        for(const auto &p : ps)
-            out += p.to_string() + "\n";
-        return out;
-    }
-
-//------------------------------------------------------------------------------
-
     Point<T> center() const {
         double
             sumX(0.0),
