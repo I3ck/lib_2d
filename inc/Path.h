@@ -11,7 +11,6 @@
         intersections (with sweep?)
         sorting
         closest / furthest
-        length
         average point distance
         convex hull
         index of point
@@ -140,6 +139,15 @@ public:
 
     size_t size() const {
         return ps.size();
+    }
+
+    T length() const {
+        T l(0);
+
+        for(const auto &i = ps.cbegin()+1; i != ps.cend(); ++i)
+            l += i->distance_to(*(i-1));
+
+        return l;
     }
 
     bool empty() const {
