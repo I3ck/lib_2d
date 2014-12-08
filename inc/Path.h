@@ -80,6 +80,21 @@ public:
         return output;
     }
 
+
+    bool from_string(const std::string &input) {
+        clear();
+        std::stringstream ss(input);
+        std::string line("");
+        while(getline(ss, line)) {
+            Point<T> point = Point<T>();
+            if(point.from_string(line))
+                ps.push_back(point);
+        }
+        if(size() == 0)
+            return false;
+        return true;
+    }
+
 //------------------------------------------------------------------------------
 
     void push_back(const Point<T> &point) {
