@@ -83,6 +83,8 @@ public:
 
     bool to_file(const std::string &path) const {
         std::ofstream out(path.c_str());
+        if(!out.good())
+            return false;
         out << to_string() << "\n";
         out.close();
         return true;
@@ -105,6 +107,8 @@ public:
 
     bool from_file(const std::string &path) {
         std::ifstream in(path.c_str());
+        if(!in.good())
+            return false;
         std::stringstream buffer;
         buffer << in.rdbuf();
         in.close();
