@@ -30,7 +30,6 @@
         convex hull
         index of point
         remove after/before  above/below  left/right
-        iteration overloads
 */
 
 namespace lib_2d {

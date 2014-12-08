@@ -220,10 +220,72 @@ int main()
 
 
 
-        cout << "testing Points" << endl;
+        cout << "testing Path" << endl;
+
+        Path<double> path = Path<double>();
+        path.push_back(0.0, 0.0);
+        path.push_back(1.0, 0.0);
+        path.push_back(-1.0, 0.0);
+
+        auto pathCenter = path.center();
+
+        if( pathCenter.abs() != 0.0)
+            throw runtime_error("center calculation of path not working");
+
+        path.move_by(1.0, 0.0);
+
+        pathCenter = path.center();
+
+        if( pathCenter.abs() != 1.0)
+            throw runtime_error("moving path doesn't seem to work");
+
+        path.rotate(PI);
+        pathCenter = path.center();
+
+        if ( pathCenter.abs() != 1.0 || pathCenter.get_x() != -1.0)
+            throw runtime_error("rotation seems to not work");
 
 
-        cout << "Points working fine" << endl;
+
+        auto path2 = path;
+        std::string path2String = path2.to_string();
+
+        path.move_by(100, 1000);
+
+        path.from_string(path2String);
+
+        if(!path.similar_to(path2, MAX_DELTA))
+            throw runtime_error("writing and reading from string doesn't work");
+
+        path.push_back(13.0 ,137.3);
+        path2 = path;
+
+        path.reverse();
+
+        if(path.similar_to(path2,MAX_DELTA))
+            throw runtime_error("reversing doesn't do anything");
+
+        path.reverse();
+
+        if(!path.similar_to(path2,MAX_DELTA))
+            throw runtime_error("reversing twice results in different result");
+
+        path2 = path;
+
+        path.mirror_horizontally();
+
+        if(path.similar_to(path2,MAX_DELTA))
+            throw runtime_error("mirroring doesn't do anything");
+
+        path.mirror_horizontally();
+
+        if(!path.similar_to(path2,MAX_DELTA))
+            throw runtime_error("mirroring twice results in different result");
+
+
+
+
+        cout << "Path working fine" << endl;
 
         cout << "everything working fine" << endl;
         return 0;
