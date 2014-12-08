@@ -22,8 +22,8 @@
 #include "Point.h"
 
 /*
+        intersections need heavy testing
     missing:
-        intersections (with sweep?)
         sorting
         closest / furthest
         average point distance
@@ -253,6 +253,81 @@ public:
                 return false;
         }
         return false;
+    }
+
+//------------------------------------------------------------------------------
+
+    Path intersections_with(const Path &other) const {
+
+        Path intersections;
+
+        for(const auto i1 = ps.cbegin(); i1 != ps.end()-1; ++i1) {
+            bool path1vertical(false), path1horizontal(false);
+            double slope1(0.0), slope2(0.0);
+            Point<T> currentIntersection;
+
+            if((i1+1)->get_x() == i1->get_x())
+                path1vertical = true;
+            else
+                slope1 = i1->slope_to(*(i1+1));
+
+            if((i1+1)->get_y() == i1->get_y())
+                path1horizontal = true;
+
+            for(const auto i2 = other.cbegin(); i2 != other.end()-1; ++i2) {
+                double path2vertical(false), path2horizontal(false);
+
+                if((i2+1)->get_x() == i2->get_x()) {
+                    if(path1vertical) continue;
+                    path2vertical = true;
+                }
+
+                if((i2+1)->get_y() == i2->get_y()) {
+                    if(path1horizontal) continue;
+                    path2horizontal = true;
+                }
+
+                if(path1vertical) {
+                    currentIntersection.set_x(i1->get_x());
+                    if(path2horizontal)
+                        currentIntersection.set_y(i2->get_y());
+                    else
+                        currentIntersection.set_y(
+                                                  i2->slope_to(*(i2+1))
+                                                  * currentIntersection.get_x()
+                                                  + ( (i2+1)->get_x() * i2->get_y() - i2->get_x() * (i2+1)->get_y() )
+                                                  / ( (i2+1)->get_x() - i2->get_x() )
+                                                  );
+                }
+                else if(path2vertical) {
+                    currentIntersection.set_x(i2->get_x());
+                    if(path1horizontal)
+                        currentIntersection.set_y(i1->get_y());
+                    else
+                        currentIntersection.set_y(
+                                                  i1->slope_to(*(i1+1))
+                                                  * currentIntersection.get_x()
+                                                  + ( (i1+1)->get_x() * i1->get_y() - i1->get_x() * (i1+1)->get_y() )
+                                                  / ( (i2+1)->get_x() - i2->get_x() )
+                                                  );
+                }
+                else {
+                    slope2 = i2->slope_to(*(i2+1));
+                    currentIntersection.set_x( (i2->get_y() - i1->get_y() + slope1 * i1->get_x() - slope2 * i2->get_x())  /  (slope1 - slope2) );
+                    currentIntersection.set_y( slope1 * (currentIntersection.get_x() - i1->get_x()) + i1->get_y());
+                }
+
+                if(     ( ((i2+1)->get_x() >= currentIntersection.get_x() && i2->get_x() <= currentIntersection.get_x() )
+                           || (i2->get_x() >= currentIntersection.get_x() && ((i2+1)->get_x() <= currentIntersection.get_x()))
+                        )
+                        && ( ((i1+1)->get_x() >= currentIntersection.get_x() && i1->get_x() <= currentIntersection.get_x() )
+                            || (i1->get_x() >= currentIntersection.get_x() && ((i1+1)->get_x() <= currentIntersection.get_x()))
+                        )
+                   )
+                    intersections.push_back(currentIntersection);
+            }
+        }
+        return intersections;
     }
 
 //------------------------------------------------------------------------------
