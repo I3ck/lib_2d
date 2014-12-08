@@ -10,7 +10,6 @@
     missing:
         intersections (with sweep?)
         sorting
-        reverse
         closest / furthest
         length
         average point distance
@@ -166,6 +165,10 @@ public:
 
     void clear() {
         ps.clear();
+    }
+
+    void reverse() {
+        ps.reverse();
     }
 
     void flip() {
