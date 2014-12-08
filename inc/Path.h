@@ -109,7 +109,7 @@ public:
         std::string output("");
 
         for(const auto &p : ps)
-                output += p.to_string() + "\n";
+                output += p.to_string(divider) + "\n";
 
         return output;
     }
@@ -242,6 +242,35 @@ public:
     }
 
 //------------------------------------------------------------------------------
+
+    bool similar_to(const Path &other, const T &maxDistance) const {
+        for(unsigned int i = 0; i < size(); ++i) {
+            if(!ps[i].similar_to(other[i]))
+                return false;
+        }
+        return true;
+    }
+
+//------------------------------------------------------------------------------
+
+    bool equal_to (const Path &other) const {
+        for(unsigned int i = 0; i < size(); ++i) {
+            if(!ps[i].equal_to(other[i]))
+                return false;
+        }
+        return false;
+    }
+
+//------------------------------------------------------------------------------
+
+    bool operator == (const Path &other) const {
+        return equal_to(other);
+    }
+
+    bool operator != (const Path &other) const {
+        return !equal_to(other);
+    }
+
 
     Point<T> operator [] (const unsigned int &i) const
     {
