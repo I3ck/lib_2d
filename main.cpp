@@ -322,6 +322,35 @@ int main()
            throw runtime_error("intersections incorrect");
 
 
+
+        path = Path<double> ();
+        path.push_back(1,100);
+        path.push_back(2,99);
+        path.push_back(3,98);
+        path.push_back(4,97);
+        path.push_back(5,96);
+        path.push_back(6,95);
+        path.push_back(7,94);
+        path.push_back(8,93);
+        path.push_back(9,92);
+        path.push_back(10,91);
+
+        path.sort_y();
+
+        for(unsigned int y=91; y <= 100; ++y) {
+            if (path[y-91].get_y() != y)
+                throw runtime_error("sorting by y doesn't work");
+        }
+
+        path.sort_x();
+
+        for(unsigned int x=1; x <= 10; ++x) {
+            if (path[x-1].get_x() != x)
+                throw runtime_error("sorting by x doesn't work");
+        }
+
+
+
         cout << "Path working fine" << endl;
 
         cout << "everything working fine" << endl;

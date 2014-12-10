@@ -22,9 +22,7 @@
 #include "Point.h"
 
 /*
-        intersections need heavy testing
     missing:
-        sorting
         closest / furthest
         average point distance
         convex hull
@@ -329,6 +327,17 @@ public:
         }
         return intersections;
     }
+//------------------------------------------------------------------------------
+
+    void sort_x() {
+        if(!empty())
+            sort(ps.begin(), ps.end(), compare_x);
+    }
+
+    void sort_y() {
+        if(!empty())
+            sort(ps.begin(), ps.end(), compare_y);
+    }
 
 //------------------------------------------------------------------------------
 
@@ -386,6 +395,16 @@ public:
     friend std::ostream &operator << (std::ostream &os, const Path &path) {
         os << path.to_string();
         return os;
+    }
+
+private:
+
+    static bool compare_x(const Point<T> &lhs, const Point<T> &rhs) {
+        return lhs.get_x() < rhs.get_x();
+    }
+
+    static bool compare_y(const Point<T> &lhs, const Point<T> &rhs) {
+        return lhs.get_y() < rhs.get_y();
     }
 
 };
