@@ -261,7 +261,7 @@ public:
 
         Path intersections;
 
-        for(const auto i1 = ps.cbegin(); i1 != ps.end()-1; ++i1) {
+        for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
             bool path1vertical(false), path1horizontal(false);
             double slope1(0.0), slope2(0.0);
             Point<T> currentIntersection;
@@ -274,7 +274,7 @@ public:
             if((i1+1)->get_y() == i1->get_y())
                 path1horizontal = true;
 
-            for(const auto i2 = other.cbegin(); i2 != other.end()-1; ++i2) {
+            for(auto i2 = other.cbegin(); i2 != other.cend()-1; ++i2) {
                 double path2vertical(false), path2horizontal(false);
 
                 if((i2+1)->get_x() == i2->get_x()) {
@@ -340,11 +340,11 @@ public:
         return ps.end();
     }
 
-    typename std::vector <Point<T> >::const_iterator cbegin() {
+    typename std::vector <Point<T> >::const_iterator cbegin() const {
         return ps.cbegin();
     }
 
-    typename std::vector <Point<T> >::const_iterator cend() {
+    typename std::vector <Point<T> >::const_iterator cend() const {
         return ps.cend();
     }
 
