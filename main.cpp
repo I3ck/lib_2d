@@ -307,7 +307,19 @@ int main()
            throw runtime_error("intersections incorrect");
 
 
+        path = Path<double> ();
+        path.push_back(-100,100);
+        path.push_back(100,-100);
 
+        path2 = Path<double> ();
+        path2.push_back(100,100);
+        path2.push_back(-100,-100);
+
+        intersections = path.intersections_with(path2);
+        shouldIntersection = Point<double>(0,0);
+
+        if(!intersections[0].similar_to(shouldIntersection,MAX_DELTA))
+           throw runtime_error("intersections incorrect");
 
 
         cout << "Path working fine" << endl;
