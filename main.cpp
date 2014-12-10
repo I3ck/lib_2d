@@ -285,6 +285,31 @@ int main()
 
 
 
+        path = Path<double> ();
+        path.push_back(-100,0);
+        path.push_back(100,0);
+
+        path2 = Path<double> ();
+        path2.push_back(0,-100);
+        path2.push_back(0,100);
+
+        auto intersections = path.intersections_with(path2);
+        auto shouldIntersection = Point<double>(0,0);
+
+        if(!intersections[0].similar_to(shouldIntersection,MAX_DELTA))
+           throw runtime_error("intersections incorrect");
+
+        path.move_by(0,-1);
+        intersections = path.intersections_with(path2);
+        shouldIntersection = Point<double>(0,-1);
+
+        if(!intersections[0].similar_to(shouldIntersection,MAX_DELTA))
+           throw runtime_error("intersections incorrect");
+
+
+
+
+
         cout << "Path working fine" << endl;
 
         cout << "everything working fine" << endl;
