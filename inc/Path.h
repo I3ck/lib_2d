@@ -23,7 +23,7 @@
 
 /*
     missing:
-        closest / furthest
+        closest / furthest (closest done for point, but missing for path=>path, and all need testing)
         average point distance
         convex hull
         index of point
@@ -231,6 +231,24 @@ public:
         }
 
         return Point<T>(sumX / size(), sumY / size());
+    }
+
+//------------------------------------------------------------------------------
+
+    int furthest_apart(const Point<T> &other) const {
+        T maxDistance(0);
+        int furthestIndex(-1);
+        for (unsigned int i = 0; i < size(); ++i) {
+            if(ps[i].distance_to(other) >= maxDistance) {
+                maxDistance = ps[i].distance_to(other);
+                furthestIndex = i;
+            }
+        }
+        return furthestIndex;
+    }
+
+    int furthest_apart(const T &x, const T &y) const {
+        return furthest_apart(Point<T>(x, y));
     }
 
 //------------------------------------------------------------------------------
