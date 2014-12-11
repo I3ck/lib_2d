@@ -25,7 +25,8 @@
     missing:
         convex hull
         index of point
-        remove after/before  above/below  left/right
+        remove above/below  left/right
+        test all remove methods
 */
 
 namespace lib_2d {
@@ -224,6 +225,21 @@ public:
 
     void reverse() {
         std::reverse(ps.begin(), ps.end());
+    }
+
+//------------------------------------------------------------------------------
+
+    void remove_from(const unsigned int &index) {
+        if(size() < index)
+            return;
+        ps.erase(ps.begin() + index, ps.end());
+    }
+
+    void remove_until(const unsigned int &index) {
+        if(size() < index)
+            clear();
+        else
+            ps.erase(ps.begin(), ps.begin() + index);
     }
 
 //------------------------------------------------------------------------------
