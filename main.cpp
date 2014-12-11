@@ -349,6 +349,9 @@ int main()
                 throw runtime_error("sorting by x doesn't work");
         }
 
+        if(path[path.furthest_apart(Point<double>())] != Point<double>(1,100))
+            throw runtime_error("furthest apart not working properly");
+
 
 
         cout << "Path working fine" << endl;
