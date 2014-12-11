@@ -350,10 +350,22 @@ int main()
         }
 
         if(path[path.furthest_apart(Point<double>())] != Point<double>(1,100))
-            throw runtime_error("furthest apart not working properly");
+            throw runtime_error("furthest apart path to point not working properly");
 
         if(path[path.closest(Point<double>())] != Point<double>(10,91))
-            throw runtime_error("closest not working properly");
+            throw runtime_error("closest path to point not working properly");
+
+
+
+        path2.clear();
+
+        path2.push_back(Point<double>());
+
+        if(path[path.furthest_apart(path2)] != Point<double>(1,100))
+            throw runtime_error("furthest apart path to path not working properly");
+
+        if(path[path.closest(path2)] != Point<double>(10,91))
+            throw runtime_error("closest path to path not working properly");
 
 
 
