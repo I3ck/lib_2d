@@ -352,6 +352,9 @@ int main()
         if(path[path.furthest_apart(Point<double>())] != Point<double>(1,100))
             throw runtime_error("furthest apart not working properly");
 
+        if(path[path.closest(Point<double>())] != Point<double>(10,91))
+            throw runtime_error("closest not working properly");
+
 
 
         cout << "Path working fine" << endl;

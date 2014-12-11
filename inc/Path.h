@@ -253,6 +253,26 @@ public:
 
 //------------------------------------------------------------------------------
 
+    int closest(const Point<T> &other) const {
+        int closestIndex(-1);
+        if(size() == 0)
+            return closestIndex;
+        T minDistance = ps[0].distance_to(other);
+        for (unsigned int i = 0; i < size(); ++i) {
+            if(ps[i].distance_to(other) <= minDistance) {
+                minDistance = ps[i].distance_to(other);
+                closestIndex = i;
+            }
+        }
+        return closestIndex;
+    }
+
+    int closest(const T &x, const T &y) const {
+        return closest(Point<T>(x, y));
+    }
+
+//------------------------------------------------------------------------------
+
     bool similar_to(const Path &other, const T &maxDistance) const {
         for(unsigned int i = 0; i < size(); ++i) {
             if(!ps[i].similar_to(other[i], maxDistance))
