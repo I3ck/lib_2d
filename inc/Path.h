@@ -23,7 +23,7 @@
 
 /*
     missing:
-        closest / furthest (closest done for point, but missing for path=>path, and all need testing)
+        closest / furthest for path=>path
         average point distance
         convex hull
         index of point
