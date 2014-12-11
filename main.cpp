@@ -369,6 +369,14 @@ int main()
 
 
 
+        path2.push_back(1,0);
+        path2.push_back(2,0);
+
+        if(path2.average_distance() != 1)
+            throw runtime_error("average distance not working properly");
+
+
+
         cout << "Path working fine" << endl;
 
         cout << "everything working fine" << endl;

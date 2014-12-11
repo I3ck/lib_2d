@@ -23,7 +23,6 @@
 
 /*
     missing:
-        average point distance
         convex hull
         index of point
         remove after/before  above/below  left/right
@@ -169,12 +168,22 @@ public:
 //------------------------------------------------------------------------------
 
     T length() const {
+        if(size() < 2)
+            return 0;
         T l(0);
 
-        for(const auto &i = ps.cbegin()+1; i != ps.cend(); ++i)
+        for(auto i = ps.cbegin()+1; i != ps.cend(); ++i)
             l += i->distance_to(*(i-1));
 
         return l;
+    }
+
+//------------------------------------------------------------------------------
+
+    T average_distance() const {
+        if(size() < 2)
+            return 0;
+        return length() / (size()-1);
     }
 
 //------------------------------------------------------------------------------
