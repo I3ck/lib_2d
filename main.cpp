@@ -384,6 +384,59 @@ int main()
             throw runtime_error("point which is not in path was found");
 
 
+        path2.remove_from(5);
+        path2.remove_until(0);
+        path2.remove_left_of(0);
+        path2.remove_right_of(2);
+        path2.remove_above_of(0);
+        path2.remove_below_of(0);
+
+
+        if(path2.size() != 3)
+            throw runtime_error("path had points removed although that shouldn't have happened");
+
+        path2.push_back(0,17);
+        path2.remove_above_of(16);
+
+        if(path2.size() != 3)
+            throw runtime_error("remove above doesn't work");
+
+        path2.push_back(0,-17);
+        path2.remove_below_of(-16);
+
+        if(path2.size() != 3)
+            throw runtime_error("remove below doesn't work");
+
+        path2.push_back(17,17);
+        path2.remove_right_of(16);
+
+        if(path2.size() != 3)
+            throw runtime_error("remove right of doesn't work");
+
+        path2.push_back(-17,17);
+        path2.remove_left_of(-16);
+
+        if(path2.size() != 3)
+            throw runtime_error("remove left of doesn't work");
+
+        path2.remove_from(2);
+
+        if(path2.size() != 2)
+            throw runtime_error("remove from doesn't work");
+
+        path2.remove_until(1);
+
+        if(path2.size() != 1)
+            throw runtime_error("remove until doesn't work");
+
+
+
+
+
+
+
+
+
 
         cout << "Path working fine" << endl;
 

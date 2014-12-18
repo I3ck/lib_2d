@@ -24,8 +24,6 @@
 /*
     missing:
         convex hull
-        remove above/below  left/right
-        test all remove methods
 */
 
 namespace lib_2d {
@@ -240,6 +238,71 @@ public:
         else
             ps.erase(ps.begin(), ps.begin() + index);
     }
+
+    void remove_right_of(const T &x) {
+        for(auto i = ps.begin(); i!= ps.end();) {
+            bool deleted(false);
+            if(i->get_x() > x) {
+                deleted = true;
+                i = ps.erase(i);
+            }
+            if(!deleted)
+                ++i;
+        }
+    }
+
+    void remove_right_of(const Point<T> &other) {
+        remove_right_of(other.get_x());
+    }
+
+    void remove_left_of(const T &x) {
+        for(auto i = ps.begin(); i!= ps.end();) {
+            bool deleted(false);
+            if(i->get_x() < x) {
+                deleted = true;
+                i = ps.erase(i);
+            }
+            if(!deleted)
+                ++i;
+        }
+    }
+
+    void remove_left_of(const Point<T> &other) {
+        remove_left_of(other.get_x());
+    }
+
+    void remove_above_of(const T &y) {
+        for(auto i = ps.begin(); i!= ps.end();) {
+            bool deleted(false);
+            if(i->get_y() > y) {
+                deleted = true;
+                i = ps.erase(i);
+            }
+            if(!deleted)
+                ++i;
+        }
+    }
+
+    void remove_above_of(const Point<T> &other) {
+        remove_above_of(other.get_y());
+    }
+
+    void remove_below_of(const T &y) {
+        for(auto i = ps.begin(); i!= ps.end();) {
+            bool deleted(false);
+            if(i->get_y() < y) {
+                deleted = true;
+                i = ps.erase(i);
+            }
+            if(!deleted)
+                ++i;
+        }
+    }
+
+    void remove_below_of(const Point<T> &other) {
+        remove_below_of(other.get_y());
+    }
+
 
 //------------------------------------------------------------------------------
 
