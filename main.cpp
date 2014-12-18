@@ -12,6 +12,14 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+/**
+ * \file    main.cpp
+ * \author  Martin Buck
+ * \date    November 2014
+ * \version 1.0
+ * \brief   contains several tests for the libary
+ */
+
 #include <iostream>
 #include <stdexcept>
 

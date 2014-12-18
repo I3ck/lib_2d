@@ -12,6 +12,15 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+/**
+ * \file    Path.h
+ * \author  Martin Buck
+ * \date    November 2014
+ * \version 1.0
+ * \brief   contains the class Point which represents a umerical point in 2d space
+ *          Point provides several methods to work with
+ */
+
 #ifndef POINT_H_INCLUDED
 #define POINT_H_INCLUDED
 

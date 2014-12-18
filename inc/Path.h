@@ -12,6 +12,16 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+/**
+ * \file    Path.h
+ * \author  Martin Buck
+ * \date    November 2014
+ * \version 1.0
+ * \brief   contains the class Path which represents a collection of numerical points in 2d space
+ *          the data is defined as a vector <Point>
+ *          Path provides several methods to work with such a dataset
+ */
+
 #ifndef PATH_H_INCLUDED
 #define PATH_H_INCLUDED
 
