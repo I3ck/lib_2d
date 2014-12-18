@@ -377,6 +377,14 @@ int main()
 
 
 
+        if(path2.index_of(Point<double>(2,0)) != 2)
+            throw runtime_error("index of point couldn't be found");
+
+        if(path2.index_of(Point<double>(222,0)) != -1)
+            throw runtime_error("point which is not in path was found");
+
+
+
         cout << "Path working fine" << endl;
 
         cout << "everything working fine" << endl;

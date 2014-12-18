@@ -24,7 +24,6 @@
 /*
     missing:
         convex hull
-        index of point
         remove above/below  left/right
         test all remove methods
 */
@@ -342,6 +341,16 @@ public:
                 return false;
         }
         return false;
+    }
+
+//------------------------------------------------------------------------------
+
+    int index_of(const Point<T> &other) {
+        for(auto p = ps.cbegin(); p != ps.cend(); ++p) {
+                if (*p == other)
+                    return (p - ps.cbegin());
+        }
+        return -1;
     }
 
 //------------------------------------------------------------------------------
