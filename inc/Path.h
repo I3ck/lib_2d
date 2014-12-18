@@ -22,8 +22,10 @@
 #include "Point.h"
 
 /*
-    missing:
+    todo:
+        sweep algorithms for intersections
         convex hull
+        more contrainers to construct from or to replace
 */
 
 namespace lib_2d {
