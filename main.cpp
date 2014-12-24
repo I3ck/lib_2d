@@ -25,6 +25,7 @@
 
 #include "inc/Point.h"
 #include "inc/Path.h"
+#include "inc/Arc.h"
 
 using namespace std;
 using namespace lib_2d;
@@ -437,16 +438,29 @@ int main()
         if(path2.size() != 1)
             throw runtime_error("remove until doesn't work");
 
-
-
-
-
-
-
-
-
-
         cout << "Path working fine" << endl;
+
+
+
+
+
+
+
+        cout << "testing Arc" << endl;
+
+        Arc<double> arc = Arc<double>(300.0, 100);
+
+        cout << arc << endl;
+
+
+
+
+        cout << "Arc working fine" << endl;
+
+
+
+
+
 
         cout << "everything working fine" << endl;
         return 0;

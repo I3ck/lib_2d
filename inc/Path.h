@@ -43,7 +43,7 @@ namespace lib_2d {
 template <typename T>
 class Path {
 
-private:
+protected:
     std::vector < Point <T> > ps;
 
 public:
