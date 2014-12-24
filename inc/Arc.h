@@ -52,7 +52,7 @@ public:
             center(center) {
 
         reserve(nPoints);
-        unsigned int nRemoved(0);
+        unsigned int nRemoved(1);
 
         if( abs(radiansEnd - radiansStart == 3.14159265358979323846 * 2.0) )
             nRemoved = 2;
@@ -60,15 +60,10 @@ public:
         T pDistance = abs(radiansEnd - radiansStart) / (T)(nPoints - nRemoved);
 
 
-        for(T i=radiansStart; i<=radiansEnd; i+=pDistance) {
-            T x = center.get_x() + diameter/2.0 * cos(i);
-            T y = center.get_y() + diameter/2.0 * sin(i);
-            push_back(x, y);
-        }
-
-        if(nRemoved == 2) {
-            T x = center.get_x() + diameter/2.0 * cos(radiansStart);
-            T y = center.get_y() + diameter/2.0 * sin(radiansStart);
+        for(unsigned int i=0; i<nPoints; ++i) {
+            T radians = radiansStart + i * pDistance;
+            T x = center.get_x() + diameter/2.0 * cos(radians);
+            T y = center.get_y() + diameter/2.0 * sin(radians);
             push_back(x, y);
         }
     }
