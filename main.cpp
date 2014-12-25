@@ -450,17 +450,17 @@ int main()
 
         Arc<double> arc = Arc<double>(300.0, 100);
 
-        arc.to_file("arc_full");
+        arc.to_file("arc_full.test");
 
-        //if(arc.size() != 100)
-         //   throw runtime_error("full arc size incorrect");
+        if(arc.size() != 100)
+            throw runtime_error("full arc size incorrect");
 
-        arc = Arc<double>(300.0, 100, PI);
+        arc = Arc<double>(300.0, 100, false, PI);
 
-        arc.to_file("arc_semi");
+        arc.to_file("arc_semi.test");
 
-        //if(arc.size() != 100)
-         //   throw runtime_error("semi arc size incorrect");
+        if(arc.size() != 100)
+            throw runtime_error("semi arc size incorrect");
 
 
 

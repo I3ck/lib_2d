@@ -2,3 +2,4 @@ bin/
 obj/
 lib_2d.layout
 lib_2d.depend
+*.test
