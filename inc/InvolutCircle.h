@@ -13,27 +13,26 @@
 */
 
 /**
- * \file    Arc.h
+ * \file    InvolutCircle.h
  * \author  Martin Buck
- * \date    November 2014
+ * \date    December 2014
  * \version 1.0
- * \brief   contains the class Arc which represents an arc in 2d space
+ * \brief   contains the class InvolutCircle which represents an involut of a circle
  *          derived from Path
  * \todo    many methods have to change the center aswell, maybe the diameter too
- * \bug     arcs aren't closing properly, maybe there's rounding errors
+ * \todo    the involut currently has its points with the same radial distance, but absolute distance would be prefered
  */
 
-#ifndef ARC_H_INCLUDED
-#define ARC_H_INCLUDED
+#ifndef INVOLUTCIRCLE_H_INCLUDED
+#define INVOLUTCIRCLE_H_INCLUDED
 
 #include "Path.h"
 #include "Point.h"
 
-
 namespace lib_2d {
 
 template <typename T>
-class Arc : public Path<T> {
+class InvolutCircle : public Path<T> {
     using Path<T>::reserve;
     using Path<T>::push_back;
 
@@ -43,43 +42,25 @@ private:
 
 public:
 
-    Arc(const T &diameter,
-        const unsigned int &nPoints,
-        const bool &closePath = true,
-        const T &radiansStart = 0,
-        const T &radiansEnd = 3.14159265358979323846 * 2.0,
-        const Point<T> &center = Point<T> (0.0, 0.0)) :
+    InvolutCircle(const T &diameter,
+                  const unsigned int nPoints,
+                  const T &radiansStart = 0,
+                  const T &radiansEnd = 3.14159265358979323846 * 2.0,
+                  const Point<T> &center = Point<T> (0.0, 0.0)) :
             Path<T>(),
             diameter(diameter),
             center(center) {
 
-        T pDistance;
-        unsigned int endIndex(nPoints);
         reserve(nPoints);
 
-        if(closePath) {
-            pDistance= abs(radiansEnd - radiansStart) / (T)(nPoints - 2);
-            endIndex--;
+        T pDistance = abs(radiansEnd - radiansStart) / (T)(nPoints - 1);
+
+        for (unsigned int i=0; i<nPoints; ++i ) {
+            T current = i * pDistance;
+            T x = center.get_x() + diameter/2.0 * (cos(current) + current * sin(current));
+            T y = center.get_y() + diameter/2.0 * (sin(current) - current * cos(current));
+            push_back(x,y);
         }
-
-        else
-            pDistance= abs(radiansEnd - radiansStart) / (T)(nPoints - 1);
-
-
-        for(unsigned int i=0; i<endIndex; ++i) {
-            T radians = radiansStart + i * pDistance;
-            T x = center.get_x() + diameter/2.0 * cos(radians);
-            T y = center.get_y() + diameter/2.0 * sin(radians);
-            push_back(x, y);
-        }
-
-        if(closePath) {
-            T x = center.get_x() + diameter/2.0 * cos(radiansStart);
-            T y = center.get_y() + diameter/2.0 * sin(radiansStart);
-            push_back(x, y);
-        }
-
-
     }
 
 //------------------------------------------------------------------------------
@@ -97,4 +78,8 @@ public:
 
 } //lib_2d
 
-#endif // ARC_H_INCLUDED
+
+
+
+
+#endif // INVOLUTCIRCLE_H_INCLUDED

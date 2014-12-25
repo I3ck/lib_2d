@@ -35,6 +35,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="inc/Arc.h" />
+		<Unit filename="inc/InvolutCircle.h" />
 		<Unit filename="inc/Path.h" />
 		<Unit filename="inc/Point.h" />
 		<Unit filename="main.cpp" />

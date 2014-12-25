@@ -26,6 +26,7 @@
 #include "inc/Point.h"
 #include "inc/Path.h"
 #include "inc/Arc.h"
+#include "inc/InvolutCircle.h"
 
 using namespace std;
 using namespace lib_2d;
@@ -466,6 +467,16 @@ int main()
 
 
         cout << "Arc working fine" << endl;
+
+
+        cout << "testing InvolutCircle" << endl;
+
+        InvolutCircle<double> inv = InvolutCircle<double>(1.0, 100);
+
+        inv.to_file("inv.test");
+
+        if(inv.size() != 100)
+            throw runtime_error("semi arc size incorrect");
 
 
 
