@@ -52,20 +52,29 @@ public:
             center(center) {
 
         reserve(nPoints);
-        unsigned int nRemoved(1);
+        unsigned int nRemoved(0);
+        bool isFullCircle = true;//abs(radiansEnd - radiansStart) >= 3.14159265358979323846 * 2.0;
 
-        if( abs(radiansEnd - radiansStart == 3.14159265358979323846 * 2.0) )
-            nRemoved = 2;
+        if(isFullCircle)
+            nRemoved = 3;
 
         T pDistance = abs(radiansEnd - radiansStart) / (T)(nPoints - nRemoved);
 
 
-        for(unsigned int i=0; i<nPoints; ++i) {
+        for(unsigned int i=0; i<=nPoints; ++i) {
             T radians = radiansStart + i * pDistance;
             T x = center.get_x() + diameter/2.0 * cos(radians);
             T y = center.get_y() + diameter/2.0 * sin(radians);
             push_back(x, y);
         }
+
+        if(isFullCircle) {
+            T x = center.get_x() + diameter/2.0 * cos(radiansStart);
+            T y = center.get_y() + diameter/2.0 * sin(radiansStart);
+            push_back(x, y);
+        }
+
+
     }
 
 //------------------------------------------------------------------------------
