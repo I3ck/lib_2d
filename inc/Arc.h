@@ -44,31 +44,34 @@ public:
 
     Arc(const T &diameter,
         const unsigned int &nPoints,
+        const bool &closePath = true,
         const T &radiansStart = 0,
         const T &radiansEnd = 3.14159265358979323846 * 2.0,
         const Point<T> &center = Point<T> (0.0, 0.0)) :
             Path<T>(),
             diameter(diameter),
             center(center) {
-
+        T pDistance;
+        unsigned int endIndex(nPoints);
         reserve(nPoints);
-        unsigned int nRemoved(0);
-        bool isFullCircle = false;//abs(radiansEnd - radiansStart) >= 3.14159265358979323846 * 2.0;
 
-        if(isFullCircle)
-            nRemoved = 3;
+        if(closePath) {
+            pDistance= abs(radiansEnd - radiansStart) / (T)(nPoints - 2);
+            endIndex--;
+        }
 
-        T pDistance = abs(radiansEnd - radiansStart) / (T)(nPoints - nRemoved);
+        else
+            pDistance= abs(radiansEnd - radiansStart) / (T)(nPoints - 1);
 
 
-        for(unsigned int i=0; i<=nPoints; ++i) {
+        for(unsigned int i=0; i<endIndex; ++i) {
             T radians = radiansStart + i * pDistance;
             T x = center.get_x() + diameter/2.0 * cos(radians);
             T y = center.get_y() + diameter/2.0 * sin(radians);
             push_back(x, y);
         }
 
-        if(isFullCircle) {
+        if(closePath) {
             T x = center.get_x() + diameter/2.0 * cos(radiansStart);
             T y = center.get_y() + diameter/2.0 * sin(radiansStart);
             push_back(x, y);
