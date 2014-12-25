@@ -166,6 +166,11 @@ public:
         push_back(Point<T>(x, y));
     }
 
+    void push_back(const Path &other) {
+        for(auto i = other.cbegin(); i != other.cend(); ++i)
+            push_back(*i);
+    }
+
 //------------------------------------------------------------------------------
 
     size_t size() const {
