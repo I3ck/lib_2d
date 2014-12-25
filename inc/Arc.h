@@ -53,7 +53,7 @@ public:
 
         reserve(nPoints);
         unsigned int nRemoved(0);
-        bool isFullCircle = true;//abs(radiansEnd - radiansStart) >= 3.14159265358979323846 * 2.0;
+        bool isFullCircle = false;//abs(radiansEnd - radiansStart) >= 3.14159265358979323846 * 2.0;
 
         if(isFullCircle)
             nRemoved = 3;

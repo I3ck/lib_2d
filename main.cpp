@@ -452,15 +452,15 @@ int main()
 
         arc.to_file("arc_full");
 
-        if(arc.size() != 100)
-            throw runtime_error("full arc size incorrect");
+        //if(arc.size() != 100)
+         //   throw runtime_error("full arc size incorrect");
 
         arc = Arc<double>(300.0, 100, PI);
 
         arc.to_file("arc_semi");
 
-        if(arc.size() != 100)
-            throw runtime_error("semi arc size incorrect");
+        //if(arc.size() != 100)
+         //   throw runtime_error("semi arc size incorrect");
 
 
 
