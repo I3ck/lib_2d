@@ -36,6 +36,7 @@
         sweep algorithms for intersections
         convex hull
         more contrainers to construct from or to replace
+        remove closer / further to than
 */
 
 namespace lib_2d {
