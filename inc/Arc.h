@@ -20,6 +20,7 @@
  * \brief   contains the class Arc which represents an arc in 2d space
  *          derived from Path
  * \todo    many methods have to change the center aswell, maybe the diameter too
+ * \bug     arcs aren't closing properly, maybe there's rounding errors
  */
 
 #ifndef ARC_H_INCLUDED

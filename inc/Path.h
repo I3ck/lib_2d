@@ -20,6 +20,10 @@
  * \brief   contains the class Path which represents a collection of numerical points in 2d space
  *          the data is defined as a vector <Point>
  *          Path provides several methods to work with such a dataset
+ * \todo    sweep algorithms for intersections
+ * \todo    convex hull
+ * \todo    more contrainers to construct from or to replace
+ * \todo    remove closer / further to than
  */
 
 #ifndef PATH_H_INCLUDED
@@ -30,14 +34,6 @@
 #include <algorithm>
 
 #include "Point.h"
-
-/*
-    todo:
-        sweep algorithms for intersections
-        convex hull
-        more contrainers to construct from or to replace
-        remove closer / further to than
-*/
 
 namespace lib_2d {
 
