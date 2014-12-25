@@ -171,6 +171,19 @@ public:
             push_back(*i);
     }
 
+    void emplace_back(const Point<T> &point) {
+        ps.emplace_back(point);
+    }
+
+    void emplace_back(const T &x, const T &y) {
+        emplace_back(Point<T>(x, y));
+    }
+
+    void emplace_back(const Path &other) {
+        for(auto i = other.cbegin(); i != other.cend(); ++i)
+            emplace_back(*i);
+    }
+
 //------------------------------------------------------------------------------
 
     size_t size() const {
