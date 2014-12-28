@@ -58,12 +58,12 @@ public:
         reserve(nPoints);
 
         if(closePath) {
-            pDistance= abs(radiansEnd - radiansStart) / (T)(nPoints - 2);
+            pDistance = fabs(radiansEnd - radiansStart) / (T)(nPoints - 2);
             endIndex--;
         }
 
         else
-            pDistance= abs(radiansEnd - radiansStart) / (T)(nPoints - 1);
+            pDistance = fabs(radiansEnd - radiansStart) / (T)(nPoints - 1);
 
 
         for(unsigned int i=0; i<endIndex; ++i) {
