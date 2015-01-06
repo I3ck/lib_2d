@@ -192,227 +192,208 @@ TEST_CASE("testing Point") {
     }
 }
 
-/*
-int main()
-{
-    try {
+TEST_CASE("testing Path") {
+    Path<double> path = Path<double>();
+    path.push_back(0.0, 0.0);
+    path.push_back(1.0, 0.0);
+    path.push_back(-1.0, 0.0);
 
-        cout << "testing Path" << endl;
-
-        Path<double> path = Path<double>();
-        path.push_back(0.0, 0.0);
-        path.push_back(1.0, 0.0);
-        path.push_back(-1.0, 0.0);
-
+    SECTION("testing center of path") {
         auto pathCenter = path.center();
 
-        if( pathCenter.abs() != 0.0)
-            throw runtime_error("center calculation of path not working");
+        REQUIRE(pathCenter.abs() == 0.0);
+    }
 
+    SECTION("testing moving of path") {
         path.move_by(1.0, 0.0);
+        auto pathCenter = path.center();
 
-        pathCenter = path.center();
+        REQUIRE( pathCenter.abs() == 1.0);
+    }
 
-        if( pathCenter.abs() != 1.0)
-            throw runtime_error("moving path doesn't seem to work");
-
+    SECTION("testing rotation of path") {
+        path.move_by(1.0, 0.0);
         path.rotate(PI);
-        pathCenter = path.center();
+        auto pathCenter = path.center();
 
-        if ( pathCenter.abs() != 1.0 || pathCenter.get_x() != -1.0)
-            throw runtime_error("rotation seems to not work");
+        REQUIRE(pathCenter.abs() == 1.0);
+        REQUIRE(pathCenter.get_x() == -1.0);
+    }
 
-
-
+    SECTION("testing parsing from and to string") {
         auto path2 = path;
         std::string path2String = path2.to_string();
 
         path.move_by(100, 1000);
-
         path.from_string(path2String);
 
-        if(!path.similar_to(path2, MAX_DELTA))
-            throw runtime_error("writing and reading from string doesn't work");
+        REQUIRE(path.similar_to(path2, MAX_DELTA));
+    }
 
+    SECTION("testing reversing of path") {
         path.push_back(13.0 ,137.3);
-        path2 = path;
+        auto path2 = path;
 
         path.reverse();
-
-        if(path.similar_to(path2,MAX_DELTA))
-            throw runtime_error("reversing doesn't do anything");
+        REQUIRE(!path.similar_to(path2,MAX_DELTA));
 
         path.reverse();
+        REQUIRE(path.similar_to(path2,MAX_DELTA));
+    }
 
-        if(!path.similar_to(path2,MAX_DELTA))
-            throw runtime_error("reversing twice results in different result");
-
-        path2 = path;
-
-        path.mirror_horizontally();
-
-        if(path.similar_to(path2,MAX_DELTA))
-            throw runtime_error("mirroring doesn't do anything");
+    SECTION("testing mirroring") {
+        path.push_back(13.0 ,137.3);
+        auto path2 = path;
 
         path.mirror_horizontally();
+        REQUIRE(!path.similar_to(path2,MAX_DELTA));
 
-        if(!path.similar_to(path2,MAX_DELTA))
-            throw runtime_error("mirroring twice results in different result");
+        path.mirror_horizontally();
+        REQUIRE(path.similar_to(path2,MAX_DELTA));
+    }
 
+    SECTION("testing intersections between paths") {
+        Path<double> tmp = Path<double> ();
+        tmp.push_back(-100,0);
+        tmp.push_back(100,0);
 
+        Path<double> tmp2 = Path<double> ();
+        tmp2.push_back(0,-100);
+        tmp2.push_back(0,100);
 
-
-        path = Path<double> ();
-        path.push_back(-100,0);
-        path.push_back(100,0);
-
-        path2 = Path<double> ();
-        path2.push_back(0,-100);
-        path2.push_back(0,100);
-
-        auto intersections = path.intersections_with(path2);
+        auto intersections = tmp.intersections_with(tmp2);
         auto shouldIntersection = Point<double>(0,0);
+        REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
 
-        if(!intersections[0].similar_to(shouldIntersection,MAX_DELTA))
-           throw runtime_error("intersections incorrect");
-
-        path.move_by(0,-1);
-        intersections = path.intersections_with(path2);
+        tmp.move_by(0,-1);
+        intersections = tmp.intersections_with(tmp2);
         shouldIntersection = Point<double>(0,-1);
+        REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
 
-        if(!intersections[0].similar_to(shouldIntersection,MAX_DELTA))
-           throw runtime_error("intersections incorrect");
+        tmp = Path<double> ();
+        tmp.push_back(-100,100);
+        tmp.push_back(100,-100);
 
+        tmp2 = Path<double> ();
+        tmp2.push_back(100,100);
+        tmp2.push_back(-100,-100);
 
-        path = Path<double> ();
-        path.push_back(-100,100);
-        path.push_back(100,-100);
-
-        path2 = Path<double> ();
-        path2.push_back(100,100);
-        path2.push_back(-100,-100);
-
-        intersections = path.intersections_with(path2);
+        intersections = tmp.intersections_with(tmp2);
         shouldIntersection = Point<double>(0,0);
+        REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
+    }
 
-        if(!intersections[0].similar_to(shouldIntersection,MAX_DELTA))
-           throw runtime_error("intersections incorrect");
+    SECTION("testing sorting") {
+        Path<double> tmp = Path<double> ();
+        tmp.push_back(1,100);
+        tmp.push_back(2,99);
+        tmp.push_back(3,98);
+        tmp.push_back(4,97);
+        tmp.push_back(5,96);
+        tmp.push_back(6,95);
+        tmp.push_back(7,94);
+        tmp.push_back(8,93);
+        tmp.push_back(9,92);
+        tmp.push_back(10,91);
 
+        tmp.sort_y();
+        for(unsigned int y=91; y <= 100; ++y)
+            REQUIRE(tmp[y-91].get_y() == y);
 
+        tmp.sort_x();
+        for(unsigned int x=1; x <= 10; ++x)
+            REQUIRE(tmp[x-1].get_x() == x);
+    }
 
-        path = Path<double> ();
-        path.push_back(1,100);
-        path.push_back(2,99);
-        path.push_back(3,98);
-        path.push_back(4,97);
-        path.push_back(5,96);
-        path.push_back(6,95);
-        path.push_back(7,94);
-        path.push_back(8,93);
-        path.push_back(9,92);
-        path.push_back(10,91);
+    SECTION("testing closest and furthest") {
+        Path<double> tmp = Path<double> ();
+        tmp.push_back(1,100);
+        tmp.push_back(9,92);
+        tmp.push_back(10,91);
 
-        path.sort_y();
+        REQUIRE(tmp[tmp.furthest_apart(Point<double>())] == Point<double>(1,100));
 
-        for(unsigned int y=91; y <= 100; ++y) {
-            if (path[y-91].get_y() != y)
-                throw runtime_error("sorting by y doesn't work");
-        }
+        REQUIRE(tmp[tmp.closest(Point<double>())] == Point<double>(10,91));
 
-        path.sort_x();
+        Path<double> tmp2 = Path<double> ();
+        tmp2.push_back(Point<double>());
 
-        for(unsigned int x=1; x <= 10; ++x) {
-            if (path[x-1].get_x() != x)
-                throw runtime_error("sorting by x doesn't work");
-        }
+        REQUIRE(tmp[tmp.furthest_apart(tmp2)] == Point<double>(1,100));
 
-        if(path[path.furthest_apart(Point<double>())] != Point<double>(1,100))
-            throw runtime_error("furthest apart path to point not working properly");
+        REQUIRE(tmp[tmp.closest(tmp2)] == Point<double>(10,91));
+    }
 
-        if(path[path.closest(Point<double>())] != Point<double>(10,91))
-            throw runtime_error("closest path to point not working properly");
+    SECTION("testing average distance") {
+        Path<double> tmp = Path<double> ();
+        tmp.push_back(Point<double>());
+        tmp.push_back(1,0);
+        tmp.push_back(2,0);
 
+        REQUIRE(tmp.average_distance() == 1);
+    }
 
+    SECTION("testing finding of points") {
+        Path<double> tmp = Path<double> ();
+        tmp.push_back(Point<double>());
+        tmp.push_back(1,0);
+        tmp.push_back(2,0);
 
-        path2.clear();
+        REQUIRE(tmp.index_of(Point<double>(2,0)) == 2);
 
-        path2.push_back(Point<double>());
+        REQUIRE(tmp.index_of(Point<double>(222,0)) == -1);
+    }
 
-        if(path[path.furthest_apart(path2)] != Point<double>(1,100))
-            throw runtime_error("furthest apart path to path not working properly");
+    SECTION("testing removal of points") {
+        Path<double> tmp = Path<double> ();
+        tmp.push_back(Point<double>());
+        tmp.push_back(1,0);
+        tmp.push_back(2,0);
 
-        if(path[path.closest(path2)] != Point<double>(10,91))
-            throw runtime_error("closest path to path not working properly");
+        tmp.remove_from(5);
+        tmp.remove_until(0);
+        tmp.remove_left_of(0);
+        tmp.remove_right_of(2);
+        tmp.remove_above_of(0);
+        tmp.remove_below_of(0);
+        REQUIRE(tmp.size() == 3);
 
+        tmp.push_back(0,17);
+        tmp.remove_above_of(16);
+        REQUIRE(tmp.size() == 3);
 
+        tmp.push_back(0,-17);
+        tmp.remove_below_of(-16);
+        REQUIRE(tmp.size() == 3);
 
-        path2.push_back(1,0);
-        path2.push_back(2,0);
+        tmp.push_back(17,17);
+        tmp.remove_right_of(16);
+        REQUIRE(tmp.size() == 3);
 
-        if(path2.average_distance() != 1)
-            throw runtime_error("average distance not working properly");
+        tmp.push_back(-17,17);
+        tmp.remove_left_of(-16);
+        REQUIRE(tmp.size() == 3);
 
+        tmp.remove_from(2);
+        REQUIRE(tmp.size() == 2);
 
-
-        if(path2.index_of(Point<double>(2,0)) != 2)
-            throw runtime_error("index of point couldn't be found");
-
-        if(path2.index_of(Point<double>(222,0)) != -1)
-            throw runtime_error("point which is not in path was found");
-
-
-        path2.remove_from(5);
-        path2.remove_until(0);
-        path2.remove_left_of(0);
-        path2.remove_right_of(2);
-        path2.remove_above_of(0);
-        path2.remove_below_of(0);
-
-
-        if(path2.size() != 3)
-            throw runtime_error("path had points removed although that shouldn't have happened");
-
-        path2.push_back(0,17);
-        path2.remove_above_of(16);
-
-        if(path2.size() != 3)
-            throw runtime_error("remove above doesn't work");
-
-        path2.push_back(0,-17);
-        path2.remove_below_of(-16);
-
-        if(path2.size() != 3)
-            throw runtime_error("remove below doesn't work");
-
-        path2.push_back(17,17);
-        path2.remove_right_of(16);
-
-        if(path2.size() != 3)
-            throw runtime_error("remove right of doesn't work");
-
-        path2.push_back(-17,17);
-        path2.remove_left_of(-16);
-
-        if(path2.size() != 3)
-            throw runtime_error("remove left of doesn't work");
-
-        path2.remove_from(2);
-
-        if(path2.size() != 2)
-            throw runtime_error("remove from doesn't work");
-
-        path2.remove_until(1);
-
-        if(path2.size() != 1)
-            throw runtime_error("remove until doesn't work");
-
-        cout << "Path working fine" << endl;
+        tmp.remove_until(1);
+        REQUIRE(tmp.size() == 1);
+    }
 
 
 
 
 
 
+
+
+
+
+}
+
+/*
+int main()
+{
 
         cout << "testing Arc" << endl;
 
