@@ -33,6 +33,8 @@
 #define CATCH_CONFIG_MAIN
 #include "inc/Catch.h"
 
+#define OUTPUT_TEST_FILES
+
 using namespace std;
 using namespace lib_2d;
 
@@ -379,66 +381,29 @@ TEST_CASE("testing Path") {
         tmp.remove_until(1);
         REQUIRE(tmp.size() == 1);
     }
-
-
-
-
-
-
-
-
-
-
 }
 
-/*
-int main()
-{
+TEST_CASE("testing Arc") {
+    lib_2d::Arc<double> arc = lib_2d::Arc<double>(300.0, 100);
+    REQUIRE(arc.size() == 100);
 
-        cout << "testing Arc" << endl;
+#ifdef OUTPUT_TEST_FILES
+    arc.to_file("arc_full.test");
+#endif // OUTPUT_TEST_FILES
 
-        Arc<double> arc = Arc<double>(300.0, 100);
+    arc = lib_2d::Arc<double>(300.0, 100, false, PI);
 
-        arc.to_file("arc_full.test");
-
-        if(arc.size() != 100)
-            throw runtime_error("full arc size incorrect");
-
-        arc = Arc<double>(300.0, 100, false, PI);
-
-        arc.to_file("arc_semi.test");
-
-        if(arc.size() != 100)
-            throw runtime_error("semi arc size incorrect");
-
-
-
-
-        cout << "Arc working fine" << endl;
-
-
-        cout << "testing InvolutCircle" << endl;
-
-        InvolutCircle<double> inv = InvolutCircle<double>(1.0, 100);
-
-        inv.to_file("inv.test");
-
-        if(inv.size() != 100)
-            throw runtime_error("semi arc size incorrect");
-
-
-
-
-
-
-        cout << "everything working fine" << endl;
-        return 0;
-    }
-    catch (runtime_error &e) {
-        cout << e.what() << endl;
-    }
-    return 1;
+    REQUIRE(arc.size() == 100);
+#ifdef OUTPUT_TEST_FILES
+    arc.to_file("arc_semi.test");
+#endif // OUTPUT_TEST_FILES
 }
-*/
 
+TEST_CASE("testing InvolutCircle") {
+    InvolutCircle<double> inv = InvolutCircle<double>(1.0, 100);
 
+    REQUIRE(inv.size() == 100);
+#ifdef OUTPUT_TEST_FILES
+    inv.to_file("inv.test");
+#endif // OUTPUT_TEST_FILES
+}
