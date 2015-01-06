@@ -29,6 +29,7 @@
 #include "../inc/Path.h"
 #include "../inc/Arc.h"
 #include "../inc/InvolutCircle.h"
+#include "../inc/InterpolationBezier.h"
 
 #define CATCH_CONFIG_MAIN
 #include "../inc/Catch.h"
@@ -405,5 +406,18 @@ TEST_CASE("testing InvolutCircle") {
     REQUIRE(inv.size() == 100);
 #ifdef OUTPUT_TEST_FILES
     inv.to_file("inv.test");
+#endif // OUTPUT_TEST_FILES
+}
+
+TEST_CASE("testing bezier interpolation") {
+    Path<double> tmp = Path<double> ();
+    tmp.push_back(Point<double>());
+    tmp.push_back(1,1);
+    tmp.push_back(2,-5);
+    InterpolationBezier<double> bezier = InterpolationBezier<double>(100, tmp);
+
+    REQUIRE(bezier.size() == 100);
+#ifdef OUTPUT_TEST_FILES
+    bezier.to_file("bezier.test");
 #endif // OUTPUT_TEST_FILES
 }

@@ -13,69 +13,59 @@
 */
 
 /**
- * \file    InvolutCircle.h
+ * \file    InterpolationBezier.h
  * \author  Martin Buck
- * \date    December 2014
+ * \date    January 2015
  * \version 1.0
- * \brief   contains the class InvolutCircle which represents an involut of a circle
- *          derived from Path
- * \todo    many methods have to change the center aswell, maybe the diameter too
- * \todo    the involut currently has its points with the same radial distance, but absolute distance would be prefered
+ * \brief   contains the class InterpolationBezier which represents a bezier curve
  */
 
-#ifndef INVOLUTCIRCLE_H_INCLUDED
-#define INVOLUTCIRCLE_H_INCLUDED
+#ifndef INTERPOLATIONBEZIER_H_INCLUDED
+#define INTERPOLATIONBEZIER_H_INCLUDED
 
-#include "Path.h"
-#include "Point.h"
+#include "calc.h"
 
 namespace lib_2d {
 
 template <typename T>
-class InvolutCircle : public Path<T> {
+class InterpolationBezier : public Path<T> {
     using Path<T>::reserve;
     using Path<T>::push_back;
 
 private:
-    T diameter;
-    Point<T> center;
+
+    Point<T> control_polygon(const Path<T> &path, const unsigned int nPoints, const T &t) {
+        T x(0), y(0);
+
+        for(unsigned int i = 0; i <= nPoints; ++i) {
+            x += bernstein_polynomal(nPoints,i,t) * path[i].get_x();
+            y += bernstein_polynomal(nPoints,i,t) * path[i].get_y();
+        }
+
+        return Point<T>(x,y);
+    }
+
 
 public:
 
-    InvolutCircle(const T &diameter,
-                  const unsigned int nPoints,
-                  const T &radiansStart = 0,
-                  const T &radiansEnd = 3.14159265358979323846 * 2.0,
-                  const Point<T> &center = Point<T> (0.0, 0.0)) :
-            Path<T>(),
-            diameter(diameter),
-            center(center) {
+    InterpolationBezier(const unsigned int nPoints,
+                        const Path<T> &path) : ///@todo find proper name for path
+        Path<T>() {
 
         reserve(nPoints);
 
-        T pDistance = abs(radiansEnd - radiansStart) / (T)(nPoints - 1);
+        T pDistance = 1.0 / (T)(nPoints);
 
         for (unsigned int i=0; i<nPoints; ++i ) {
-            T current = i * pDistance;
-            T x = center.get_x() + diameter/2.0 * (cos(current) + current * sin(current));
-            T y = center.get_y() + diameter/2.0 * (sin(current) - current * cos(current));
-            push_back(x,y);
+            T t = i * pDistance;
+            push_back(control_polygon(path, path.size()-1, t));
         }
     }
 
 //------------------------------------------------------------------------------
 
-    T get_diameter() const {
-        return diameter;
-    }
-
-//------------------------------------------------------------------------------
-
-    Point<T> get_center() const {
-        return center;
-    }
 };
 
 } //lib_2d
 
-#endif // INVOLUTCIRCLE_H_INCLUDED
+#endif // INTERPOLATIONBEZIER_H_INCLUDED
