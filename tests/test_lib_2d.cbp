@@ -36,9 +36,11 @@
 		</Compiler>
 		<Unit filename="../inc/Arc.h" />
 		<Unit filename="../inc/Catch.h" />
+		<Unit filename="../inc/InterpolationBezier.h" />
 		<Unit filename="../inc/InvolutCircle.h" />
 		<Unit filename="../inc/Path.h" />
 		<Unit filename="../inc/Point.h" />
+		<Unit filename="../inc/calc.h" />
 		<Unit filename="test_lib_2d.cpp" />
 		<Extensions>
 			<code_completion />
