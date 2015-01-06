@@ -18,6 +18,8 @@
  * \date    November 2014
  * \version 1.0
  * \brief   contains several tests for the libary
+ * \todo    since this test is using catch, split the libary away from it, and make the test a single repo (or give the test itself another license)
+ * \todo    move this file to folder tests and split it onto several files?
  */
 
 #include <iostream>
@@ -28,168 +30,147 @@
 #include "inc/Arc.h"
 #include "inc/InvolutCircle.h"
 
+#define CATCH_CONFIG_MAIN
+#include "inc/Catch.h"
+
 using namespace std;
 using namespace lib_2d;
 
-int main()
-{
-    try {
-        const double
-            X(0.3),
-            Y(4.5),
-            MOVE_X(0.5),
-            MOVE_Y(-10.0),
-            MAX_DELTA(0.00001),
-            PI (3.14159265358979323846);
+const double
+    X(0.3),
+    Y(4.5),
+    MOVE_X(0.5),
+    MOVE_Y(-10.0),
+    MAX_DELTA(0.00001),
+    PI (3.14159265358979323846);
 
-        cout << "testing Point" << endl;
 
-        Point <double> p(X, Y);
-        auto p2 = p;
+TEST_CASE("testing Point") {
 
-        if(p.get_x() != X)
-            throw runtime_error("x read incorrectly");
+    Point <double> p(X, Y);
+    auto p2 = p;
 
-        if(p.get_y() != Y)
-            throw runtime_error("y read incorrectly");
+    SECTION ("testing initialisation") {
+        REQUIRE(p.get_x() == X);
+        REQUIRE(p.get_y() == Y);
+    }
 
+    SECTION("testing moving") {
         p.move_by(MOVE_X, MOVE_Y);
 
-        if(p.get_x() != X+MOVE_X)
-            throw runtime_error("moving by x failed");
+        REQUIRE(p.get_x() == X+MOVE_X);
+        REQUIRE(p.get_y() == Y+MOVE_Y);
+    }
 
-        if(p.get_y() != Y+MOVE_Y)
-            throw runtime_error("moving by y failed");
-
-
-
+    SECTION("testing parsing from and to strings") {
         std::string tmp = p.to_string();
         p.set_x(17);
         p.set_y(32);
         p.from_string(tmp);
 
-        if(p.to_string() != tmp)
-            throw runtime_error("parsing from and to string failed");
+        REQUIRE(p.to_string() == tmp);
+    }
 
+    SECTION("testing distances and abs") {
+        REQUIRE(p.abs() == sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  ));
+        REQUIRE(p.distance_to(0.0, 0.0) == p.abs());
+        REQUIRE(p.distance_to(p) == 0.0);
+    }
 
-
-        if (p.abs() != sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  ))
-            throw runtime_error("absolute value failed");
-
-        if (p.distance_to(0.0, 0.0) != p.abs())
-            throw runtime_error("distance to 0/0 unequal to abs");
-
-        if (p.distance_to(p) != 0.0)
-            throw runtime_error("distance to point itself not 0");
-
-
-
+    SECTION("testing rotation") {
         p2 = p;
-        p.rotate(PI);
-
-        if (p.get_x() ==  p2.get_x() || p.get_y() ==  p2.get_y())
-            throw runtime_error("rotation does nothing");
 
         p.rotate(PI);
+        REQUIRE(p.get_x() !=  p2.get_x());
+        REQUIRE(p.get_y() !=  p2.get_y());
 
-        if ( abs(p.get_x() - p2.get_x()) > MAX_DELTA || abs(p.get_y() - p2.get_y()) > MAX_DELTA)
-            throw runtime_error("rotation by 360 degree yields other results");
+        p.rotate(PI);
+        REQUIRE(abs(p.get_x() - p2.get_x()) < MAX_DELTA);
+        REQUIRE(abs(p.get_y() - p2.get_y()) < MAX_DELTA);
+    }
 
-
-
+    SECTION("testing mirroring") {
         p2 = p;
         p.mirror_vertically();
-
-        if ( p.get_y() != p2.get_y() || p.get_x() != -p2.get_x())
-            throw runtime_error("vertically mirroring doesn't work");
-
-
+        REQUIRE(p.get_y() == p2.get_y());
+        REQUIRE(p.get_x() == -p2.get_x());
 
         p2 = p;
         p.mirror_horizontally();
-
-        if ( p.get_x() != p2.get_x() || p.get_y() != -p2.get_y())
-            throw runtime_error("horizontally mirroring doesn't work");
-
-
+        REQUIRE(p.get_x() == p2.get_x());
+        REQUIRE(p.get_y() == -p2.get_y());
 
         p2 = p;
         p.mirror_point();
+        REQUIRE(p.get_x() == -p2.get_x());
+        REQUIRE(p.get_y() == -p2.get_y());
+    }
 
-        if ( p.get_x() != -p2.get_x() || p.get_y() != -p2.get_y())
-            throw runtime_error("point mirroring doesn't work");
-
-
-
-
-
-
+    SECTION("testing equality tests") {
         p2 = p;
-
-        if ( p2 != p)
-            throw runtime_error("equal points measured as unequal");
+        REQUIRE(p2 == p);
 
         p.move_by(0.00000000001, 0.0);
 
-        if ( p2 == p)
-            throw runtime_error("unequal points measured as equal");
+        REQUIRE(p2 != p);
+    }
 
-
-
+    SECTION("testing conversion with pair") {
         p2 = p;
-        pair <double, double> tmpPair = p;
-        p = Point <double> (tmpPair);
+        pair <double, double> tmp = p;
+        p = Point <double> (tmp);
 
-        if (p2 != p)
-            throw runtime_error("conversion to and from pair yields new values");
+        REQUIRE(p2 == p);
 
-        tmpPair = pair <double,double> (0.3, 17.7);
-        p = Point <double> (tmpPair);
+        tmp = pair <double,double> (0.3, 17.7);
+        p = Point <double> (tmp);
 
-        if (p == p2)
-            throw runtime_error("pair and point shouldn't be equal here");
+        REQUIRE(p != p2);
+    }
 
-
-        std::stringstream tmpSs;
+    SECTION("testing stringstream overload") {
+        std::stringstream tmp;
         p2 = p;
-        tmpSs << p;
+        tmp << p;
         p.move_by(0.3, 7.9);
-        p.from_string(tmpSs.str());
+        p.from_string(tmp.str());
 
-        if (p != p2)
-            throw runtime_error("stringstream overload doesn't work");
+        REQUIRE(p == p2);
+    }
 
-
-
+    SECTION("testing similarity") {
         p2 = p;
-
-        if (!p.similar_to(p2, MAX_DELTA))
-            throw runtime_error("equal points should count as similar");
+        REQUIRE(p.similar_to(p2, MAX_DELTA));
 
         p.move_by(0.999 * MAX_DELTA,0);
-
-        if (!p.similar_to(p2, MAX_DELTA))
-            throw runtime_error("edge case for similarity not working");
+        REQUIRE(p.similar_to(p2, MAX_DELTA));
 
         p2 = p;
         p.move_by(1.0001 * MAX_DELTA,0);
+        REQUIRE(!p.similar_to(p2, MAX_DELTA));
+    }
 
-        if (p.similar_to(p2, MAX_DELTA))
-            throw runtime_error("edge case for similarity not working");
-
-
-
+    SECTION("testing phi calculation") {
         p.set_x(0);
         p.set_y(1);
-
-        if (abs( p.phi() - PI/2.0) > MAX_DELTA)
-            throw runtime_error("phi not calculated correctly");
+        REQUIRE(abs( p.phi() - PI/2.0) <= MAX_DELTA);
 
         p.set_x(-1);
         p.set_y(0);
+        REQUIRE(abs( p.phi() - PI) <= MAX_DELTA);
+    }
 
-        if (abs( p.phi() - PI) > MAX_DELTA)
-            throw runtime_error("phi not calculated correctly");
+
+
+
+
+}
+
+/*
+int main()
+{
+    try {
+
 
 
 
@@ -491,5 +472,6 @@ int main()
     }
     return 1;
 }
+*/
 
 
