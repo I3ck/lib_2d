@@ -13,7 +13,7 @@
 */
 
 /**
- * \file    main.cpp
+ * \file    test_lib_2d.cpp
  * \author  Martin Buck
  * \date    November 2014
  * \version 1.0
@@ -25,13 +25,13 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "inc/Point.h"
-#include "inc/Path.h"
-#include "inc/Arc.h"
-#include "inc/InvolutCircle.h"
+#include "../inc/Point.h"
+#include "../inc/Path.h"
+#include "../inc/Arc.h"
+#include "../inc/InvolutCircle.h"
 
 #define CATCH_CONFIG_MAIN
-#include "inc/Catch.h"
+#include "../inc/Catch.h"
 
 #define OUTPUT_TEST_FILES
 

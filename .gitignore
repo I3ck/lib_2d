@@ -1,5 +1,5 @@
-bin/
-obj/
-lib_2d.layout
-lib_2d.depend
+test_lib_2d.layout
+test_lib_2d.depend
 *.test
+tests/bin/
+tests/obj/
