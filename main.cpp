@@ -160,56 +160,42 @@ TEST_CASE("testing Point") {
         REQUIRE(abs( p.phi() - PI) <= MAX_DELTA);
     }
 
-
-
-
-
-}
-
-/*
-int main()
-{
-    try {
-
-
-
-
+    SECTION("testing slope calculation") {
         p.set_x(0);
         p.set_y(0);
 
         p2.set_x(1);
         p2.set_y(2);
 
-        if (abs( p.slope_to(p2) - 2.0) > MAX_DELTA)
-            throw runtime_error("slope calculated incorrectly");
+        REQUIRE(abs( p.slope_to(p2) - 2.0) <= MAX_DELTA);
+    }
 
-
-
+    SECTION("testing radians calculation") {
         p.set_x(1);
         p.set_y(1);
 
         p2.set_x(1);
         p2.set_y(2);
 
-        if (abs( p.rad_to(p2) - PI/2.0) > MAX_DELTA)
-            throw runtime_error("radians between points calculated incorrectly");
+        REQUIRE(abs( p.rad_to(p2) - PI/2.0) <= MAX_DELTA);
+    }
 
-
-
+    SECTION("testing center calculation") {
         Point <double> center, centerShould;
 
+        p = Point<double> (1,1);
+        p2 = Point<double> (1,2);
         centerShould = Point <double> (1, 1.5);
         center = p.center_between(p2);
 
-        if (!center.similar_to(centerShould, MAX_DELTA))
-            throw runtime_error("center calculation seems to be wrong");
+        REQUIRE(center.similar_to(centerShould, MAX_DELTA));
+    }
+}
 
-
-        cout << "Point working fine" << endl;
-
-
-
-
+/*
+int main()
+{
+    try {
 
         cout << "testing Path" << endl;
 
