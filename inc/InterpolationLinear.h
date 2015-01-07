@@ -47,9 +47,6 @@ public:
             for(auto j = path.cbegin()+1; j != path.cend(); ++j) {
                 traveled += sqrt ( pow( j->get_x() - (j-1)->get_x(),2) + pow(j->get_y() - (j-1)->get_y(),2) );
 
-                std::cout << "traveled: " << traveled << std::endl;
-                std::cout << "traveledBefore: " << traveledBefore << std::endl;
-
                 if(traveled >= pDistance*i) {
                     T proportion = (i*pDistance - traveledBefore) / (traveled - traveledBefore);
                     T newX = (j-1)->get_x() + proportion * ( j->get_x() - (j-1)->get_x());
