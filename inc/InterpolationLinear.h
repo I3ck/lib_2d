@@ -56,7 +56,6 @@ public:
                     T newY = (j-1)->get_y() + proportion * ( j->get_y() - (j-1)->get_y());
 
                     emplace_back(Point<T>(newX, newY));
-                    traveledBefore = traveled;
                     break;
                 }
                 traveledBefore = traveled;
