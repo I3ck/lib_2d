@@ -50,9 +50,7 @@ public:
 
     InterpolationBezier(const unsigned int &nPoints,
                         const Path<T> &path) : ///@todo find proper name for path
-        Path<T>() {
-
-        reserve(nPoints);
+        Path<T>(nPoints) {
 
         T pDistance = 1.0 / (T)(nPoints);
 

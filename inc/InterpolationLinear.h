@@ -34,9 +34,7 @@ public:
 
     InterpolationLinear(const unsigned int &nPoints,
                         const Path<T> &path) : ///@todo find proper name for path
-        Path<T> () {
-
-        reserve(nPoints);
+        Path<T> (nPoints) {
 
         T pDistance = path.length() / (T)(nPoints-1);
 

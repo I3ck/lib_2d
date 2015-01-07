@@ -47,11 +47,9 @@ public:
                   const T &radiansStart = 0,
                   const T &radiansEnd = 3.14159265358979323846 * 2.0,
                   const Point<T> &center = Point<T> (0.0, 0.0)) :
-            Path<T>(),
+            Path<T>(nPoints),
             diameter(diameter),
             center(center) {
-
-        reserve(nPoints);
 
         T pDistance = abs(radiansEnd - radiansStart) / (T)(nPoints - 1);
 
