@@ -24,6 +24,7 @@
  * \todo    convex hull
  * \todo    more contrainers to construct from or to replace
  * \todo    remove closer / further to than
+ * \todo    new constructor which reserves points (and use that in derived classes)
  */
 
 #ifndef PATH_H_INCLUDED

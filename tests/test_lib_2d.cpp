@@ -30,6 +30,7 @@
 #include "../inc/Arc.h"
 #include "../inc/InvolutCircle.h"
 #include "../inc/InterpolationBezier.h"
+#include "../inc/InterpolationLinear.h"
 
 #define CATCH_CONFIG_MAIN
 #include "../inc/Catch.h"
@@ -420,4 +421,18 @@ TEST_CASE("testing bezier interpolation") {
 #ifdef OUTPUT_TEST_FILES
     bezier.to_file("bezier.test");
 #endif // OUTPUT_TEST_FILES
+}
+
+TEST_CASE("testing linear interpolation") {
+    Path<double> tmp = Path<double> ();
+    tmp.push_back(Point<double>());
+    tmp.push_back(1,1);
+    tmp.push_back(2,-5);
+    InterpolationLinear<double> linear = InterpolationLinear<double>(100, tmp);
+
+    REQUIRE(linear.size() == 100);
+#ifdef OUTPUT_TEST_FILES
+    linear.to_file("linear.test");
+#endif // OUTPUT_TEST_FILES
+
 }
