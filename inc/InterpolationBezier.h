@@ -48,7 +48,7 @@ private:
 
 public:
 
-    InterpolationBezier(const unsigned int nPoints,
+    InterpolationBezier(const unsigned int &nPoints,
                         const Path<T> &path) : ///@todo find proper name for path
         Path<T>() {
 
