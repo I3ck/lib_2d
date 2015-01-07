@@ -34,7 +34,7 @@ namespace lib_2d {
 template <typename T>
 class InvolutCircle : public Path<T> {
     using Path<T>::reserve;
-    using Path<T>::push_back;
+    using Path<T>::emplace_back;
 
 private:
     T diameter;
@@ -59,7 +59,7 @@ public:
             T current = i * pDistance;
             T x = center.get_x() + diameter/2.0 * (cos(current) + current * sin(current));
             T y = center.get_y() + diameter/2.0 * (sin(current) - current * cos(current));
-            push_back(x,y);
+            emplace_back(x,y);
         }
     }
 

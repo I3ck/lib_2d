@@ -34,7 +34,7 @@ namespace lib_2d {
 template <typename T>
 class Arc : public Path<T> {
     using Path<T>::reserve;
-    using Path<T>::push_back;
+    using Path<T>::emplace_back;
 
 private:
     T diameter;
@@ -69,13 +69,13 @@ public:
             T radians = radiansStart + i * pDistance;
             T x = center.get_x() + diameter/2.0 * cos(radians);
             T y = center.get_y() + diameter/2.0 * sin(radians);
-            push_back(x, y);
+            emplace_back(x, y);
         }
 
         if(closePath) {
             T x = center.get_x() + diameter/2.0 * cos(radiansStart);
             T y = center.get_y() + diameter/2.0 * sin(radiansStart);
-            push_back(x, y);
+            emplace_back(x, y);
         }
 
 

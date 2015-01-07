@@ -30,7 +30,7 @@ namespace lib_2d {
 template <typename T>
 class InterpolationBezier : public Path<T> {
     using Path<T>::reserve;
-    using Path<T>::push_back;
+    using Path<T>::emplace_back;
 
 private:
 
@@ -58,7 +58,7 @@ public:
 
         for (unsigned int i=0; i<nPoints; ++i ) {
             T t = i * pDistance;
-            push_back(control_polygon(path, path.size()-1, t));
+            emplace_back(control_polygon(path, path.size()-1, t));
         }
     }
 
