@@ -23,12 +23,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "../inc/Point.h"
-#include "../inc/Path.h"
-#include "../inc/Arc.h"
-#include "../inc/InvolutCircle.h"
-#include "../inc/InterpolationBezier.h"
-#include "../inc/InterpolationLinear.h"
+#include "../lib_2d.h"
 
 #define CATCH_CONFIG_MAIN
 #include "../inc/Catch.h"
