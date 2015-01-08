@@ -26,7 +26,7 @@
 #include "../lib_2d.h"
 
 #define CATCH_CONFIG_MAIN
-#include "../inc/Catch.h"
+#include "../dependencies/Catch.h"
 
 #define OUTPUT_TEST_FILES
 
