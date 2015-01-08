@@ -18,8 +18,6 @@
  * \date    November 2014
  * \version 1.0
  * \brief   contains several tests for the libary
- * \todo    since this test is using catch, split the libary away from it, and make the test a single repo (or give the test itself another license)
- * \todo    move this file to folder tests and split it onto several files?
  */
 
 #include <iostream>
