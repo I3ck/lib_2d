@@ -19,7 +19,7 @@
  * \version 1.0
  * \brief   contains the class Arc which represents an arc in 2d space
  *          derived from Path
- * \todo    many methods have to change the center aswell, maybe the diameter too
+ * \todo    add tests for the overloads which also change the center
  */
 
 #ifndef ARC_H_INCLUDED
@@ -76,8 +76,6 @@ public:
             T y = center.get_y() + diameter/2.0 * sin(radiansStart);
             emplace_back(x, y);
         }
-
-
     }
 
 //------------------------------------------------------------------------------
@@ -90,7 +88,61 @@ public:
         return center;
     }
 
+//------------------------------------------------------------------------------
 
+    void move_by(const T &x, const T &y) {
+        Path<T>::move_by(x, y);
+        center.move_by(x, y);
+    }
+
+    void move_by(const Point<T> &other) {
+        Path<T>::move_by(other);
+        center.move_by(other);
+    }
+
+//------------------------------------------------------------------------------
+
+    void mirror_vertically(const T &xValue = 0) {
+        Path<T>::mirror_vertically(xValue);
+        center.mirror_vertically(xValue);
+    }
+
+    void mirror_vertically(const Point<T> &other) {
+        Path<T>::mirror_vertically(other);
+        center.mirror_vertically(other);
+    }
+
+    void mirror_horizontally(const T &yValue = 0) {
+        Path<T>::mirror_horizontally(yValue);
+        center.mirror_horizontally(yValue);
+    }
+
+    void mirror_horizontally(const Point<T> &other) {
+        Path<T>::mirror_horizontally(other);
+        center.mirror_horizontally(other);
+    }
+
+    void mirror_point(const Point<T> &other) {
+        Path<T>::mirror_point(other);
+        center.mirror_point(other);
+    }
+
+    void mirror_point(const T &xValue = 0, const T &yValue = 0) {
+        Path<T>::mirror_point(xValue, yValue);
+        center.mirror_point(xValue, yValue);
+    }
+
+//------------------------------------------------------------------------------
+
+    void rotate(const T &radians, const Point<T> &center = Point<T>(0, 0)) {
+        Path<T>::rotate(radians, center);
+        this->center.rotate(radians, center);
+    }
+
+    void rotate(const T &radians, const T &centerX, const T &centerY) {
+        Path<T>::rotate(radians, centerX, centerY);
+        this->center.rotate(radians, centerX, centerY);
+    }
 };
 
 } //lib_2d
