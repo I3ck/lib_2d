@@ -84,6 +84,8 @@ public:
         return diameter;
     }
 
+//------------------------------------------------------------------------------
+
     Point<T> center() const {
         return m_center;
     }
