@@ -255,17 +255,20 @@ TEST_CASE("testing Path") {
         tmp.push_back(100,0);
 
         Path<double> tmp2 = Path<double> ();
+        REQUIRE(!tmp.intersects_with(tmp2));
         tmp2.push_back(0,-100);
         tmp2.push_back(0,100);
 
         auto intersections = tmp.intersections_with(tmp2);
         auto shouldIntersection = Point<double>(0,0);
         REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
+        REQUIRE(tmp.intersects_with(tmp2));
 
         tmp.move_by(0,-1);
         intersections = tmp.intersections_with(tmp2);
         shouldIntersection = Point<double>(0,-1);
         REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
+        REQUIRE(tmp.intersects_with(tmp2));
 
         tmp = Path<double> ();
         tmp.push_back(-100,100);
@@ -278,6 +281,7 @@ TEST_CASE("testing Path") {
         intersections = tmp.intersections_with(tmp2);
         shouldIntersection = Point<double>(0,0);
         REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
+        REQUIRE(tmp.intersects_with(tmp2));
     }
 
     SECTION("testing sorting") {
