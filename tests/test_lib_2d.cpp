@@ -379,19 +379,28 @@ TEST_CASE("testing Path") {
 }
 
 TEST_CASE("testing Arc") {
+
     lib_2d::Arc<double> arc = lib_2d::Arc<double>(300.0, 100);
-    REQUIRE(arc.size() == 100);
+    SECTION("creation") {
+        REQUIRE(arc.size() == 100);
 
 #ifdef OUTPUT_TEST_FILES
-    arc.to_file("arc_full.test");
+        arc.to_file("arc_full.test");
 #endif // OUTPUT_TEST_FILES
 
-    arc = lib_2d::Arc<double>(300.0, 100, false, PI);
+        arc = lib_2d::Arc<double>(300.0, 100, false, PI);
 
-    REQUIRE(arc.size() == 100);
+        REQUIRE(arc.size() == 100);
 #ifdef OUTPUT_TEST_FILES
-    arc.to_file("arc_semi.test");
+        arc.to_file("arc_semi.test");
 #endif // OUTPUT_TEST_FILES
+    }
+
+    SECTION("moving") {
+        arc.move_by(10,0);
+        REQUIRE(arc.center() == Point<double>(10,0));
+    }
+
 }
 
 TEST_CASE("testing InvolutCircle") {
