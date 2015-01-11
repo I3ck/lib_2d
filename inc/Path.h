@@ -453,6 +453,9 @@ public:
 
         Path intersections;
 
+        if(empty() || other.empty())
+            return intersections;
+
         for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
             bool path1vertical(false), path1horizontal(false);
             double slope1(0.0), slope2(0.0);
@@ -526,6 +529,9 @@ public:
 
     //this method should be kept similar to "intersections_with"
     bool intersects_with(const Path &other) const {
+
+        if(empty() || other.empty())
+            return false;
 
         for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
             bool path1vertical(false), path1horizontal(false);
