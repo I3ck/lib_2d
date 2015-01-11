@@ -408,6 +408,20 @@ TEST_CASE("testing Arc") {
         REQUIRE(center.get_x() == -10);
     }
 
+    SECTION("mirroring") {
+        arc.move_by(10,5);
+
+        arc.mirror_vertically();
+        auto center = arc.center();
+        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.get_y() == 5);
+
+        arc.mirror_horizontally();
+        center = arc.center();
+        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.get_y() == -5);
+    }
+
 }
 
 TEST_CASE("testing InvolutCircle") {
