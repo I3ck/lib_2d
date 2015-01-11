@@ -22,7 +22,6 @@
  *          Path provides several methods to work with such a dataset
  * \todo    sweep algorithms for intersections
  * \todo    convex hull
- * \todo    more contrainers to construct from or to replace
  * \todo    remove closer / further to than
  */
 
@@ -32,6 +31,11 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <deque>
+#include <forward_list>
+#include <list>
+#include <queue>
+#include <stack>
 
 #include "Point.h"
 
@@ -45,11 +49,43 @@ protected:
 
 public:
     Path(){};
+
     Path(const unsigned int &nPoints) {
         reserve(nPoints);
     }
+
     Path(const std::vector < Point <T> > &points) :
         ps(points){}
+
+    Path(const std::deque < Point <T> > &points) {
+        for(const auto &i : points)
+            ps.push_back(i);
+    }
+
+    Path(const std::forward_list < Point <T> > &points) {
+        for(const auto &i : points)
+            ps.push_back(i);
+    }
+
+    Path(const std::list < Point <T> > &points) {
+        for(const auto &i : points)
+            ps.push_back(i);
+    }
+
+    Path(std::queue < Point <T> > points) {
+        while(!points.empty()) {
+            ps.push_back(points.front());
+            points.pop();
+        }
+    }
+
+    Path(std::stack < Point <T> > points) {
+        while(!points.empty()) {
+            ps.push_back(points.top());
+            points.pop();
+        }
+        reverse();
+    }
 
     ~Path(){};
 
@@ -664,6 +700,41 @@ public:
 
     operator std::vector < Point <T> > () const {
         return ps;
+    }
+
+    operator std::deque < Point <T> > () const {
+        std::deque< Point<T> > out;
+        for(const auto p : ps)
+            out.push_back(p);
+        return out;
+    }
+
+    operator std::forward_list < Point <T> > () const {
+        std::forward_list< Point<T> > out;
+        for(auto i = ps.rbegin(); i != ps.rend(); ++i)
+            out.push_front(*i);
+        return out;
+    }
+
+    operator std::list < Point <T> > () const {
+        std::list< Point<T> > out;
+        for(const auto p : ps)
+            out.push_back(p);
+        return out;
+    }
+
+    operator std::queue < Point <T> > () const {
+        std::queue< Point<T> > out;
+        for(const auto p : ps)
+            out.push(p);
+        return out;
+    }
+
+    operator std::stack < Point <T> > () const {
+        std::stack< Point<T> > out;
+        for(const auto p : ps)
+            out.push(p);
+        return out;
     }
 
 //------------------------------------------------------------------------------

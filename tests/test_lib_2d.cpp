@@ -195,6 +195,53 @@ TEST_CASE("testing Path") {
     path.push_back(1.0, 0.0);
     path.push_back(-1.0, 0.0);
 
+    SECTION("testing usage a vector") {
+        std::vector< Point <double> > vec = path;
+        REQUIRE(vec.size() == 3);
+
+        Path<double> tmp = Path<double>(vec);
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+    }
+
+    SECTION("testing usage a deque") {
+        std::deque< Point <double> > deq = path;
+        REQUIRE(deq.size() == 3);
+
+        Path<double> tmp = Path<double>(deq);
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+    }
+
+    SECTION("testing usage of forward list") {
+        std::forward_list< Point <double> > fl = path;
+
+        Path<double> tmp = Path<double>(fl);
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+    }
+
+    SECTION("testing usage of list") {
+        std::list< Point <double> > l = path;
+        REQUIRE(l.size() == 3);
+
+        Path<double> tmp = Path<double>(l);
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+    }
+
+    SECTION("testing usage of queue") {
+        std::queue< Point <double> > q = path;
+        REQUIRE(q.size() == 3);
+
+        Path<double> tmp = Path<double>(q);
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+    }
+
+    SECTION("testing usage of stack") {
+        std::stack< Point <double> > s = path;
+        REQUIRE(s.size() == 3);
+
+        Path<double> tmp = Path<double>(s);
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+    }
+
     SECTION("testing center of path") {
         auto pathCenter = path.center();
 
