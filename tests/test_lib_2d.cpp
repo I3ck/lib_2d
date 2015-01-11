@@ -401,6 +401,13 @@ TEST_CASE("testing Arc") {
         REQUIRE(arc.center() == Point<double>(10,0));
     }
 
+    SECTION("rotation") {
+        arc.move_by(10,0);
+        arc.rotate(PI);
+        auto center = arc.center();
+        REQUIRE(center.get_x() == -10);
+    }
+
 }
 
 TEST_CASE("testing InvolutCircle") {
