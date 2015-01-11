@@ -38,7 +38,7 @@ class Arc : public Path<T> {
 
 private:
     T diameter;
-    Point<T> center;
+    Point<T> m_center;
 
 public:
 
@@ -47,10 +47,10 @@ public:
         const bool &closePath = true,
         const T &radiansStart = 0,
         const T &radiansEnd = 3.14159265358979323846 * 2.0,
-        const Point<T> &center = Point<T> (0.0, 0.0)) :
+        const Point<T> &m_center = Point<T> (0.0, 0.0)) :
             Path<T>(nPoints),
             diameter(diameter),
-            center(center) {
+            m_center(m_center) {
 
         T pDistance;
         unsigned int endIndex(nPoints);
@@ -66,14 +66,14 @@ public:
 
         for(unsigned int i=0; i<endIndex; ++i) {
             T radians = radiansStart + i * pDistance;
-            T x = center.get_x() + diameter/2.0 * cos(radians);
-            T y = center.get_y() + diameter/2.0 * sin(radians);
+            T x = m_center.get_x() + diameter/2.0 * cos(radians);
+            T y = m_center.get_y() + diameter/2.0 * sin(radians);
             emplace_back(x, y);
         }
 
         if(closePath) {
-            T x = center.get_x() + diameter/2.0 * cos(radiansStart);
-            T y = center.get_y() + diameter/2.0 * sin(radiansStart);
+            T x = m_center.get_x() + diameter/2.0 * cos(radiansStart);
+            T y = m_center.get_y() + diameter/2.0 * sin(radiansStart);
             emplace_back(x, y);
         }
     }
@@ -84,64 +84,64 @@ public:
         return diameter;
     }
 
-    Point<T> get_center() const {
-        return center;
+    Point<T> center() const {
+        return m_center;
     }
 
 //------------------------------------------------------------------------------
 
     void move_by(const T &x, const T &y) {
         Path<T>::move_by(x, y);
-        center.move_by(x, y);
+        m_center.move_by(x, y);
     }
 
     void move_by(const Point<T> &other) {
         Path<T>::move_by(other);
-        center.move_by(other);
+        m_center.move_by(other);
     }
 
 //------------------------------------------------------------------------------
 
     void mirror_vertically(const T &xValue = 0) {
         Path<T>::mirror_vertically(xValue);
-        center.mirror_vertically(xValue);
+        m_center.mirror_vertically(xValue);
     }
 
     void mirror_vertically(const Point<T> &other) {
         Path<T>::mirror_vertically(other);
-        center.mirror_vertically(other);
+        m_center.mirror_vertically(other);
     }
 
     void mirror_horizontally(const T &yValue = 0) {
         Path<T>::mirror_horizontally(yValue);
-        center.mirror_horizontally(yValue);
+        m_center.mirror_horizontally(yValue);
     }
 
     void mirror_horizontally(const Point<T> &other) {
         Path<T>::mirror_horizontally(other);
-        center.mirror_horizontally(other);
+        m_center.mirror_horizontally(other);
     }
 
     void mirror_point(const Point<T> &other) {
         Path<T>::mirror_point(other);
-        center.mirror_point(other);
+        m_center.mirror_point(other);
     }
 
     void mirror_point(const T &xValue = 0, const T &yValue = 0) {
         Path<T>::mirror_point(xValue, yValue);
-        center.mirror_point(xValue, yValue);
+        m_center.mirror_point(xValue, yValue);
     }
 
 //------------------------------------------------------------------------------
 
-    void rotate(const T &radians, const Point<T> &center = Point<T>(0, 0)) {
-        Path<T>::rotate(radians, center);
-        this->center.rotate(radians, center);
+    void rotate(const T &radians, const Point<T> &m_center = Point<T>(0, 0)) {
+        Path<T>::rotate(radians, m_center);
+        this->m_center.rotate(radians, m_center);
     }
 
     void rotate(const T &radians, const T &centerX, const T &centerY) {
         Path<T>::rotate(radians, centerX, centerY);
-        this->center.rotate(radians, centerX, centerY);
+        this->m_center.rotate(radians, centerX, centerY);
     }
 };
 
