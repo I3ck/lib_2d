@@ -427,10 +427,39 @@ TEST_CASE("testing Arc") {
 TEST_CASE("testing InvolutCircle") {
     InvolutCircle<double> inv = InvolutCircle<double>(1.0, 100);
 
-    REQUIRE(inv.size() == 100);
+    SECTION("creation") {
+        REQUIRE(inv.size() == 100);
 #ifdef OUTPUT_TEST_FILES
-    inv.to_file("inv.test");
+        inv.to_file("inv.test");
 #endif // OUTPUT_TEST_FILES
+    }
+
+    SECTION("moving") {
+        inv.move_by(10,0);
+        REQUIRE(inv.center() == Point<double>(10,0));
+    }
+
+    SECTION("rotation") {
+        inv.move_by(10,0);
+        inv.rotate(PI);
+        auto center = inv.center();
+        REQUIRE(center.get_x() == -10);
+    }
+
+    SECTION("mirroring") {
+        inv.move_by(10,5);
+
+        inv.mirror_vertically();
+        auto center = inv.center();
+        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.get_y() == 5);
+
+        inv.mirror_horizontally();
+        center = inv.center();
+        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.get_y() == -5);
+    }
+
 }
 
 TEST_CASE("testing bezier interpolation") {
