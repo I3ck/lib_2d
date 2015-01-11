@@ -38,7 +38,7 @@ class InvolutCircle : public Path<T> {
 
 private:
     T diameter;
-    Point<T> center;
+    Point<T> m_center;
 
 public:
 
@@ -46,17 +46,17 @@ public:
                   const unsigned int nPoints,
                   const T &radiansStart = 0,
                   const T &radiansEnd = 3.14159265358979323846 * 2.0,
-                  const Point<T> &center = Point<T> (0.0, 0.0)) :
+                  const Point<T> &m_center = Point<T> (0.0, 0.0)) :
             Path<T>(nPoints),
             diameter(diameter),
-            center(center) {
+            m_center(m_center) {
 
         T pDistance = abs(radiansEnd - radiansStart) / (T)(nPoints - 1);
 
         for (unsigned int i=0; i<nPoints; ++i ) {
             T current = i * pDistance;
-            T x = center.get_x() + diameter/2.0 * (cos(current) + current * sin(current));
-            T y = center.get_y() + diameter/2.0 * (sin(current) - current * cos(current));
+            T x = m_center.get_x() + diameter/2.0 * (cos(current) + current * sin(current));
+            T y = m_center.get_y() + diameter/2.0 * (sin(current) - current * cos(current));
             emplace_back(x,y);
         }
     }
@@ -69,8 +69,8 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Point<T> get_center() const {
-        return center;
+    Point<T> center() const {
+        return m_center;
     }
 };
 
