@@ -14,6 +14,7 @@ all: test
 
 test:
 	$(CC) $(CFLAGS) test_lib_2d.cpp -o $(TARGET)
+	./$(TARGET)
 
 clean:
 	rm -f *o *.so *.dll *.exe bin/*.exe
