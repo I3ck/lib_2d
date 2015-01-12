@@ -1,5 +1,6 @@
-test_lib_2d.layout
-test_lib_2d.depend
+*.layout
+*.depend
+*.cbp
 *.test
 tests/bin/
 tests/obj/
