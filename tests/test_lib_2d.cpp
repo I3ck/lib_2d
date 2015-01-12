@@ -426,6 +426,19 @@ TEST_CASE("testing Path") {
 
         tmp.remove_until(1);
         REQUIRE(tmp.size() == 1);
+
+        tmp.remove_closer_to_than(1.0);
+        tmp.remove_further_apart_to_than(1.0);
+        REQUIRE(tmp.size() == 1);
+
+        auto tmp2 = tmp;
+
+        tmp.remove_closer_to_than(1.00001);
+        REQUIRE(tmp.size() == 0);
+
+        tmp = tmp2;
+        tmp.remove_further_apart_to_than(0.99999);
+        REQUIRE(tmp.size() == 0);
     }
 }
 

@@ -22,7 +22,6 @@
  *          Path provides several methods to work with such a dataset
  * \todo    sweep algorithms for intersections
  * \todo    convex hull
- * \todo    remove closer / further to than
  */
 
 #ifndef PATH_H_INCLUDED
@@ -369,6 +368,29 @@ public:
         remove_below_of(other.get_y());
     }
 
+    void remove_closer_to_than(const T &distance, const Point<T> &other = Point<T>(0, 0)) {
+        for(auto i = ps.begin(); i!= ps.end();) {
+            bool deleted(false);
+            if(i->distance_to(other) < distance) {
+                deleted = true;
+                i = ps.erase(i);
+            }
+            if(!deleted)
+                ++i;
+        }
+    }
+
+    void remove_further_apart_to_than(const T &distance, const Point<T> &other = Point<T>(0, 0)) {
+        for(auto i = ps.begin(); i!= ps.end();) {
+            bool deleted(false);
+            if(i->distance_to(other) > distance) {
+                deleted = true;
+                i = ps.erase(i);
+            }
+            if(!deleted)
+                ++i;
+        }
+    }
 
 //------------------------------------------------------------------------------
 
