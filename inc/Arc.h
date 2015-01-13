@@ -19,7 +19,6 @@
  * \version 1.0
  * \brief   contains the class Arc which represents an arc in 2d space
  *          derived from Path
- * \todo    add tests for the overloads which also change the center
  */
 
 #ifndef ARC_H_INCLUDED
