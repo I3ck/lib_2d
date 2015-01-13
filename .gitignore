@@ -2,5 +2,6 @@
 *.depend
 *.cbp
 *.test
+*.swp
 tests/bin/
 tests/obj/
