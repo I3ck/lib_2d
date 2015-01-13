@@ -477,6 +477,8 @@ public:
 //------------------------------------------------------------------------------
 
     bool similar_to(const Path &other, const T &maxDistance) const {
+        if(size() != other.size())
+            return false;
         for(unsigned int i = 0; i < size(); ++i) {
             if(!ps[i].similar_to(other[i], maxDistance))
                 return false;
@@ -487,6 +489,8 @@ public:
 //------------------------------------------------------------------------------
 
     bool equal_to (const Path &other) const {
+        if(size() != other.size())
+            return false;
         for(unsigned int i = 0; i < size(); ++i) {
             if(!ps[i].equal_to(other[i]))
                 return false;
