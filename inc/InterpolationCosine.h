@@ -51,10 +51,11 @@ public:
                 if(traveled >= pDistance*i) {
                     T proportion = (i*pDistance - traveledBefore) / (traveled - traveledBefore);
                     T proportion2 = ( 1 - cos(proportion*LIB_2D_PI) ) / 2.0;
-                    T newX = (j-1)->get_x() + proportion * j->get_x() - (j-1)->get_x();
-                    T newY = (j-1)->get_x() * ( 1 - proportion2) + j->get_y()*proportion2;
+                    T newX = (j-1)->get_x() + proportion * (j->get_x() - (j-1)->get_x());
+                    T newY = (j-1)->get_y() * ( 1 - proportion2) + j->get_y()*proportion2;
 
                     emplace_back(Point<T>(newX, newY));
+                    traveledBefore = traveled;
                     break;
                 }
                 traveledBefore = traveled;
