@@ -550,5 +550,17 @@ TEST_CASE("testing linear interpolation") {
 #ifdef OUTPUT_TEST_FILES
     linear.to_file("linear.test");
 #endif // OUTPUT_TEST_FILES
+}
 
+TEST_CASE("testing cosine interpolation") {
+    Path<double> tmp = Path<double> ();
+    tmp.push_back(Point<double>());
+    tmp.push_back(1,1);
+    tmp.push_back(2,-5);
+    InterpolationCosine<double> cosine = InterpolationCosine<double>(100, tmp);
+
+    REQUIRE(cosine.size() == 100);
+#ifdef OUTPUT_TEST_FILES
+    cosine.to_file("cosine.test");
+#endif // OUTPUT_TEST_FILES
 }

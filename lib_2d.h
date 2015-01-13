@@ -29,5 +29,6 @@
 #include "inc/InvolutCircle.h"
 #include "inc/InterpolationBezier.h"
 #include "inc/InterpolationLinear.h"
+#include "inc/InterpolationCosine.h"
 
 #endif // LIB_2D_H_INCLUDED
