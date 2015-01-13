@@ -46,7 +46,7 @@ public:
     InvolutCircle(const T &diameter,
                   const unsigned int nPoints,
                   const T &radiansStart = 0,
-                  const T &radiansEnd = LIB_2D_PI * 2.0,
+                  const T &radiansEnd = LIB_2D_2PI,
                   const Point<T> &m_center = Point<T> (0.0, 0.0)) :
             Path<T>(nPoints),
             diameter(diameter),
