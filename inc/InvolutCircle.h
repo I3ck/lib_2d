@@ -26,6 +26,7 @@
 #ifndef INVOLUTCIRCLE_H_INCLUDED
 #define INVOLUTCIRCLE_H_INCLUDED
 
+#include "constants.h"
 #include "Path.h"
 #include "Point.h"
 
@@ -45,7 +46,7 @@ public:
     InvolutCircle(const T &diameter,
                   const unsigned int nPoints,
                   const T &radiansStart = 0,
-                  const T &radiansEnd = 3.14159265358979323846 * 2.0,
+                  const T &radiansEnd = LIB_2D_PI * 2.0,
                   const Point<T> &m_center = Point<T> (0.0, 0.0)) :
             Path<T>(nPoints),
             diameter(diameter),

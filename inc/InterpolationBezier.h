@@ -24,6 +24,9 @@
 #define INTERPOLATIONBEZIER_H_INCLUDED
 
 #include "calc.h"
+#include "constants.h"
+#include "Path.h"
+#include "Point.h"
 
 namespace lib_2d {
 

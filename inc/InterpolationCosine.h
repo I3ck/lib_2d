@@ -22,6 +22,10 @@
 #ifndef INTERPOLATIONCOSINE_H_INCLUDED
 #define INTERPOLATIONCOSINE_H_INCLUDED
 
+#include "constants.h"
+#include "Path.h"
+#include "Point.h"
+
 namespace lib_2d {
 
 template <typename T>
@@ -46,7 +50,7 @@ public:
 
                 if(traveled >= pDistance*i) {
                     T proportion = (i*pDistance - traveledBefore) / (traveled - traveledBefore);
-                    T proportion2 = ( 1 - cos(proportion*3.14159265358979323846) ) / 2.0;
+                    T proportion2 = ( 1 - cos(proportion*LIB_2D_PI) ) / 2.0;
                     T newX = (j-1)->get_x() + proportion * j->get_x() - (j-1)->get_x();
                     T newY = (j-1)->get_x() * ( 1 - proportion2) + j->get_y()*proportion2;
 

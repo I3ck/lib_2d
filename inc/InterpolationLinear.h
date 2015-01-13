@@ -23,6 +23,10 @@
 #ifndef INTERPOLATIONLINEAR_H_INCLUDED
 #define INTERPOLATIONLINEAR_H_INCLUDED
 
+#include "constants.h"
+#include "Path.h"
+#include "Point.h"
+
 namespace lib_2d {
 
 template <typename T>
