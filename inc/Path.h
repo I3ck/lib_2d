@@ -20,8 +20,6 @@
  * \brief   contains the class Path which represents a collection of numerical points in 2d space
  *          the data is defined as a vector <Point>
  *          Path provides several methods to work with such a dataset
- * \todo    sweep algorithms for intersections
- * \todo    convex hull
  */
 
 #ifndef PATH_H_INCLUDED
