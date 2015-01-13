@@ -38,8 +38,7 @@ const double
     Y(4.5),
     MOVE_X(0.5),
     MOVE_Y(-10.0),
-    MAX_DELTA(0.00001),
-    PI (3.14159265358979323846);
+    MAX_DELTA(0.00001);
 
 
 TEST_CASE("testing Point") {
@@ -77,11 +76,11 @@ TEST_CASE("testing Point") {
     SECTION("testing rotation") {
         p2 = p;
 
-        p.rotate(PI);
+        p.rotate(LIB_2D_PI);
         REQUIRE(p.get_x() !=  p2.get_x());
         REQUIRE(p.get_y() !=  p2.get_y());
 
-        p.rotate(PI);
+        p.rotate(LIB_2D_PI);
         REQUIRE(abs(p.get_x() - p2.get_x()) < MAX_DELTA);
         REQUIRE(abs(p.get_y() - p2.get_y()) < MAX_DELTA);
     }
@@ -150,11 +149,11 @@ TEST_CASE("testing Point") {
     SECTION("testing phi calculation") {
         p.set_x(0);
         p.set_y(1);
-        REQUIRE(abs( p.phi() - PI/2.0) <= MAX_DELTA);
+        REQUIRE(abs( p.phi() - LIB_2D_PI/2.0) <= MAX_DELTA);
 
         p.set_x(-1);
         p.set_y(0);
-        REQUIRE(abs( p.phi() - PI) <= MAX_DELTA);
+        REQUIRE(abs( p.phi() - LIB_2D_PI) <= MAX_DELTA);
     }
 
     SECTION("testing slope calculation") {
@@ -174,7 +173,7 @@ TEST_CASE("testing Point") {
         p2.set_x(1);
         p2.set_y(2);
 
-        REQUIRE(abs( p.rad_to(p2) - PI/2.0) <= MAX_DELTA);
+        REQUIRE(abs( p.rad_to(p2) - LIB_2D_PI/2.0) <= MAX_DELTA);
     }
 
     SECTION("testing center calculation") {
@@ -257,7 +256,7 @@ TEST_CASE("testing Path") {
 
     SECTION("testing rotation of path") {
         path.move_by(1.0, 0.0);
-        path.rotate(PI);
+        path.rotate(LIB_2D_PI);
         auto pathCenter = path.center();
 
         REQUIRE(pathCenter.abs() == 1.0);
@@ -452,7 +451,7 @@ TEST_CASE("testing Arc") {
         arc.to_file("arc_full.test");
 #endif // OUTPUT_TEST_FILES
 
-        arc = lib_2d::Arc<double>(300.0, 100, false, PI);
+        arc = lib_2d::Arc<double>(300.0, 100, false, LIB_2D_PI);
 
         REQUIRE(arc.size() == 100);
 #ifdef OUTPUT_TEST_FILES
@@ -467,7 +466,7 @@ TEST_CASE("testing Arc") {
 
     SECTION("rotation") {
         arc.move_by(10,0);
-        arc.rotate(PI);
+        arc.rotate(LIB_2D_PI);
         auto center = arc.center();
         REQUIRE(center.get_x() == -10);
     }
@@ -505,7 +504,7 @@ TEST_CASE("testing InvolutCircle") {
 
     SECTION("rotation") {
         inv.move_by(10,0);
-        inv.rotate(PI);
+        inv.rotate(LIB_2D_PI);
         auto center = inv.center();
         REQUIRE(center.get_x() == -10);
     }
