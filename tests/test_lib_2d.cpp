@@ -30,12 +30,13 @@
 
 #define OUTPUT_TEST_FILES
 
-#define TYPENAME double
 
 using namespace std;
 using namespace lib_2d;
 
-const TYPENAME
+using T = double;
+
+const T
     X(0.3),
     Y(4.5),
     MOVE_X(0.5),
@@ -45,7 +46,7 @@ const TYPENAME
 
 TEST_CASE("testing Point") {
 
-    Point <TYPENAME> p(X, Y);
+    Point <T> p(X, Y);
     auto p2 = p;
 
     SECTION ("testing initialisation") {
@@ -115,13 +116,13 @@ TEST_CASE("testing Point") {
 
     SECTION("testing conversion with pair") {
         p2 = p;
-        pair <TYPENAME, TYPENAME> tmp = p;
-        p = Point <TYPENAME> (tmp);
+        pair <T, T> tmp = p;
+        p = Point <T> (tmp);
 
         REQUIRE(p2 == p);
 
-        tmp = pair <TYPENAME,TYPENAME> (0.3, 17.7);
-        p = Point <TYPENAME> (tmp);
+        tmp = pair <T,T> (0.3, 17.7);
+        p = Point <T> (tmp);
 
         REQUIRE(p != p2);
     }
@@ -179,11 +180,11 @@ TEST_CASE("testing Point") {
     }
 
     SECTION("testing center calculation") {
-        Point <TYPENAME> center, centerShould;
+        Point <T> center, centerShould;
 
-        p = Point<TYPENAME> (1,1);
-        p2 = Point<TYPENAME> (1,2);
-        centerShould = Point <TYPENAME> (1, 1.5);
+        p = Point<T> (1,1);
+        p2 = Point<T> (1,2);
+        centerShould = Point <T> (1, 1.5);
         center = p.center_between(p2);
 
         REQUIRE(center.similar_to(centerShould, MAX_DELTA));
@@ -191,55 +192,55 @@ TEST_CASE("testing Point") {
 }
 
 TEST_CASE("testing Path") {
-    Path<TYPENAME> path = Path<TYPENAME>();
+    Path<T> path = Path<T>();
     path.push_back(0.0, 0.0);
     path.push_back(1.0, 0.0);
     path.push_back(-1.0, 0.0);
 
     SECTION("testing usage a vector") {
-        std::vector< Point <TYPENAME> > vec = path;
+        std::vector< Point <T> > vec = path;
         REQUIRE(vec.size() == 3);
 
-        Path<TYPENAME> tmp = Path<TYPENAME>(vec);
+        Path<T> tmp = Path<T>(vec);
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 
     SECTION("testing usage a deque") {
-        std::deque< Point <TYPENAME> > deq = path;
+        std::deque< Point <T> > deq = path;
         REQUIRE(deq.size() == 3);
 
-        Path<TYPENAME> tmp = Path<TYPENAME>(deq);
+        Path<T> tmp = Path<T>(deq);
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 
     SECTION("testing usage of forward list") {
-        std::forward_list< Point <TYPENAME> > fl = path;
+        std::forward_list< Point <T> > fl = path;
 
-        Path<TYPENAME> tmp = Path<TYPENAME>(fl);
+        Path<T> tmp = Path<T>(fl);
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 
     SECTION("testing usage of list") {
-        std::list< Point <TYPENAME> > l = path;
+        std::list< Point <T> > l = path;
         REQUIRE(l.size() == 3);
 
-        Path<TYPENAME> tmp = Path<TYPENAME>(l);
+        Path<T> tmp = Path<T>(l);
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 
     SECTION("testing usage of queue") {
-        std::queue< Point <TYPENAME> > q = path;
+        std::queue< Point <T> > q = path;
         REQUIRE(q.size() == 3);
 
-        Path<TYPENAME> tmp = Path<TYPENAME>(q);
+        Path<T> tmp = Path<T>(q);
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 
     SECTION("testing usage of stack") {
-        std::stack< Point <TYPENAME> > s = path;
+        std::stack< Point <T> > s = path;
         REQUIRE(s.size() == 3);
 
-        Path<TYPENAME> tmp = Path<TYPENAME>(s);
+        Path<T> tmp = Path<T>(s);
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 
@@ -298,42 +299,42 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing intersections between paths") {
-        Path<TYPENAME> tmp = Path<TYPENAME> ();
+        Path<T> tmp = Path<T> ();
         tmp.push_back(-100,0);
         tmp.push_back(100,0);
 
-        Path<TYPENAME> tmp2 = Path<TYPENAME> ();
+        Path<T> tmp2 = Path<T> ();
         REQUIRE(!tmp.intersects_with(tmp2));
         tmp2.push_back(0,-100);
         tmp2.push_back(0,100);
 
         auto intersections = tmp.intersections_with(tmp2);
-        auto shouldIntersection = Point<TYPENAME>(0,0);
+        auto shouldIntersection = Point<T>(0,0);
         REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
         REQUIRE(tmp.intersects_with(tmp2));
 
         tmp.move_by(0,-1);
         intersections = tmp.intersections_with(tmp2);
-        shouldIntersection = Point<TYPENAME>(0,-1);
+        shouldIntersection = Point<T>(0,-1);
         REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
         REQUIRE(tmp.intersects_with(tmp2));
 
-        tmp = Path<TYPENAME> ();
+        tmp = Path<T> ();
         tmp.push_back(-100,100);
         tmp.push_back(100,-100);
 
-        tmp2 = Path<TYPENAME> ();
+        tmp2 = Path<T> ();
         tmp2.push_back(100,100);
         tmp2.push_back(-100,-100);
 
         intersections = tmp.intersections_with(tmp2);
-        shouldIntersection = Point<TYPENAME>(0,0);
+        shouldIntersection = Point<T>(0,0);
         REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
         REQUIRE(tmp.intersects_with(tmp2));
     }
 
     SECTION("testing sorting") {
-        Path<TYPENAME> tmp = Path<TYPENAME> ();
+        Path<T> tmp = Path<T> ();
         tmp.push_back(1,100);
         tmp.push_back(2,99);
         tmp.push_back(3,98);
@@ -355,26 +356,26 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing closest and furthest") {
-        Path<TYPENAME> tmp = Path<TYPENAME> ();
+        Path<T> tmp = Path<T> ();
         tmp.push_back(1,100);
         tmp.push_back(9,92);
         tmp.push_back(10,91);
 
-        REQUIRE(tmp[tmp.furthest_apart(Point<TYPENAME>())] == Point<TYPENAME>(1,100));
+        REQUIRE(tmp[tmp.furthest_apart(Point<T>())] == Point<T>(1,100));
 
-        REQUIRE(tmp[tmp.closest(Point<TYPENAME>())] == Point<TYPENAME>(10,91));
+        REQUIRE(tmp[tmp.closest(Point<T>())] == Point<T>(10,91));
 
-        Path<TYPENAME> tmp2 = Path<TYPENAME> ();
-        tmp2.push_back(Point<TYPENAME>());
+        Path<T> tmp2 = Path<T> ();
+        tmp2.push_back(Point<T>());
 
-        REQUIRE(tmp[tmp.furthest_apart(tmp2)] == Point<TYPENAME>(1,100));
+        REQUIRE(tmp[tmp.furthest_apart(tmp2)] == Point<T>(1,100));
 
-        REQUIRE(tmp[tmp.closest(tmp2)] == Point<TYPENAME>(10,91));
+        REQUIRE(tmp[tmp.closest(tmp2)] == Point<T>(10,91));
     }
 
     SECTION("testing average distance") {
-        Path<TYPENAME> tmp = Path<TYPENAME> ();
-        tmp.push_back(Point<TYPENAME>());
+        Path<T> tmp = Path<T> ();
+        tmp.push_back(Point<T>());
         tmp.push_back(1,0);
         tmp.push_back(2,0);
 
@@ -382,19 +383,19 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing finding of points") {
-        Path<TYPENAME> tmp = Path<TYPENAME> ();
-        tmp.push_back(Point<TYPENAME>());
+        Path<T> tmp = Path<T> ();
+        tmp.push_back(Point<T>());
         tmp.push_back(1,0);
         tmp.push_back(2,0);
 
-        REQUIRE(tmp.index_of(Point<TYPENAME>(2,0)) == 2);
+        REQUIRE(tmp.index_of(Point<T>(2,0)) == 2);
 
-        REQUIRE(tmp.index_of(Point<TYPENAME>(222,0)) == -1);
+        REQUIRE(tmp.index_of(Point<T>(222,0)) == -1);
     }
 
     SECTION("testing removal of points") {
-        Path<TYPENAME> tmp = Path<TYPENAME> ();
-        tmp.push_back(Point<TYPENAME>());
+        Path<T> tmp = Path<T> ();
+        tmp.push_back(Point<T>());
         tmp.push_back(1,0);
         tmp.push_back(2,0);
 
@@ -445,7 +446,7 @@ TEST_CASE("testing Path") {
 
 TEST_CASE("testing Arc") {
 
-    lib_2d::Arc<TYPENAME> arc = lib_2d::Arc<TYPENAME>(300.0, 100);
+    lib_2d::Arc<T> arc = lib_2d::Arc<T>(300.0, 100);
     SECTION("creation") {
         REQUIRE(arc.size() == 100);
 
@@ -453,7 +454,7 @@ TEST_CASE("testing Arc") {
         arc.to_file("arc_full.test");
 #endif // OUTPUT_TEST_FILES
 
-        arc = lib_2d::Arc<TYPENAME>(300.0, 100, false, LIB_2D_PI);
+        arc = lib_2d::Arc<T>(300.0, 100, false, LIB_2D_PI);
 
         REQUIRE(arc.size() == 100);
 #ifdef OUTPUT_TEST_FILES
@@ -463,7 +464,7 @@ TEST_CASE("testing Arc") {
 
     SECTION("moving") {
         arc.move_by(10,0);
-        REQUIRE(arc.center() == Point<TYPENAME>(10,0));
+        REQUIRE(arc.center() == Point<T>(10,0));
     }
 
     SECTION("rotation") {
@@ -490,7 +491,7 @@ TEST_CASE("testing Arc") {
 }
 
 TEST_CASE("testing InvolutCircle") {
-    InvolutCircle<TYPENAME> inv = InvolutCircle<TYPENAME>(1.0, 100);
+    InvolutCircle<T> inv = InvolutCircle<T>(1.0, 100);
 
     SECTION("creation") {
         REQUIRE(inv.size() == 100);
@@ -501,7 +502,7 @@ TEST_CASE("testing InvolutCircle") {
 
     SECTION("moving") {
         inv.move_by(10,0);
-        REQUIRE(inv.center() == Point<TYPENAME>(10,0));
+        REQUIRE(inv.center() == Point<T>(10,0));
     }
 
     SECTION("rotation") {
@@ -528,11 +529,11 @@ TEST_CASE("testing InvolutCircle") {
 }
 
 TEST_CASE("testing bezier interpolation") {
-    Path<TYPENAME> tmp = Path<TYPENAME> ();
-    tmp.push_back(Point<TYPENAME>());
+    Path<T> tmp = Path<T> ();
+    tmp.push_back(Point<T>());
     tmp.push_back(1,1);
     tmp.push_back(2,-5);
-    InterpolationBezier<TYPENAME> bezier = InterpolationBezier<TYPENAME>(100, tmp);
+    InterpolationBezier<T> bezier = InterpolationBezier<T>(100, tmp);
 
     REQUIRE(bezier.size() == 100);
 #ifdef OUTPUT_TEST_FILES
@@ -541,11 +542,11 @@ TEST_CASE("testing bezier interpolation") {
 }
 
 TEST_CASE("testing linear interpolation") {
-    Path<TYPENAME> tmp = Path<TYPENAME> ();
-    tmp.push_back(Point<TYPENAME>());
+    Path<T> tmp = Path<T> ();
+    tmp.push_back(Point<T>());
     tmp.push_back(1,1);
     tmp.push_back(2,-5);
-    InterpolationLinear<TYPENAME> linear = InterpolationLinear<TYPENAME>(100, tmp);
+    InterpolationLinear<T> linear = InterpolationLinear<T>(100, tmp);
 
     REQUIRE(linear.size() == 100);
 #ifdef OUTPUT_TEST_FILES
@@ -554,11 +555,11 @@ TEST_CASE("testing linear interpolation") {
 }
 
 TEST_CASE("testing cosine interpolation") {
-    Path<TYPENAME> tmp = Path<TYPENAME> ();
-    tmp.push_back(Point<TYPENAME>());
+    Path<T> tmp = Path<T> ();
+    tmp.push_back(Point<T>());
     tmp.push_back(1,1);
     tmp.push_back(2,-5);
-    InterpolationCosine<TYPENAME> cosine = InterpolationCosine<TYPENAME>(100, tmp);
+    InterpolationCosine<T> cosine = InterpolationCosine<T>(100, tmp);
 
     REQUIRE(cosine.size() == 100);
 #ifdef OUTPUT_TEST_FILES
