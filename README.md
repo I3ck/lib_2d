@@ -1,5 +1,5 @@
 # lib_2d
-A c++ library for paths defined by points within the 2d space  
+A c++ library for paths defined by points within the 2d space (using floating point data types)  
 using Catch as testing framework https://github.com/philsquared/Catch  
 ##usage  
 add inc/ to your include path and include lib_2d.h within your code  
