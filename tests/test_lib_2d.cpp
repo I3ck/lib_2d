@@ -79,7 +79,7 @@ TEST_CASE("testing Point") {
     }
 
     SECTION("testing distances and abs") {
-        REQUIRE(p.abs() == (T)sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  ));
+        REQUIRE(abs(  p.abs() - (T)sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  )  ) < MAX_DELTA);
         REQUIRE(p.distance_to(0.0, 0.0) == p.abs());
         REQUIRE(p.distance_to(p) == 0.0);
     }
@@ -142,7 +142,7 @@ TEST_CASE("testing Point") {
         p.move_by(0.3, 7.9);
         p.from_string(tmp.str());
 
-        REQUIRE(p == p2);
+        REQUIRE(p.similar_to(p2,MAX_DELTA));
     }
 
     SECTION("testing similarity") {
