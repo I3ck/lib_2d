@@ -8,4 +8,4 @@ add speed tests?
 
 convex hull algorithm
 
-long double test failing currently
+auto perform all tests (make DOUBLE=1 etc.) with a single make call

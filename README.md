@@ -11,6 +11,9 @@ cd tests/
 to test doubles:
 make DOUBLE=1  
   
+to test long doubles:
+make LDOUBLE = 1
+  
 to test floats:
 make FLOAT=1
 
