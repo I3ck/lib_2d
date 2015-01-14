@@ -7,3 +7,5 @@ sweep algorithms
 add speed tests?
 
 convex hull algorithm
+
+long double test failing currently

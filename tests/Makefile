@@ -11,6 +11,8 @@ endif
 
 ifeq  ($(DOUBLE),1)
 	CFLAGS += -D USE_DOUBLE
+else ifeq  ($(LDOUBLE),1)
+	CFLAGS += -D USE_LDOUBLE
 else ifeq  ($(FLOAT),1)
 	CFLAGS += -D USE_FLOAT
 endif

@@ -36,8 +36,12 @@ using namespace lib_2d;
 
 #ifdef USE_DOUBLE
 using T = double;
+#elif USE_LDOUBLE
+using T = long double;
 #elif USE_FLOAT
 using T = float;
+#else
+using T = int;
 #endif
 
 const T
