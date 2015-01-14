@@ -9,6 +9,12 @@ else
     TARGET = bin/test_lib_2d
 endif
 
+ifeq  ($(DOUBLE),1)
+	CFLAGS += -D USE_DOUBLE
+else ifeq  ($(FLOAT),1)
+	CFLAGS += -D USE_FLOAT
+endif
+
 
 all: test
 

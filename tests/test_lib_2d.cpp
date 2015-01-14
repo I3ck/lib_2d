@@ -34,7 +34,11 @@
 using namespace std;
 using namespace lib_2d;
 
+#ifdef USE_DOUBLE
 using T = double;
+#elif USE_FLOAT
+using T = float;
+#endif
 
 const T
     X(0.3),
