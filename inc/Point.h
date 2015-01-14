@@ -155,35 +155,35 @@ public:
 
 //------------------------------------------------------------------------------
 
-    double abs() const {
+    T abs() const {
         return sqrt(  pow(x,2) + pow(y,2) );
     }
 
 //------------------------------------------------------------------------------
 
-    double phi() const {
+    T phi() const {
         return atan2(y, x);
     }
 
 //------------------------------------------------------------------------------
 
-    double distance_to(const Point &other) const {
+    T distance_to(const Point &other) const {
         return sqrt(  pow(x-other.x,2) + pow(y-other.y,2)  );
     }
 
-    double distance_to(const T &x, const T &y) const {
+    T distance_to(const T &x, const T &y) const {
         return distance_to(Point(x,y));
     }
 
 //------------------------------------------------------------------------------
 
-    double slope_to(const Point &other) const {
+    T slope_to(const Point &other) const {
         return (other.y - y) / (other.x - x);
     }
 
 //------------------------------------------------------------------------------
 
-    double rad_to(const Point &other) const {
+    T rad_to(const Point &other) const {
         return atan2(other.y - y, other.x - x);
     }
 

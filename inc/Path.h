@@ -393,7 +393,7 @@ public:
 //------------------------------------------------------------------------------
 
     Point<T> center() const {
-        double
+        T
             sumX(0.0),
             sumY(0.0);
 
@@ -518,7 +518,7 @@ public:
 
         for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
             bool path1vertical(false), path1horizontal(false);
-            double slope1(0.0), slope2(0.0);
+            T slope1(0.0), slope2(0.0);
             Point<T> currentIntersection;
 
             if((i1+1)->get_x() == i1->get_x())
@@ -530,7 +530,7 @@ public:
                 path1horizontal = true;
 
             for(auto i2 = other.cbegin(); i2 != other.cend()-1; ++i2) {
-                double path2vertical(false), path2horizontal(false);
+                T path2vertical(false), path2horizontal(false);
 
                 if((i2+1)->get_x() == i2->get_x()) {
                     if(path1vertical) continue;
@@ -595,7 +595,7 @@ public:
 
         for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
             bool path1vertical(false), path1horizontal(false);
-            double slope1(0.0), slope2(0.0);
+            T slope1(0.0), slope2(0.0);
             Point<T> currentIntersection;
 
             if((i1+1)->get_x() == i1->get_x())
@@ -607,7 +607,7 @@ public:
                 path1horizontal = true;
 
             for(auto i2 = other.cbegin(); i2 != other.cend()-1; ++i2) {
-                double path2vertical(false), path2horizontal(false);
+                T path2vertical(false), path2horizontal(false);
 
                 if((i2+1)->get_x() == i2->get_x()) {
                     if(path1vertical) continue;
