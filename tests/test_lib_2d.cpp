@@ -75,7 +75,7 @@ TEST_CASE("testing Point") {
     }
 
     SECTION("testing distances and abs") {
-        REQUIRE(p.abs() == sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  ));
+        REQUIRE(p.abs() == (T)sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  ));
         REQUIRE(p.distance_to(0.0, 0.0) == p.abs());
         REQUIRE(p.distance_to(p) == 0.0);
     }
@@ -113,7 +113,7 @@ TEST_CASE("testing Point") {
         p2 = p;
         REQUIRE(p2 == p);
 
-        p.move_by(0.00000000001, 0.0);
+        p.move_by(0.001, 0.0);
 
         REQUIRE(p2 != p);
     }
