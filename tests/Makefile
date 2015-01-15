@@ -27,4 +27,4 @@ test_float:
 	./$(TARGET)_FLOAT
 
 clean:
-	rm -f *o *.so *.dll *.exe bin/*.exe
+	rm -rf *o *.so *.dll *.exe bin/* bin/ obj/* obj/
