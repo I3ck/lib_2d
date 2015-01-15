@@ -1,13 +1,14 @@
 CC = g++
 DEBUG ?= 0
+CFLAGS = -std=c++11
 
 .PHONY: all
 
 ifeq ($(DEBUG), 1)
-  	CFLAGS = -std=c++11 -DDEBUG
+  	CFLAGS += -DDEBUG
   	TARGET = bin/test_lib_2d_DEBUG
 else
-    CFLAGS = -std=c++11 -DNDEBUG
+    CFLAGS += -DNDEBUG
     TARGET = bin/test_lib_2d
 endif
 
