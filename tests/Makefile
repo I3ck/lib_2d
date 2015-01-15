@@ -1,6 +1,8 @@
 CC = g++
 DEBUG ?= 0
 
+.PHONY: all
+
 ifeq ($(DEBUG), 1)
   	CFLAGS = -std=c++11 -DDEBUG
   	TARGET = bin/test_lib_2d_DEBUG
@@ -9,20 +11,20 @@ else
     TARGET = bin/test_lib_2d
 endif
 
-ifeq  ($(DOUBLE),1)
-	CFLAGS += -D USE_DOUBLE
-else ifeq  ($(LDOUBLE),1)
-	CFLAGS += -D USE_LDOUBLE
-else ifeq  ($(FLOAT),1)
-	CFLAGS += -D USE_FLOAT
-endif
 
+all: test_double test_ldouble test_float
 
-all: test
+test_double:
+	$(CC) $(CFLAGS) -D USE_DOUBLE test_lib_2d.cpp -o $(TARGET)_DOUBLE
+	./$(TARGET)_DOUBLE
 
-test:
-	$(CC) $(CFLAGS) test_lib_2d.cpp -o $(TARGET)
-	./$(TARGET)
+test_ldouble:
+	$(CC) $(CFLAGS) -D USE_LDOUBLE test_lib_2d.cpp -o $(TARGET)_LDOUBLE
+	./$(TARGET)_LDOUBLE
+
+test_float:
+	$(CC) $(CFLAGS) -D USE_FLOAT test_lib_2d.cpp -o $(TARGET)_FLOAT
+	./$(TARGET)_FLOAT
 
 clean:
 	rm -f *o *.so *.dll *.exe bin/*.exe

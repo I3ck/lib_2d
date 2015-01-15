@@ -7,16 +7,7 @@ add inc/ to your include path and include lib_2d.h within your code
 ##running the tests  
 to run the tests  
 cd tests/  
-  
-to test doubles:
-make DOUBLE=1  
-  
-to test long doubles:
-make LDOUBLE = 1
-  
-to test floats:
-make FLOAT=1
-
+make  
 ##contribute  
 If you find any bugs, feel free to open an issue  
 If you'd like other Paths than Arc etc. open an issue  
