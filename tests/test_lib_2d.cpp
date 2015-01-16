@@ -460,9 +460,12 @@ TEST_CASE("testing Path") {
         tmp.push_back(-5,0);
 
         tmp.push_back(1,1);
+        tmp.push_back(1,1);
         tmp.push_back(2,1);
 
         auto convexHull = tmp.convex_hull();
+
+        std::cout << convexHull << std::endl;
 
         REQUIRE(convexHull.size() == 5);
 

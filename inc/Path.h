@@ -26,6 +26,7 @@
 #define PATH_H_INCLUDED
 
 #include <vector>
+#include <set>
 #include <map>
 #include <fstream>
 #include <algorithm>
@@ -289,9 +290,27 @@ public:
             ++M;
             convexHull[M] = convexHull[i];
         }
+        convexHull.make_unique();
         return convexHull;
     }
 
+//------------------------------------------------------------------------------
+    void make_unique() {
+        std::set <unsigned int> nonUniqueIndexes;
+        for(unsigned int i = 0; i < size()-1; ++i) {
+            for(unsigned int j = i+1; j < size(); ++j) {
+                if((*this)[i] == (*this)[j]) {
+                    nonUniqueIndexes.insert(j);
+                }
+            }
+        }
+        auto out = Path<T>();
+        for(unsigned int i = 0; i < size(); ++i) {
+            if(nonUniqueIndexes.find(i) == nonUniqueIndexes.end())
+                out.push_back((*this)[i]);
+        }
+        *this = out;
+    }
 //------------------------------------------------------------------------------
 
     T average_distance() const {

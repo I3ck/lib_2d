@@ -8,4 +8,4 @@ add speed tests?
 
 write tests for convex hull
 
-convex hull has to have double points removed
+convex hull still not working perfectly
