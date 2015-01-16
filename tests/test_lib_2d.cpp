@@ -450,6 +450,25 @@ TEST_CASE("testing Path") {
         tmp.remove_further_apart_to_than(0.99999);
         REQUIRE(tmp.size() == 0);
     }
+
+    SECTION("testting convex hull") {
+        Path<T> tmp = Path<T> ();
+        tmp.push_back(0,0);
+        tmp.push_back(3,0);
+        tmp.push_back(3,3);
+        tmp.push_back(-5,3);
+        tmp.push_back(-5,0);
+
+        tmp.push_back(1,1);
+        tmp.push_back(2,1);
+
+        auto convexHull = tmp.convex_hull();
+
+        REQUIRE(convexHull.size() == 5);
+
+
+
+    }
 }
 
 TEST_CASE("testing Arc") {

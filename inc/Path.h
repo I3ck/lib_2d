@@ -34,6 +34,7 @@
 #include <list>
 #include <queue>
 #include <stack>
+#include <utility>
 
 #include "Point.h"
 
@@ -249,7 +250,7 @@ public:
         unsigned int yMinIndex = 0;
         T yMin = convexHull[0].get_y();
 
-        for(unsigned int i = 0; i < convexHull.size(); ++i) {
+        for(unsigned int i = 1; i < size(); ++i) {
             if (convexHull[i].get_y() < yMin
             || ( convexHull[i].get_y() == yMin && convexHull[i].get_x() < convexHull[yMinIndex].get_x())) {
                 yMin = convexHull[i].get_y();
@@ -257,23 +258,22 @@ public:
             }
         }
 
-        swap(convexHull[1], convexHull[yMinIndex]);
+        std::swap(convexHull[1], convexHull[yMinIndex]);
 
         std::vector <T> radians;
         for(auto i : convexHull)
             radians.push_back( convexHull[1].rad_to(i));
 
-        ///@todo this can lead to lost points, needs a better way to do this
         std::multimap< T,Point<T> > sorted;
         for(unsigned int i = 0; i < convexHull.size(); ++i)
-            sorted.emplace_back(std::pair< T,Point<T> >(radians[i], convexHull[i]));
+            sorted.emplace(std::pair< T,Point<T> >(radians[i], convexHull[i]));
         convexHull.clear();
         for(auto i : sorted)
-            convexHull += i.second;
+            convexHull.push_back(i.second);
 
-        convexHull[0] = convexHull[convexHull.size()-1];
-        unsigned int M =1;
-        unsigned int N = size();
+        convexHull[0] = convexHull[size()-1];
+        unsigned int M = 1;
+        unsigned int N = size(); ///@can be declared at the beginning
         for(unsigned int i=2; i < N; ++i) {
             while(true) {
                 T orientation = (convexHull[M].get_x() - convexHull[M].get_x())
@@ -282,7 +282,7 @@ public:
                             * (convexHull[i].get_x() - convexHull[M-1].get_x());
 
                 if(orientation > 0) break;
-                if(M > 1) --M;
+                else if(M > 1) --M;
                 else if(i == N) break;
                 else ++i;
             }
@@ -291,6 +291,7 @@ public:
         }
         return convexHull;
     }
+
 //------------------------------------------------------------------------------
 
     T average_distance() const {
