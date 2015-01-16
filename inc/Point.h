@@ -183,6 +183,7 @@ public:
 
 //------------------------------------------------------------------------------
 
+    ///@todo rename to 'radians_to'
     T rad_to(const Point &other) const {
         return atan2(other.y - y, other.x - x);
     }

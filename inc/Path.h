@@ -240,6 +240,35 @@ public:
     }
 
 //------------------------------------------------------------------------------
+    Path convex_hull() const {
+        if(size() < 2)
+            return *this;
+        Path convexHull = *this;
+
+        unsigned int yMinIndex = 0;
+        T yMin = convexHull[0].get_y();
+
+        for(auto i : convexHull) {
+            if (i.get_y() < yMin
+            || ( i.get_y() == yMin && i.get_x() < convexHull[yMinIndex].get_x())) {
+                yMin = i.get_y();
+                yMinIndex = i; ///@todo wont work, usual iteration needed
+            }
+        }
+
+        swap(convexHull[1], convexHull[yMinIndex]);
+
+        vector <T> radians;
+        for(auto i : convexHull)
+            radians.push_back( convexHull[1].rad_to(i));
+
+        //sort by radians
+        //convexHull[0] = convexHull[LAST]
+        //more todo
+
+
+    //} commented out because method is unfinished
+//------------------------------------------------------------------------------
 
     T average_distance() const {
         if(size() < 2)
