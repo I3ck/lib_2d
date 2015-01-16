@@ -7,5 +7,3 @@ sweep algorithms
 add speed tests?
 
 convex hull algorithm
-
-auto perform all tests (make DOUBLE=1 etc.) with a single make call
