@@ -249,11 +249,11 @@ public:
         unsigned int yMinIndex = 0;
         T yMin = convexHull[0].get_y();
 
-        for(auto i : convexHull) {
-            if (i.get_y() < yMin
-            || ( i.get_y() == yMin && i.get_x() < convexHull[yMinIndex].get_x())) {
-                yMin = i.get_y();
-                yMinIndex = i; ///@todo wont work, usual iteration needed
+        for(unsigned int i = 0; i < convexHull.size(); ++i) {
+            if (convexHull[i].get_y() < yMin
+            || ( convexHull[i].get_y() == yMin && convexHull[i].get_x() < convexHull[yMinIndex].get_x())) {
+                yMin = convexHull[i].get_y();
+                yMinIndex = i;
             }
         }
 
@@ -263,11 +263,10 @@ public:
         for(auto i : convexHull)
             radians.push_back( convexHull[1].rad_to(i));
 
-        //sort the values using a multimap
         ///@todo this can lead to lost points, needs a better way to do this
         std::multimap< T,Point<T> > sorted;
-        for(auto i : convexHull) ///@wont work, since radians[i] needs an index
-            sorted.emplace_back(std::pair< T,Point<T> >(radians[i], i));
+        for(unsigned int i = 0; i < convexHull.size(); ++i)
+            sorted.emplace_back(std::pair< T,Point<T> >(radians[i], convexHull[i]));
         convexHull.clear();
         for(auto i : sorted)
             convexHull += i.second;
@@ -289,11 +288,8 @@ public:
             }
             ++M;
             convexHull[M] = convexHull[i];
-
         }
         return convexHull;
-
-
     }
 //------------------------------------------------------------------------------
 
