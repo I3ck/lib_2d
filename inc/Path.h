@@ -26,6 +26,7 @@
 #define PATH_H_INCLUDED
 
 #include <vector>
+#include <map>
 #include <fstream>
 #include <algorithm>
 #include <deque>
@@ -258,16 +259,42 @@ public:
 
         swap(convexHull[1], convexHull[yMinIndex]);
 
-        vector <T> radians;
+        std::vector <T> radians;
         for(auto i : convexHull)
             radians.push_back( convexHull[1].rad_to(i));
 
-        //sort by radians
-        //convexHull[0] = convexHull[LAST]
-        //more todo
+        //sort the values using a multimap
+        ///@todo this can lead to lost points, needs a better way to do this
+        std::multimap< T,Point<T> > sorted;
+        for(auto i : convexHull) ///@wont work, since radians[i] needs an index
+            sorted.emplace_back(std::pair< T,Point<T> >(radians[i], i));
+        convexHull.clear();
+        for(auto i : sorted)
+            convexHull += i.second;
+
+        convexHull[0] = convexHull[convexHull.size()-1];
+        unsigned int M =1;
+        unsigned int N = size();
+        for(unsigned int i=2; i < N; ++i) {
+            while(true) {
+                T orientation = (convexHull[M].get_x() - convexHull[M].get_x())
+                            * (convexHull[i].get_y() - convexHull[M].get_y())
+                            - (convexHull[M].get_y() - convexHull[M-1].get_y())
+                            * (convexHull[i].get_x() - convexHull[M-1].get_x());
+
+                if(orientation > 0) break;
+                if(M > 1) --M;
+                else if(i == N) break;
+                else ++i;
+            }
+            ++M;
+            convexHull[M] = convexHull[i];
+
+        }
+        return convexHull;
 
 
-    //} commented out because method is unfinished
+    }
 //------------------------------------------------------------------------------
 
     T average_distance() const {
