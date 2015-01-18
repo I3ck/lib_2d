@@ -454,18 +454,23 @@ TEST_CASE("testing Path") {
     SECTION("testting convex hull") {
         Path<T> tmp = Path<T> ();
         tmp.push_back(0,0);
-        tmp.push_back(3,0);
+        tmp.push_back(3,-1);
         tmp.push_back(3,3);
-        tmp.push_back(-5,3);
-        tmp.push_back(-5,0);
+        tmp.push_back(-5,4);
+        tmp.push_back(-6,0);
 
-        tmp.push_back(1,1);
         tmp.push_back(1,1);
         tmp.push_back(2,1);
 
         auto convexHull = tmp.convex_hull();
 
         std::cout << convexHull << std::endl;
+
+#ifdef OUTPUT_TEST_FILES
+        tmp.to_file("convex_before.test");
+        convexHull.to_file("convex_after.test");
+#endif // OUTPUT_TEST_FILES
+
 
         REQUIRE(convexHull.size() == 5);
 

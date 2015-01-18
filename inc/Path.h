@@ -47,6 +47,10 @@ class Path {
 protected:
     std::vector < Point <T> > ps;
 
+    T ccw(const Point<T> &p1,const Point<T> &p2, const Point<T> &p3) const {
+        return (p2.get_x() - p1.get_x())*(p3.get_y() - p1.get_y()) - (p2.get_y() - p1.get_y())*(p3.get_x() - p1.get_x());
+    }
+
 public:
     Path(){};
 
@@ -244,14 +248,15 @@ public:
 
 //------------------------------------------------------------------------------
     Path convex_hull() const {
-        if(size() < 2)
+        unsigned int N = size(); ///@can be declared at the beginning
+        if(N < 2)
             return *this;
         Path convexHull = *this;
 
         unsigned int yMinIndex = 0;
         T yMin = convexHull[0].get_y();
 
-        for(unsigned int i = 1; i < size(); ++i) {
+        for(unsigned int i = 1; i < N; ++i) {
             if (convexHull[i].get_y() < yMin
             || ( convexHull[i].get_y() == yMin && convexHull[i].get_x() < convexHull[yMinIndex].get_x())) {
                 yMin = convexHull[i].get_y();
@@ -272,23 +277,16 @@ public:
         for(auto i : sorted)
             convexHull.push_back(i.second);
 
-        convexHull[0] = convexHull[size()-1];
+        convexHull[0] = convexHull[convexHull.size()-1];
         unsigned int M = 1;
-        unsigned int N = size(); ///@can be declared at the beginning
         for(unsigned int i=2; i < N; ++i) {
-            while(true) {
-                T orientation = (convexHull[M].get_x() - convexHull[M].get_x())
-                            * (convexHull[i].get_y() - convexHull[M].get_y())
-                            - (convexHull[M].get_y() - convexHull[M-1].get_y())
-                            * (convexHull[i].get_x() - convexHull[M-1].get_x());
-
-                if(orientation > 0) break;
-                else if(M > 1) --M;
+            while(ccw(convexHull[M-1], convexHull[M], convexHull[i]) <= 0) {
+                if(M > 1) --M;
                 else if(i == N) break;
                 else ++i;
             }
             ++M;
-            convexHull[M] = convexHull[i];
+            std::swap(convexHull[M], convexHull[i]);
         }
         convexHull.make_unique();
         return convexHull;
