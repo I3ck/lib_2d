@@ -4,8 +4,8 @@ using Catch as testing framework https://github.com/philsquared/Catch
 ##usage  
 add inc/ to your include path and include lib_2d.h within your code  
 /tests/test_lib_2d.cpp also provides a basic usage example
-##running the tests  
-to run the tests  
+##testing 
+to make and run the tests  
 cd tests/  
 make  
 ##contribute  
