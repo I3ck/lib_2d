@@ -464,8 +464,6 @@ TEST_CASE("testing Path") {
 
         auto convexHull = tmp.convex_hull();
 
-        std::cout << convexHull << std::endl;
-
 #ifdef OUTPUT_TEST_FILES
         tmp.to_file("convex_before.test");
         convexHull.to_file("convex_after.test");
@@ -473,9 +471,6 @@ TEST_CASE("testing Path") {
 
 
         REQUIRE(convexHull.size() == 5);
-
-
-
     }
 }
 
