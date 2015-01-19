@@ -451,7 +451,7 @@ TEST_CASE("testing Path") {
         REQUIRE(tmp.size() == 0);
     }
 
-    SECTION("testting convex hull") {
+    SECTION("testing convex hull") {
         Path<T> tmp = Path<T> ();
         tmp.push_back(0,0);
         tmp.push_back(3,-1);

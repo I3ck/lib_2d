@@ -229,6 +229,12 @@ public:
 
 //------------------------------------------------------------------------------
 
+    void pop_back() {
+        ps.pop_back();
+    }
+
+//------------------------------------------------------------------------------
+
     size_t size() const {
         return ps.size();
     }
@@ -247,52 +253,37 @@ public:
     }
 
 //------------------------------------------------------------------------------
+
     Path convex_hull() const {
-        unsigned int N = size(); ///@can be declared at the beginning
-        if(N < 2)
-            return *this;
-        Path convexHull = *this;
+        int n = size();
+        Path<T> path = *this;
 
-        unsigned int yMinIndex = 0;
-        T yMin = convexHull[0].get_y();
+        std::sort(path.begin(), path.end());
 
-        for(unsigned int i = 1; i < N; ++i) {
-            if (convexHull[i].get_y() < yMin
-            || ( convexHull[i].get_y() == yMin && convexHull[i].get_x() < convexHull[yMinIndex].get_x())) {
-                yMin = convexHull[i].get_y();
-                yMinIndex = i;
-            }
+        Path<T> lower;
+        for (int i = 0; i < n; ++i) {
+            while (lower.size() >= 2 && ccw(lower[lower.size()-2], lower[lower.size()-1], path[i]) <= 0)
+                lower.pop_back();
+            lower.push_back(path[i]);
         }
 
-        std::swap(convexHull[1], convexHull[yMinIndex]);
-
-        std::vector <T> radians;
-        for(auto i : convexHull)
-            radians.push_back( convexHull[1].rad_to(i));
-
-        std::multimap< T,Point<T> > sorted;
-        for(unsigned int i = 0; i < convexHull.size(); ++i)
-            sorted.emplace(std::pair< T,Point<T> >(radians[i], convexHull[i]));
-        convexHull.clear();
-        for(auto i : sorted)
-            convexHull.push_back(i.second);
-
-        convexHull[0] = convexHull[convexHull.size()-1];
-        unsigned int M = 1;
-        for(unsigned int i=2; i < N; ++i) {
-            while(ccw(convexHull[M-1], convexHull[M], convexHull[i]) <= 0) {
-                if(M > 1) --M;
-                else if(i == N) break;
-                else ++i;
-            }
-            ++M;
-            std::swap(convexHull[M], convexHull[i]);
+        Path<T> upper;
+        for (int i = n-1; i >= 0; i--) {
+            while (upper.size() >= 2 && ccw(upper[upper.size()-2], upper[upper.size()-1], path[i]) <= 0)
+                upper.pop_back();
+            upper.push_back(path[i]);
         }
-        convexHull.make_unique();
-        return convexHull;
+
+        Path<T> output;
+        output.push_back(lower);
+        output.push_back(upper);
+        output.make_unique();
+        output.push_back(output[0]);
+        return output;
     }
 
 //------------------------------------------------------------------------------
+
     void make_unique() {
         std::set <unsigned int> nonUniqueIndexes;
         for(unsigned int i = 0; i < size()-1; ++i) {
