@@ -221,6 +221,10 @@ public:
         return !equal_to(other);
     }
 
+    bool operator < (const Point &other) const {
+        return x < other.get_x() || (x == other.get_x() && y < other.get_y());
+    }
+
     friend std::ostream &operator << (std::ostream &os, const Point &point) {
         os << point.to_string();
         return os;
