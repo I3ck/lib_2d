@@ -254,6 +254,16 @@ public:
 
 //------------------------------------------------------------------------------
 
+    Point<T> first() const {
+        return ps[0];
+    }
+
+    Point<T> last() const {
+        return ps[size()-1];
+    }
+
+//------------------------------------------------------------------------------
+
     Path convex_hull() const {
         int n = size();
         Path<T> path = *this;
@@ -794,13 +804,11 @@ public:
         return out;
     }
 
-    Point<T> operator [] (const unsigned int &i) const
-    {
+    Point<T> operator [] (const unsigned int &i) const {
         return ps[i];
     }
 
-    Point<T>& operator [] (const unsigned int &i)
-    {
+    Point<T>& operator [] (const unsigned int &i) {
         return ps[i];
     }
 

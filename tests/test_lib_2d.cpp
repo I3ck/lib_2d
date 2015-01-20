@@ -222,6 +222,11 @@ TEST_CASE("testing Path") {
         REQUIRE(tmp.size() == 16);
     }
 
+    SECTION("testing retrieval of first and last element") {
+        REQUIRE(path.last() == path[path.size()-1]);
+        REQUIRE(path.first() == path[0]);
+    }
+
     SECTION("testing usage of vector") {
         std::vector< Point <T> > vec = path;
         REQUIRE(vec.size() == 3);
