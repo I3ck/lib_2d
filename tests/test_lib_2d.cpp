@@ -205,14 +205,6 @@ TEST_CASE("testing Path") {
     path.push_back(1.0, 0.0);
     path.push_back(-1.0, 0.0);
 
-    SECTION("testing usage a vector") {
-        std::vector< Point <T> > vec = path;
-        REQUIRE(vec.size() == 3);
-
-        Path<T> tmp = Path<T>(vec);
-        REQUIRE(tmp.similar_to(path, MAX_DELTA));
-    }
-
     SECTION("testing append operators") {
         path += Point<T>(0.3, 3.3);
         REQUIRE(path.size() == 4);
@@ -230,7 +222,15 @@ TEST_CASE("testing Path") {
         REQUIRE(tmp.size() == 16);
     }
 
-    SECTION("testing usage a deque") {
+    SECTION("testing usage of vector") {
+        std::vector< Point <T> > vec = path;
+        REQUIRE(vec.size() == 3);
+
+        Path<T> tmp = Path<T>(vec);
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+    }
+
+    SECTION("testing usage of deque") {
         std::deque< Point <T> > deq = path;
         REQUIRE(deq.size() == 3);
 
