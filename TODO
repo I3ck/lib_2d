@@ -5,3 +5,5 @@ add more interpolations (splines)
 sweep algorithms
 
 add speed tests?
+
+way to access first and last element of path

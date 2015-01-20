@@ -772,6 +772,27 @@ public:
         return !equal_to(other);
     }
 
+    Path<T>& operator += (const Path<T> &other) {
+        push_back(other);
+        return *this;
+    }
+
+    Path<T>& operator += (const Point<T> &other) {
+        push_back(other);
+        return *this;
+    }
+
+    Path<T> operator + (const Path<T> &other) const {
+        auto out = *this;
+        out.push_back(other);
+        return out;
+    }
+
+    Path<T> operator + (const Point<T> &other) const {
+        auto out = *this;
+        out.push_back(other);
+        return out;
+    }
 
     Point<T> operator [] (const unsigned int &i) const
     {

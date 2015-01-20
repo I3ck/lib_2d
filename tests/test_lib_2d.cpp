@@ -213,6 +213,23 @@ TEST_CASE("testing Path") {
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 
+    SECTION("testing append operators") {
+        path += Point<T>(0.3, 3.3);
+        REQUIRE(path.size() == 4);
+
+        auto tmp = path;
+        path += tmp;
+        REQUIRE(path.size() == 8);
+
+        tmp = path + Point<T>(0.0, 4.4);
+        REQUIRE(path.size() == 8);
+        REQUIRE(tmp.size() == 9);
+
+        tmp = path + path;
+        REQUIRE(path.size() == 8);
+        REQUIRE(tmp.size() == 16);
+    }
+
     SECTION("testing usage a deque") {
         std::deque< Point <T> > deq = path;
         REQUIRE(deq.size() == 3);
