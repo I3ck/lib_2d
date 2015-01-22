@@ -19,6 +19,49 @@ InvolutCircle<T> //involut curve of a circle
 ```
 
 
+##methods  
+some of the supported methods:  
+
+```cpp
+move_by(...) //moves the Point or Path  
+mirror_vertically(...) //mirrors the Point or Path at a vertical line (horizontally and point also supported)  
+rotate(...) //rotate by angle around a center  
+to_string(...) //write coordinates to a string  
+from_string(...) //parse from a string
+distance_to(...) //calculate distances between points
+load(...) //load coordinates from file
+to_file(...) //write coordinates to file
+convex_hul(...) //calculate the convex hull of a Path  
+intersections_with(...) //intersections between paths  
+sort_x(...) //sort by x (or y)  
+```  
+
+
+##easily usable as other containers (or constructable from)
+
+```cpp
+vector< Point <T> >  
+deque< Point <T> >  
+forward_list< Point <T> >  
+list< Point <T> >  
+queue< Point <T> >  
+stack< Point <T> >  
+```  
+
+
+##operator overloards  
+
+```cpp
+== != //equality  
++ += //appending to Path  
+[] //access elements of Path
+std::cout << Path<T> << Point<T>; //overloads for streams
+```  
+
+
+
+
+
 ##usage  
 add `inc/` to your include path and `#include lib_2d.h` within your code  
 `/tests/test_lib_2d.cpp` also provides a basic usage example
