@@ -4,6 +4,16 @@ using Catch as testing framework https://github.com/philsquared/Catch
 
 
 
+##templated  
+tested for:  
+
+```cpp
+float  
+double  
+long double
+```
+
+
 ##classes
 currently, the following classes are supported:  
 
@@ -60,9 +70,7 @@ std::cout << Path<T> << Point<T>; //overloads for streams
 
 
 
-
-
-##usage  
+##using lib_2d
 add `inc/` to your include path and `#include lib_2d.h` within your code  
 `/tests/test_lib_2d.cpp` also provides a basic usage example
 
