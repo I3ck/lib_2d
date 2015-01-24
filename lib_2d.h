@@ -26,6 +26,7 @@
 #include "inc/Point.h"
 #include "inc/Path.h"
 #include "inc/Arc.h"
+#include "inc/Ellipse.h"
 #include "inc/InvolutCircle.h"
 #include "inc/InterpolationBezier.h"
 #include "inc/InterpolationLinear.h"

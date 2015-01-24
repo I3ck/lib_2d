@@ -539,7 +539,44 @@ TEST_CASE("testing Arc") {
         REQUIRE(center.get_x() == -10);
         REQUIRE(center.get_y() == -5);
     }
+}
 
+TEST_CASE("testing Ellipse") {
+
+    lib_2d::Ellipse<T> ell = lib_2d::Ellipse<T>(10, 15, 100);
+    SECTION("creation") {
+        REQUIRE(ell.size() == 100);
+
+        #ifdef OUTPUT_TEST_FILES
+        ell.to_file("ellipse.test");
+        #endif // OUTPUT_TEST_FILES
+    }
+
+    SECTION("moving") {
+        ell.move_by(10,0);
+        REQUIRE(ell.center() == Point<T>(10,0));
+    }
+
+    SECTION("rotation") {
+        ell.move_by(10,0);
+        ell.rotate(LIB_2D_PI);
+        auto center = ell.center();
+        REQUIRE(center.get_x() == -10);
+    }
+
+    SECTION("mirroring") {
+        ell.move_by(10,5);
+
+        ell.mirror_vertically();
+        auto center = ell.center();
+        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.get_y() == 5);
+
+        ell.mirror_horizontally();
+        center = ell.center();
+        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.get_y() == -5);
+    }
 }
 
 TEST_CASE("testing InvolutCircle") {
