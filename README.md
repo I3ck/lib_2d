@@ -23,6 +23,7 @@ Path<T> //a collection Points, which have a specified enumeration
 
 //subclasses of Path
 Arc<T> //an arc defined by diameter, center, start- and end angle
+Ellipse<T> //an ellipse
 InterpolationBezier<T> //a bezier curve interpolation  
 InterpolationLinear<T> //a linear interpolation
 InvolutCircle<T> //involut curve of a circle
@@ -47,7 +48,7 @@ sort_x(...) //sort by x (or y)
 ```  
 
 
-##easily usable as other containers (or constructable from)
+##easily usable as other containers
 
 ```cpp
 vector< Point <T> >  
@@ -59,7 +60,7 @@ stack< Point <T> >
 ```  
 
 
-##operator overloards  
+##operator overloads  
 
 ```cpp
 == != //equality  
