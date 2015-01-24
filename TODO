@@ -4,4 +4,6 @@ add more interpolations (splines)
 
 sweep algorithms
 
+ellipse should have an option to close the path
+
 add speed tests?
