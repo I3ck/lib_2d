@@ -2,7 +2,7 @@ CC = g++
 DEBUG ?= 0
 CFLAGS = -std=c++11
 
-.PHONY: all
+.PHONY: all, run_tests
 
 ifeq ($(DEBUG), 1)
   	CFLAGS += -DDEBUG
@@ -13,18 +13,16 @@ else
 endif
 
 
-all: test_double test_ldouble test_float
+all: make_tests run_tests
 
-test_double:
+make_tests:
 	$(CC) $(CFLAGS) -D USE_DOUBLE test_lib_2d.cpp -o $(TARGET)_DOUBLE
-	./$(TARGET)_DOUBLE
-
-test_ldouble:
 	$(CC) $(CFLAGS) -D USE_LDOUBLE test_lib_2d.cpp -o $(TARGET)_LDOUBLE
-	./$(TARGET)_LDOUBLE
-
-test_float:
 	$(CC) $(CFLAGS) -D USE_FLOAT test_lib_2d.cpp -o $(TARGET)_FLOAT
+
+run_tests:
+	./$(TARGET)_DOUBLE
+	./$(TARGET)_LDOUBLE
 	./$(TARGET)_FLOAT
 
 clean:
