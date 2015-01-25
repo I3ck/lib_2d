@@ -3,5 +3,5 @@
 *.cbp
 *.test
 *.swp
-tests/bin/
-tests/obj/
+bin/
+obj/

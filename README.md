@@ -78,9 +78,7 @@ add `inc/` to your include path and `#include lib_2d.h` within your code
 
 
 ##testing
-to make and run the tests  
-`cd tests/`  
-`make`  
+`make tests`  
 you can also use  
 `make clean`  
 

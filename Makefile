@@ -2,7 +2,7 @@ CC = g++
 DEBUG ?= 0
 CFLAGS = -std=c++11
 
-.PHONY: all, run_tests
+.PHONY: tests, run_tests
 
 ifeq ($(DEBUG), 1)
   	CFLAGS += -DDEBUG
@@ -13,12 +13,13 @@ else
 endif
 
 
-all: make_tests run_tests
+tests: make_tests run_tests
 
 make_tests:
-	$(CC) $(CFLAGS) -D USE_DOUBLE test_lib_2d.cpp -o $(TARGET)_DOUBLE
-	$(CC) $(CFLAGS) -D USE_LDOUBLE test_lib_2d.cpp -o $(TARGET)_LDOUBLE
-	$(CC) $(CFLAGS) -D USE_FLOAT test_lib_2d.cpp -o $(TARGET)_FLOAT
+	mkdir -p bin/
+	$(CC) $(CFLAGS) -D USE_DOUBLE tests/test_lib_2d.cpp -o $(TARGET)_DOUBLE
+	$(CC) $(CFLAGS) -D USE_LDOUBLE tests/test_lib_2d.cpp -o $(TARGET)_LDOUBLE
+	$(CC) $(CFLAGS) -D USE_FLOAT tests/test_lib_2d.cpp -o $(TARGET)_FLOAT
 
 run_tests:
 	./$(TARGET)_DOUBLE
