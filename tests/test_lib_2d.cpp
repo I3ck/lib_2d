@@ -547,15 +547,15 @@ TEST_CASE("testing Ellipse") {
     SECTION("creation") {
         REQUIRE(ell.size() == 100);
 
-        #ifdef OUTPUT_TEST_FILES
+#ifdef OUTPUT_TEST_FILES
         ell.to_file("ellipse.test");
-        #endif // OUTPUT_TEST_FILES
+#endif // OUTPUT_TEST_FILES
 
         ell = lib_2d::Ellipse<T>(10, 15, 100, true);
 
-        #ifdef OUTPUT_TEST_FILES
+#ifdef OUTPUT_TEST_FILES
         ell.to_file("ellipse_closed.test");
-        #endif // OUTPUT_TEST_FILES
+#endif // OUTPUT_TEST_FILES
     }
 
     SECTION("moving") {
