@@ -7,3 +7,5 @@ sweep algorithms
 ellipse should have an option to close the path
 
 add speed tests?
+
+make interpolations methods of Path?
