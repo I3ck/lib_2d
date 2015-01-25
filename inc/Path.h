@@ -263,7 +263,7 @@ public:
     }
 
 //------------------------------------------------------------------------------
-
+    //Andrew's monotone chain convex hull algorithm
     Path convex_hull() const {
         int n = size();
         Path<T> path = *this;
