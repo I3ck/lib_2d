@@ -45,6 +45,7 @@ public:
     Ellipse(const T &a,
             const T &b,
             const unsigned int &nPoints,
+            const bool &closePath = true,
             const Point<T> &m_center = Point<T> (0.0, 0.0),
             const T &angle = 0) :
 
@@ -54,12 +55,27 @@ public:
         angle(angle),
         m_center(m_center) {
 
-        T pDistance = LIB_2D_2PI / (T)(nPoints - 1);
+        T pDistance;
+        unsigned int endIndex(nPoints);
 
-        for(unsigned int i=0; i<nPoints; ++i) {
+        if(closePath) {
+            pDistance = LIB_2D_2PI / (T)(nPoints - 2);
+            endIndex--;
+        }
+
+        else
+            pDistance = LIB_2D_2PI / (T)(nPoints - 1);
+
+        for(unsigned int i=0; i<endIndex; ++i) {
             T radians = i * pDistance;
             T x = m_center.get_x() + a * cos(radians)*cos(angle) - b*sin(radians)*sin(angle);
             T y = m_center.get_y() + a * cos(radians)*sin(angle) + b*sin(radians)*cos(angle);
+            emplace_back(x, y);
+        }
+
+        if(closePath) {
+            T x = m_center.get_x() + a * cos(0)*cos(angle) - b*sin(0)*sin(angle);
+            T y = m_center.get_y() + a * cos(0)*sin(angle) + b*sin(0)*cos(angle);
             emplace_back(x, y);
         }
     }
