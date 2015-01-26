@@ -264,7 +264,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path bounding_box() const {
+    Path bounding_box(const bool &closePath = true) const {
         if(size() <= 1)
             return *this;
 
@@ -290,7 +290,9 @@ public:
         output.emplace_back(Point<T>(maxX, minY));
         output.emplace_back(Point<T>(maxX, maxY));
         output.emplace_back(Point<T>(minX, maxY));
-        output.push_back(output[0]);
+        
+        if(closePath)
+            output.push_back(output[0]);
         return output;
     }
 
@@ -298,7 +300,7 @@ public:
 //------------------------------------------------------------------------------
 
     //Andrew's monotone chain convex hull algorithm
-    Path convex_hull() const {
+    Path convex_hull(const bool &closePath = true) const {
         int n = size();
         Path<T> path = *this;
 
@@ -322,7 +324,9 @@ public:
         output.push_back(lower);
         output.push_back(upper);
         output.make_unique();
-        output.push_back(output[0]);
+
+        if(closePath)
+            output.push_back(output[0]);
         return output;
     }
 
