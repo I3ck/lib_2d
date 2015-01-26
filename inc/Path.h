@@ -621,6 +621,9 @@ public:
         if(empty() || other.empty())
             return intersections;
 
+        if(!intersects_with(other)) //faster than checking for intersections
+            return intersections;
+
         for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
             bool path1vertical(false), path1horizontal(false);
             T slope1(0.0), slope2(0.0);

@@ -6,8 +6,4 @@ add speed tests?
 
 make interpolations methods of Path?
 
-intersections_with should first call whether it intersects then
-
-maybe do those checks only if a minimum number of points is reached
-
 add option to convex hull and bounding box whether they should be closed (see Arc or Ellipse)
