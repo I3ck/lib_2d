@@ -2,8 +2,4 @@ add more interpolations (splines)
 
 sweep algorithms
 
-add speed tests?
-
-make interpolations methods of Path?
-
 add option to convex hull and bounding box whether they should be closed (see Arc or Ellipse)
