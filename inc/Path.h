@@ -263,6 +263,40 @@ public:
     }
 
 //------------------------------------------------------------------------------
+
+    Path bounding_box() const {
+        if(size() <= 1)
+            return *this;
+
+        T   minX(ps[0].get_x()),
+            maxX(ps[0].get_x()),
+            minY(ps[0].get_y()),
+            maxY(ps[0].get_y());
+
+        for(auto p : ps) {
+            if(p.get_x() < minX)
+                minX = p.get_x();
+            else if(p.get_x() > maxX)
+                maxX = p.get_x();
+
+            if(p.get_y() < minY)
+                minY = p.get_y();
+            else if(p.get_y() > maxY)
+                maxY = p.get_y();
+        }
+
+        Path<T> output;
+        output.emplace_back(Point<T>(minX, minY));
+        output.emplace_back(Point<T>(maxX, minY));
+        output.emplace_back(Point<T>(maxX, maxY));
+        output.emplace_back(Point<T>(minX, maxY));
+        output.push_back(output[0]);
+        return output;
+    }
+
+
+//------------------------------------------------------------------------------
+
     //Andrew's monotone chain convex hull algorithm
     Path convex_hull() const {
         int n = size();

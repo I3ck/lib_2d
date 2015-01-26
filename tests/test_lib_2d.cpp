@@ -473,6 +473,27 @@ TEST_CASE("testing Path") {
         REQUIRE(tmp.size() == 0);
     }
 
+    SECTION("testing bounding box") {
+        Path<T> tmp = Path<T> ();
+        tmp.push_back(0,0);
+        tmp.push_back(3,-1);
+        tmp.push_back(3,3);
+        tmp.push_back(-5,4);
+        tmp.push_back(-6,0);
+
+        tmp.push_back(1,1);
+        tmp.push_back(2,1);
+
+        auto boundingBox = tmp.bounding_box();
+
+#ifdef OUTPUT_TEST_FILES
+        tmp.to_file("bounding_before.test");
+        boundingBox.to_file("bounding_after.test");
+#endif // OUTPUT_TEST_FILES
+
+        REQUIRE(boundingBox.size() == 5);
+    }
+
     SECTION("testing convex hull") {
         Path<T> tmp = Path<T> ();
         tmp.push_back(0,0);

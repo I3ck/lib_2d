@@ -41,10 +41,12 @@ to_string(...) //write coordinates to a string
 from_string(...) //parse from a string
 distance_to(...) //calculate distances between points
 load(...) //load coordinates from file
-to_file(...) //write coordinates to file
+to_file(...) //write coordinates to file  
+bounding_box(...)  //the minimum bounding rectangle of a Path  
 convex_hul(...) //calculate the convex hull of a Path  
 intersections_with(...) //intersections between paths  
 sort_x(...) //sort by x (or y)  
+and_many(more)  
 ```  
 
 
