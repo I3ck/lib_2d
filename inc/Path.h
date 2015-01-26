@@ -698,6 +698,14 @@ public:
         if(empty() || other.empty())
             return false;
 
+        if(size() > 5 && other.size() > 5) { //prevent endless recursion
+            auto boundingBoxThis = bounding_box();
+            auto boundingBoxOther = other.bounding_box();
+
+            if(!boundingBoxThis.intersects_with(boundingBoxOther))
+                return false; //only can intersect if boundig boxes intersect
+        }
+
         for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
             bool path1vertical(false), path1horizontal(false);
             T slope1(0.0), slope2(0.0);
