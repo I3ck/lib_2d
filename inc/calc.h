@@ -25,7 +25,7 @@
 
 namespace lib_2d {
 
-    unsigned long long int faculty(const unsigned int &number) {
+    unsigned long long int faculty(unsigned int number) {
         unsigned long long int f = 1;
         for(unsigned int i =1; i <= number; ++i)
             f *= i;
@@ -33,12 +33,12 @@ namespace lib_2d {
     }
 
     template <typename T>
-    T binomial_coeff(const unsigned int &n, const unsigned int &k) {
+    T binomial_coeff(unsigned int n, unsigned int k) {
         return faculty(n) / ( faculty(k) * faculty(n-k) );
     }
 
     template <typename T>
-    T bernstein_polynomal(const unsigned int &n, const unsigned int &i, const T &t) {
+    T bernstein_polynomal(unsigned int n, unsigned int i, T t) {
         return binomial_coeff<T>(n,i) * pow(t,i) * pow(1.0-t, n-i);
     }
 

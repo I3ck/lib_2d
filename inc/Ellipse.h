@@ -42,12 +42,12 @@ private:
 
 public:
 
-    Ellipse(const T &a,
-            const T &b,
-            const unsigned int &nPoints,
-            const bool &closePath = true,
-            const Point<T> &m_center = Point<T> (0.0, 0.0),
-            const T &angle = 0) :
+    Ellipse(T a,
+            T b,
+            unsigned int nPoints,
+            bool closePath = true,
+            Point<T> m_center = Point<T> (0.0, 0.0),
+            T angle = 0) :
 
         Path<T>(nPoints),
         a(a),
@@ -88,56 +88,56 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void move_by(const T &x, const T &y) {
+    void move_by(T x, T y) {
         Path<T>::move_by(x, y);
         m_center.move_by(x, y);
     }
 
-    void move_by(const Point<T> &other) {
+    void move_by(Point<T> other) {
         Path<T>::move_by(other);
         m_center.move_by(other);
     }
 
 //------------------------------------------------------------------------------
 
-    void mirror_vertically(const T &xValue = 0) {
+    void mirror_vertically(T xValue = 0) {
         Path<T>::mirror_vertically(xValue);
         m_center.mirror_vertically(xValue);
     }
 
-    void mirror_vertically(const Point<T> &other) {
+    void mirror_vertically(Point<T> other) {
         Path<T>::mirror_vertically(other);
         m_center.mirror_vertically(other);
     }
 
-    void mirror_horizontally(const T &yValue = 0) {
+    void mirror_horizontally(T yValue = 0) {
         Path<T>::mirror_horizontally(yValue);
         m_center.mirror_horizontally(yValue);
     }
 
-    void mirror_horizontally(const Point<T> &other) {
+    void mirror_horizontally(Point<T> other) {
         Path<T>::mirror_horizontally(other);
         m_center.mirror_horizontally(other);
     }
 
-    void mirror_point(const Point<T> &other) {
+    void mirror_point(Point<T> other) {
         Path<T>::mirror_point(other);
         m_center.mirror_point(other);
     }
 
-    void mirror_point(const T &xValue = 0, const T &yValue = 0) {
+    void mirror_point(T xValue = 0, T yValue = 0) {
         Path<T>::mirror_point(xValue, yValue);
         m_center.mirror_point(xValue, yValue);
     }
 
 //------------------------------------------------------------------------------
 
-    void rotate(const T &radians, const Point<T> &m_center = Point<T>(0, 0)) {
+    void rotate(T radians, Point<T> m_center = Point<T>(0, 0)) {
         Path<T>::rotate(radians, m_center);
         this->m_center.rotate(radians, m_center);
     }
 
-    void rotate(const T &radians, const T &centerX, const T &centerY) {
+    void rotate(T radians, T centerX, T centerY) {
         Path<T>::rotate(radians, centerX, centerY);
         this->m_center.rotate(radians, centerX, centerY);
     }

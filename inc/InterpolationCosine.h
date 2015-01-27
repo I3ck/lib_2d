@@ -36,7 +36,7 @@ class InterpolationCosine : public Path<T> {
 
 public:
 
-    InterpolationCosine(const unsigned int &nPoints,
+    InterpolationCosine(unsigned int nPoints,
                         const Path<T> &path) : ///@todo find proper name for path
         Path<T> (nPoints) {
 

@@ -36,7 +36,7 @@ class InterpolationLinear : public Path<T> {
 
 public:
 
-    InterpolationLinear(const unsigned int &nPoints,
+    InterpolationLinear(unsigned int nPoints,
                         const Path<T> &path) : ///@todo find proper name for path
         Path<T> (nPoints) {
 

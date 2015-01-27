@@ -47,14 +47,14 @@ class Path {
 protected:
     std::vector < Point <T> > ps;
 
-    T ccw(const Point<T> &p1,const Point<T> &p2, const Point<T> &p3) const {
+    T ccw(Point<T> p1,Point<T> p2, Point<T> p3) const {
         return (p2.x - p1.x)*(p3.y - p1.y) - (p2.y - p1.y)*(p3.x - p1.x);
     }
 
 public:
     Path(){};
 
-    Path(const unsigned int &nPoints) {
+    Path(unsigned int nPoints) {
         reserve(nPoints);
     }
 
@@ -95,67 +95,67 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void move_by(const T &x, const T &y) {
+    void move_by(T x, T y) {
         for(auto &p : ps)
             p.move_by(x, y);
     }
 
-    void move_by(const Point<T> &other) {
+    void move_by(Point<T> other) {
         for(auto &p : ps)
             p.move_by(other);
     }
 
 //------------------------------------------------------------------------------
 
-    void mirror_vertically(const T &xValue = 0) {
+    void mirror_vertically(T xValue = 0) {
         for(auto &p : ps)
             p.mirror_vertically(xValue);
     }
 
-    void mirror_vertically(const Point<T> &other) {
+    void mirror_vertically(Point<T> other) {
         for(auto &p : ps)
             p.mirror_vertically(other);
     }
 
-    void mirror_horizontally(const T &yValue = 0) {
+    void mirror_horizontally(T yValue = 0) {
         for(auto &p : ps)
             p.mirror_horizontally(yValue);
     }
 
-    void mirror_horizontally(const Point<T> &other) {
+    void mirror_horizontally(Point<T> other) {
         for(auto &p : ps)
             p.mirror_horizontally(other);
     }
 
-    void mirror_point(const Point<T> &other) {
+    void mirror_point(Point<T> other) {
         for(auto &p : ps)
             p.mirror_point(other);
     }
 
-    void mirror_point(const T &xValue = 0, const T &yValue = 0) {
+    void mirror_point(T xValue = 0, T yValue = 0) {
         for(auto &p : ps)
             p.mirror_point(xValue, yValue);
     }
 
 //------------------------------------------------------------------------------
 
-    void rotate(const T &radians, const Point<T> &center = Point<T>(0, 0)) {
+    void rotate(T radians, Point<T> center = Point<T>(0, 0)) {
         for(auto &p : ps)
             p.rotate(radians, center);
     }
 
-    void rotate(const T &radians, const T &centerX, const T &centerY) {
+    void rotate(T radians, T centerX, T centerY) {
         for(auto &p : ps)
             p.rotate(radians, centerX, centerY);
     }
 
 //------------------------------------------------------------------------------
 
-    std::string to_string(const std::string &divider = " ") const {
+    std::string to_string(std::string divider = " ") const {
         std::string output("");
 
         for(const auto &p : ps)
-                output += p.to_string(divider) + "\n";
+            output += p.to_string(divider) + "\n";
 
         return output;
     }
@@ -201,11 +201,11 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void push_back(const Point<T> &point) {
+    void push_back(Point<T> point) {
         ps.push_back(point);
     }
 
-    void push_back(const T &x, const T &y) {
+    void push_back(T x, T y) {
         push_back(Point<T>(x, y));
     }
 
@@ -214,11 +214,11 @@ public:
             push_back(*i);
     }
 
-    void emplace_back(const Point<T> &point) {
+    void emplace_back(Point<T> point) {
         ps.emplace_back(point);
     }
 
-    void emplace_back(const T &x, const T &y) {
+    void emplace_back(T x, T y) {
         emplace_back(Point<T>(x, y));
     }
 
@@ -264,7 +264,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path bounding_box(const bool &closePath = true) const {
+    Path bounding_box(bool closePath = true) const {
         if(size() <= 1)
             return *this;
 
@@ -300,7 +300,7 @@ public:
 //------------------------------------------------------------------------------
 
     //Andrew's monotone chain convex hull algorithm
-    Path convex_hull(const bool &closePath = true) const {
+    Path convex_hull(bool closePath = true) const {
         int n = size();
         Path<T> path = *this;
 
@@ -364,7 +364,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool has_point(const Point<T> &point) {
+    bool has_point(Point<T> point) {
         for(const auto &p : ps) {
             if(p.equal_to(point))
                 return true;
@@ -374,13 +374,13 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool has_point(const T &x, const T &y) {
+    bool has_point(T x, T y) {
         return has_point(Point<T>(x, y));
     }
 
 //------------------------------------------------------------------------------
 
-    void reserve(const size_t &i) {
+    void reserve(size_t i) {
         ps.reserve(i);
     }
 
@@ -398,20 +398,20 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void remove_from(const unsigned int &index) {
+    void remove_from(unsigned int index) {
         if(size() < index)
             return;
         ps.erase(ps.begin() + index, ps.end());
     }
 
-    void remove_until(const unsigned int &index) {
+    void remove_until(unsigned int index) {
         if(size() < index)
             clear();
         else
             ps.erase(ps.begin(), ps.begin() + index);
     }
 
-    void remove_right_of(const T &x) {
+    void remove_right_of(T x) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->x > x) {
@@ -423,11 +423,11 @@ public:
         }
     }
 
-    void remove_right_of(const Point<T> &other) {
+    void remove_right_of(Point<T> other) {
         remove_right_of(other.x);
     }
 
-    void remove_left_of(const T &x) {
+    void remove_left_of(T x) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->x < x) {
@@ -439,11 +439,11 @@ public:
         }
     }
 
-    void remove_left_of(const Point<T> &other) {
+    void remove_left_of(Point<T> other) {
         remove_left_of(other.x);
     }
 
-    void remove_above_of(const T &y) {
+    void remove_above_of(T y) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->y > y) {
@@ -455,11 +455,11 @@ public:
         }
     }
 
-    void remove_above_of(const Point<T> &other) {
+    void remove_above_of(Point<T> other) {
         remove_above_of(other.y);
     }
 
-    void remove_below_of(const T &y) {
+    void remove_below_of(T y) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->y < y) {
@@ -471,11 +471,11 @@ public:
         }
     }
 
-    void remove_below_of(const Point<T> &other) {
+    void remove_below_of(Point<T> other) {
         remove_below_of(other.y);
     }
 
-    void remove_closer_to_than(const T &distance, const Point<T> &other = Point<T>(0, 0)) {
+    void remove_closer_to_than(T distance, Point<T> other = Point<T>(0, 0)) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->distance_to(other) < distance) {
@@ -487,7 +487,7 @@ public:
         }
     }
 
-    void remove_further_apart_to_than(const T &distance, const Point<T> &other = Point<T>(0, 0)) {
+    void remove_further_apart_to_than(T distance, Point<T> other = Point<T>(0, 0)) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->distance_to(other) > distance) {
@@ -516,7 +516,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    int furthest_apart(const Point<T> &other) const {
+    int furthest_apart(Point<T> other) const {
         T maxDistance(0);
         int furthestIndex(-1);
         for (unsigned int i = 0; i < size(); ++i) {
@@ -528,7 +528,7 @@ public:
         return furthestIndex;
     }
 
-    int furthest_apart(const T &x, const T &y) const {
+    int furthest_apart(T x, T y) const {
         return furthest_apart(Point<T>(x, y));
     }
 
@@ -548,7 +548,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    int closest(const Point<T> &other) const {
+    int closest(Point<T> other) const {
         int closestIndex(-1);
         if(size() == 0)
             return closestIndex;
@@ -562,7 +562,7 @@ public:
         return closestIndex;
     }
 
-    int closest(const T &x, const T &y) const {
+    int closest(T x, T y) const {
         return closest(Point<T>(x, y));
     }
 
@@ -583,7 +583,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool similar_to(const Path &other, const T &maxDistance) const {
+    bool similar_to(const Path &other, T maxDistance) const {
         if(size() != other.size())
             return false;
         for(unsigned int i = 0; i < size(); ++i) {
@@ -607,7 +607,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    int index_of(const Point<T> &other) {
+    int index_of(Point<T> other) {
         for(auto p = ps.cbegin(); p != ps.cend(); ++p) {
                 if (*p == other)
                     return (p - ps.cbegin());
@@ -836,7 +836,7 @@ public:
         return *this;
     }
 
-    Path<T>& operator += (const Point<T> &other) {
+    Path<T>& operator += (Point<T> other) {
         push_back(other);
         return *this;
     }
@@ -847,17 +847,17 @@ public:
         return out;
     }
 
-    Path<T> operator + (const Point<T> &other) const {
+    Path<T> operator + (Point<T> other) const {
         auto out = *this;
         out.push_back(other);
         return out;
     }
 
-    Point<T> operator [] (const unsigned int &i) const {
+    Point<T> operator [] (unsigned int i) const {
         return ps[i];
     }
 
-    Point<T>& operator [] (const unsigned int &i) {
+    Point<T>& operator [] (unsigned int i) {
         return ps[i];
     }
 
@@ -909,11 +909,11 @@ public:
 
 private:
 
-    static bool compare_x(const Point<T> &lhs, const Point<T> &rhs) {
+    static bool compare_x(Point<T> lhs, Point<T> rhs) {
         return lhs.x < rhs.x;
     }
 
-    static bool compare_y(const Point<T> &lhs, const Point<T> &rhs) {
+    static bool compare_y(Point<T> lhs, Point<T> rhs) {
         return lhs.y < rhs.y;
     }
 

@@ -37,7 +37,7 @@ class InterpolationBezier : public Path<T> {
 
 private:
 
-    Point<T> control_polygon(const Path<T> &path, const unsigned int nPoints, const T &t) {
+    Point<T> control_polygon(const Path<T> &path, unsigned int nPoints, T t) {
         T x(0), y(0);
 
         for(unsigned int i = 0; i <= nPoints; ++i) {
@@ -51,7 +51,7 @@ private:
 
 public:
 
-    InterpolationBezier(const unsigned int &nPoints,
+    InterpolationBezier(unsigned int nPoints,
                         const Path<T> &path) : ///@todo find proper name for path
         Path<T>(nPoints) {
 

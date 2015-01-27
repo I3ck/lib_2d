@@ -39,59 +39,59 @@ public:
         Point(0, 0)
     {}
 
-    Point(const T &x, const T &y) :
+    Point(T x, T y) :
         x(x),
         y(y)
     {}
 
-    Point(const std::pair<T, T> &values) :
+    Point(std::pair<T, T> values) :
         x(values.first),
         y(values.second)
     {}
 
 //------------------------------------------------------------------------------
 
-    void move_by(const T &x, const T &y) {
+    void move_by(T x, T y) {
         this->x+=x;
         this->y+=y;
     }
 
-    void move_by(const Point &other) {
+    void move_by(Point other) {
         this->x+=other.x;
         this->y+=other.y;
     }
 
 //------------------------------------------------------------------------------
 
-    void mirror_vertically(const T &xValue = 0) {
+    void mirror_vertically(T xValue = 0) {
         x = 2 * xValue - x;
     }
 
-    void mirror_vertically(const Point &other) {
+    void mirror_vertically(Point other) {
         mirror_vertically(other.x);
     }
 
-    void mirror_horizontally(const T &yValue = 0) {
+    void mirror_horizontally(T yValue = 0) {
         y = 2 * yValue - y;
     }
 
-    void mirror_horizontally(const Point &other) {
+    void mirror_horizontally(Point other) {
         mirror_horizontally(other.y);
     }
 
-    void mirror_point(const Point &other) {
+    void mirror_point(Point other) {
         mirror_vertically(other);
         mirror_horizontally(other);
     }
 
-    void mirror_point(const T &xValue = 0, const T &yValue = 0) {
+    void mirror_point(T xValue = 0, T yValue = 0) {
         mirror_point(Point(xValue, yValue));
     }
 
 
 //------------------------------------------------------------------------------
 
-    void rotate(const T &radians, const Point &center = Point(0, 0)) {
+    void rotate(T radians, Point center = Point(0, 0)) {
         T newX, newY;
 
         newX = center.x + cos(radians) * (x - center.x) - sin(radians) * (y - center.y);
@@ -101,19 +101,19 @@ public:
         y = newY;
     }
 
-    void rotate(const T &radians, const T &centerX, const T &centerY) {
+    void rotate(T radians, T centerX, T centerY) {
         rotate(radians, Point(centerX, centerY));
     }
 
 //------------------------------------------------------------------------------
 
-    std::string to_string(const std::string &divider = " ") const {
+    std::string to_string(std::string divider = " ") const {
         std::stringstream ss;
         ss << x << divider << y;
         return ss.str();
     }
 
-    bool from_string(const std::string &input, const std::string &divider = " ") {
+    bool from_string(const std::string &input, std::string divider = " ") {
         size_t pos = input.find(divider);
         std::stringstream ss;
         if(pos == std::string::npos)
@@ -141,37 +141,37 @@ public:
 
 //------------------------------------------------------------------------------
 
-    T distance_to(const Point &other) const {
+    T distance_to(Point other) const {
         return sqrt(  pow(x-other.x,2) + pow(y-other.y,2)  );
     }
 
-    T distance_to(const T &x, const T &y) const {
+    T distance_to(T x, T y) const {
         return distance_to(Point(x,y));
     }
 
 //------------------------------------------------------------------------------
 
-    T slope_to(const Point &other) const {
+    T slope_to(Point other) const {
         return (other.y - y) / (other.x - x);
     }
 
 //------------------------------------------------------------------------------
 
     ///@todo rename to 'radians_to'
-    T rad_to(const Point &other) const {
+    T rad_to(Point other) const {
         return atan2(other.y - y, other.x - x);
     }
 
 //------------------------------------------------------------------------------
 
-    Point center_between(const Point &other) const {
+    Point center_between(Point other) const {
         return Point(x + (other.x - x) / 2.0, y + (other.y - y) / 2.0);
     }
 
 
 //------------------------------------------------------------------------------
 
-    bool similar_to(const Point &other, const T &maxDistance) const {
+    bool similar_to(Point other, T maxDistance) const {
         if (distance_to(other) > maxDistance)
             return false;
         return true;
@@ -179,7 +179,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool equal_to (const Point &other) const {
+    bool equal_to (Point other) const {
         if (x == other.x && y == other.y)
             return true;
         return false;
@@ -187,19 +187,19 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool operator == (const Point &other) const {
+    bool operator == (Point other) const {
         return equal_to(other);
     }
 
-    bool operator != (const Point &other) const {
+    bool operator != (Point other) const {
         return !equal_to(other);
     }
 
-    bool operator < (const Point &other) const {
+    bool operator < (Point other) const {
         return x < other.x || (x == other.x && y < other.y);
     }
 
-    friend std::ostream &operator << (std::ostream &os, const Point &point) {
+    friend std::ostream &operator << (std::ostream &os, Point point) {
         os << point.to_string();
         return os;
     }
