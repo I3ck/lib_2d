@@ -17,7 +17,7 @@
  * \author  Martin Buck
  * \date    November 2014
  * \version 1.0
- * \brief   contains the class Point which represents a umerical point in 2d space
+ * \brief   contains the class Point which represents a numerical point in 2d space
  *          Point provides several methods to work with
  */
 
