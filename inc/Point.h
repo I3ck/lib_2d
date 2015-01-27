@@ -32,10 +32,9 @@ namespace lib_2d {
 template <typename T>
 class Point {
 
-private:
+public:
     T x, y;
 
-public:
     Point() :
         Point(0, 0)
     {}
