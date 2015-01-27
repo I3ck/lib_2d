@@ -35,13 +35,6 @@ class Point {
 public:
     T x, y;
 
-///@todo uncomment once running
-/*
-    Point(std::pair<T, T> values) :
-        x(values.first),
-        y(values.second)
-    {}
-*/
 //------------------------------------------------------------------------------
 
     void move_by(T x, T y) {

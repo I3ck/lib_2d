@@ -122,22 +122,6 @@ TEST_CASE("testing Point") {
         REQUIRE(p2 != p);
     }
 
-    ///@todo re-enable once working
-    /*
-    SECTION("testing conversion with pair") {
-        p2 = p;
-        pair <T, T> tmp = p;
-        p = Point <T> (tmp);
-
-        REQUIRE(p2 == p);
-
-        tmp = pair <T,T> (0.3, 17.7);
-        p = Point <T> (tmp);
-
-        REQUIRE(p != p2);
-    }
-    */
-
     SECTION("testing stringstream overload") {
         std::stringstream tmp;
         p2 = p;
