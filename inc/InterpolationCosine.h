@@ -19,6 +19,7 @@
  * \version 1.0
  * \brief   contains the class InterpolationCosine which will add interpolation points with the cosine function
  */
+
 #ifndef INTERPOLATIONCOSINE_H_INCLUDED
 #define INTERPOLATIONCOSINE_H_INCLUDED
 
@@ -46,13 +47,13 @@ public:
                 traveledBefore(0);
 
             for(auto j = path.cbegin()+1; j != path.cend(); ++j) {
-                traveled += sqrt ( pow( j->get_x() - (j-1)->get_x(),2) + pow(j->get_y() - (j-1)->get_y(),2) );
+                traveled += sqrt ( pow( j->x - (j-1)->x,2) + pow(j->y - (j-1)->y,2) );
 
                 if(traveled >= pDistance*i) {
                     T proportion = (i*pDistance - traveledBefore) / (traveled - traveledBefore);
                     T proportion2 = ( 1 - cos(proportion*LIB_2D_PI) ) / 2.0;
-                    T newX = (j-1)->get_x() + proportion * (j->get_x() - (j-1)->get_x());
-                    T newY = (j-1)->get_y() * ( 1 - proportion2) + j->get_y()*proportion2;
+                    T newX = (j-1)->x + proportion * (j->x - (j-1)->x);
+                    T newY = (j-1)->y * ( 1 - proportion2) + j->y*proportion2;
 
                     emplace_back(Point<T>(newX, newY));
                     traveledBefore = traveled;

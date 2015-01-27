@@ -47,12 +47,12 @@ public:
                 traveledBefore(0);
 
             for(auto j = path.cbegin()+1; j != path.cend(); ++j) {
-                traveled += sqrt ( pow( j->get_x() - (j-1)->get_x(),2) + pow(j->get_y() - (j-1)->get_y(),2) );
+                traveled += sqrt ( pow( j->x - (j-1)->x,2) + pow(j->y - (j-1)->y,2) );
 
                 if(traveled >= pDistance*i) {
                     T proportion = (i*pDistance - traveledBefore) / (traveled - traveledBefore);
-                    T newX = (j-1)->get_x() + proportion * ( j->get_x() - (j-1)->get_x());
-                    T newY = (j-1)->get_y() + proportion * ( j->get_y() - (j-1)->get_y());
+                    T newX = (j-1)->x + proportion * ( j->x - (j-1)->x);
+                    T newY = (j-1)->y + proportion * ( j->y - (j-1)->y);
 
                     emplace_back(Point<T>(newX, newY));
                     break;

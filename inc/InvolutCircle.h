@@ -56,8 +56,8 @@ public:
 
         for (unsigned int i=0; i<nPoints; ++i ) {
             T current = i * pDistance;
-            T x = m_center.get_x() + diameter/2.0 * (cos(current) + current * sin(current));
-            T y = m_center.get_y() + diameter/2.0 * (sin(current) - current * cos(current));
+            T x = m_center.x + diameter/2.0 * (cos(current) + current * sin(current));
+            T y = m_center.y + diameter/2.0 * (sin(current) - current * cos(current));
             emplace_back(x,y);
         }
     }

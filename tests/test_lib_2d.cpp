@@ -58,28 +58,28 @@ TEST_CASE("testing Point") {
     auto p2 = p;
 
     SECTION ("testing initialisation") {
-        REQUIRE(p.get_x() == X);
-        REQUIRE(p.get_y() == Y);
+        REQUIRE(p.x == X);
+        REQUIRE(p.y == Y);
     }
 
     SECTION("testing moving") {
         p.move_by(MOVE_X, MOVE_Y);
 
-        REQUIRE(p.get_x() == X+MOVE_X);
-        REQUIRE(p.get_y() == Y+MOVE_Y);
+        REQUIRE(p.x == X+MOVE_X);
+        REQUIRE(p.y == Y+MOVE_Y);
     }
 
     SECTION("testing parsing from and to strings") {
         std::string tmp = p.to_string();
-        p.set_x(17);
-        p.set_y(32);
+        p.x = 17;
+        p.y = 32;
         p.from_string(tmp);
 
         REQUIRE(p.to_string() == tmp);
     }
 
     SECTION("testing distances and abs") {
-        REQUIRE(abs(  p.abs() - (T)sqrt(  pow(p.get_x(),2) + pow(p.get_y(),2)  )  ) < MAX_DELTA);
+        REQUIRE(abs(  p.abs() - (T)sqrt(  pow(p.x,2) + pow(p.y,2)  )  ) < MAX_DELTA);
         REQUIRE(p.distance_to(0.0, 0.0) == p.abs());
         REQUIRE(p.distance_to(p) == 0.0);
     }
@@ -88,29 +88,29 @@ TEST_CASE("testing Point") {
         p2 = p;
 
         p.rotate(LIB_2D_PI);
-        REQUIRE(p.get_x() !=  p2.get_x());
-        REQUIRE(p.get_y() !=  p2.get_y());
+        REQUIRE(p.x !=  p2.x);
+        REQUIRE(p.y !=  p2.y);
 
         p.rotate(LIB_2D_PI);
-        REQUIRE(abs(p.get_x() - p2.get_x()) < MAX_DELTA);
-        REQUIRE(abs(p.get_y() - p2.get_y()) < MAX_DELTA);
+        REQUIRE(abs(p.x - p2.x) < MAX_DELTA);
+        REQUIRE(abs(p.y - p2.y) < MAX_DELTA);
     }
 
     SECTION("testing mirroring") {
         p2 = p;
         p.mirror_vertically();
-        REQUIRE(p.get_y() == p2.get_y());
-        REQUIRE(p.get_x() == -p2.get_x());
+        REQUIRE(p.y == p2.y);
+        REQUIRE(p.x == -p2.x);
 
         p2 = p;
         p.mirror_horizontally();
-        REQUIRE(p.get_x() == p2.get_x());
-        REQUIRE(p.get_y() == -p2.get_y());
+        REQUIRE(p.x == p2.x);
+        REQUIRE(p.y == -p2.y);
 
         p2 = p;
         p.mirror_point();
-        REQUIRE(p.get_x() == -p2.get_x());
-        REQUIRE(p.get_y() == -p2.get_y());
+        REQUIRE(p.x == -p2.x);
+        REQUIRE(p.y == -p2.y);
     }
 
     SECTION("testing equality tests") {
@@ -158,31 +158,31 @@ TEST_CASE("testing Point") {
     }
 
     SECTION("testing phi calculation") {
-        p.set_x(0);
-        p.set_y(1);
+        p.x = 0;
+        p.y = 1;
         REQUIRE(abs( p.phi() - LIB_2D_PI/2.0) <= MAX_DELTA);
 
-        p.set_x(-1);
-        p.set_y(0);
+        p.x = -1;
+        p.y = 0;
         REQUIRE(abs( p.phi() - LIB_2D_PI) <= MAX_DELTA);
     }
 
     SECTION("testing slope calculation") {
-        p.set_x(0);
-        p.set_y(0);
+        p.x = 0;
+        p.y = 0;
 
-        p2.set_x(1);
-        p2.set_y(2);
+        p2.x = 1;
+        p2.y = 2;
 
         REQUIRE(abs( p.slope_to(p2) - 2.0) <= MAX_DELTA);
     }
 
     SECTION("testing radians calculation") {
-        p.set_x(1);
-        p.set_y(1);
+        p.x = 1;
+        p.y = 1;
 
-        p2.set_x(1);
-        p2.set_y(2);
+        p2.x = 1;
+        p2.y = 2;
 
         REQUIRE(abs( p.rad_to(p2) - LIB_2D_PI/2.0) <= MAX_DELTA);
     }
@@ -293,7 +293,7 @@ TEST_CASE("testing Path") {
         auto pathCenter = path.center();
 
         REQUIRE(pathCenter.abs() == 1.0);
-        REQUIRE(pathCenter.get_x() == -1.0);
+        REQUIRE(pathCenter.x == -1.0);
     }
 
     SECTION("testing parsing from and to string") {
@@ -378,11 +378,11 @@ TEST_CASE("testing Path") {
 
         tmp.sort_y();
         for(unsigned int y=91; y <= 100; ++y)
-            REQUIRE(tmp[y-91].get_y() == y);
+            REQUIRE(tmp[y-91].y == y);
 
         tmp.sort_x();
         for(unsigned int x=1; x <= 10; ++x)
-            REQUIRE(tmp[x-1].get_x() == x);
+            REQUIRE(tmp[x-1].x == x);
     }
 
     SECTION("testing closest and furthest") {
@@ -544,7 +544,7 @@ TEST_CASE("testing Arc") {
         arc.move_by(10,0);
         arc.rotate(LIB_2D_PI);
         auto center = arc.center();
-        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.x == -10);
     }
 
     SECTION("mirroring") {
@@ -552,13 +552,13 @@ TEST_CASE("testing Arc") {
 
         arc.mirror_vertically();
         auto center = arc.center();
-        REQUIRE(center.get_x() == -10);
-        REQUIRE(center.get_y() == 5);
+        REQUIRE(center.x == -10);
+        REQUIRE(center.y == 5);
 
         arc.mirror_horizontally();
         center = arc.center();
-        REQUIRE(center.get_x() == -10);
-        REQUIRE(center.get_y() == -5);
+        REQUIRE(center.x == -10);
+        REQUIRE(center.y == -5);
     }
 }
 
@@ -588,7 +588,7 @@ TEST_CASE("testing Ellipse") {
         ell.move_by(10,0);
         ell.rotate(LIB_2D_PI);
         auto center = ell.center();
-        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.x == -10);
     }
 
     SECTION("mirroring") {
@@ -596,13 +596,13 @@ TEST_CASE("testing Ellipse") {
 
         ell.mirror_vertically();
         auto center = ell.center();
-        REQUIRE(center.get_x() == -10);
-        REQUIRE(center.get_y() == 5);
+        REQUIRE(center.x == -10);
+        REQUIRE(center.y == 5);
 
         ell.mirror_horizontally();
         center = ell.center();
-        REQUIRE(center.get_x() == -10);
-        REQUIRE(center.get_y() == -5);
+        REQUIRE(center.x == -10);
+        REQUIRE(center.y == -5);
     }
 }
 
@@ -625,7 +625,7 @@ TEST_CASE("testing InvolutCircle") {
         inv.move_by(10,0);
         inv.rotate(LIB_2D_PI);
         auto center = inv.center();
-        REQUIRE(center.get_x() == -10);
+        REQUIRE(center.x == -10);
     }
 
     SECTION("mirroring") {
@@ -633,13 +633,13 @@ TEST_CASE("testing InvolutCircle") {
 
         inv.mirror_vertically();
         auto center = inv.center();
-        REQUIRE(center.get_x() == -10);
-        REQUIRE(center.get_y() == 5);
+        REQUIRE(center.x == -10);
+        REQUIRE(center.y == 5);
 
         inv.mirror_horizontally();
         center = inv.center();
-        REQUIRE(center.get_x() == -10);
-        REQUIRE(center.get_y() == -5);
+        REQUIRE(center.x == -10);
+        REQUIRE(center.y == -5);
     }
 
 }

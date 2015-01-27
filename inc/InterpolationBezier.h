@@ -41,8 +41,8 @@ private:
         T x(0), y(0);
 
         for(unsigned int i = 0; i <= nPoints; ++i) {
-            x += bernstein_polynomal(nPoints,i,t) * path[i].get_x();
-            y += bernstein_polynomal(nPoints,i,t) * path[i].get_y();
+            x += bernstein_polynomal(nPoints,i,t) * path[i].x;
+            y += bernstein_polynomal(nPoints,i,t) * path[i].y;
         }
 
         return Point<T>(x,y);

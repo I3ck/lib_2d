@@ -68,14 +68,14 @@ public:
 
         for(unsigned int i=0; i<endIndex; ++i) {
             T radians = i * pDistance;
-            T x = m_center.get_x() + a * cos(radians)*cos(angle) - b*sin(radians)*sin(angle);
-            T y = m_center.get_y() + a * cos(radians)*sin(angle) + b*sin(radians)*cos(angle);
+            T x = m_center.x + a * cos(radians)*cos(angle) - b*sin(radians)*sin(angle);
+            T y = m_center.y + a * cos(radians)*sin(angle) + b*sin(radians)*cos(angle);
             emplace_back(x, y);
         }
 
         if(closePath) {
-            T x = m_center.get_x() + a * cos(0)*cos(angle) - b*sin(0)*sin(angle);
-            T y = m_center.get_y() + a * cos(0)*sin(angle) + b*sin(0)*cos(angle);
+            T x = m_center.x + a * cos(0)*cos(angle) - b*sin(0)*sin(angle);
+            T y = m_center.y + a * cos(0)*sin(angle) + b*sin(0)*cos(angle);
             emplace_back(x, y);
         }
     }

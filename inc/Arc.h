@@ -66,14 +66,14 @@ public:
 
         for(unsigned int i=0; i<endIndex; ++i) {
             T radians = radiansStart + i * pDistance;
-            T x = m_center.get_x() + diameter/2.0 * cos(radians);
-            T y = m_center.get_y() + diameter/2.0 * sin(radians);
+            T x = m_center.x + diameter/2.0 * cos(radians);
+            T y = m_center.y + diameter/2.0 * sin(radians);
             emplace_back(x, y);
         }
 
         if(closePath) {
-            T x = m_center.get_x() + diameter/2.0 * cos(radiansStart);
-            T y = m_center.get_y() + diameter/2.0 * sin(radiansStart);
+            T x = m_center.x + diameter/2.0 * cos(radiansStart);
+            T y = m_center.y + diameter/2.0 * sin(radiansStart);
             emplace_back(x, y);
         }
     }

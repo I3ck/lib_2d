@@ -51,26 +51,6 @@ public:
 
 //------------------------------------------------------------------------------
 
-    T get_x() const {
-        return x;
-    }
-
-    T get_y() const {
-        return y;
-    }
-
-//------------------------------------------------------------------------------
-
-    void set_x(const T &x) {
-        this->x=x;
-    }
-
-    void set_y(const T &y) {
-        this->y=y;
-    }
-
-//------------------------------------------------------------------------------
-
     void move_by(const T &x, const T &y) {
         this->x+=x;
         this->y+=y;
@@ -216,7 +196,7 @@ public:
     }
 
     bool operator < (const Point &other) const {
-        return x < other.get_x() || (x == other.get_x() && y < other.get_y());
+        return x < other.x || (x == other.x && y < other.y);
     }
 
     friend std::ostream &operator << (std::ostream &os, const Point &point) {

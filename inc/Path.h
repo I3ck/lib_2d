@@ -48,7 +48,7 @@ protected:
     std::vector < Point <T> > ps;
 
     T ccw(const Point<T> &p1,const Point<T> &p2, const Point<T> &p3) const {
-        return (p2.get_x() - p1.get_x())*(p3.get_y() - p1.get_y()) - (p2.get_y() - p1.get_y())*(p3.get_x() - p1.get_x());
+        return (p2.x - p1.x)*(p3.y - p1.y) - (p2.y - p1.y)*(p3.x - p1.x);
     }
 
 public:
@@ -268,21 +268,21 @@ public:
         if(size() <= 1)
             return *this;
 
-        T   minX(ps[0].get_x()),
-            maxX(ps[0].get_x()),
-            minY(ps[0].get_y()),
-            maxY(ps[0].get_y());
+        T   minX(ps[0].x),
+            maxX(ps[0].x),
+            minY(ps[0].y),
+            maxY(ps[0].y);
 
         for(auto p : ps) {
-            if(p.get_x() < minX)
-                minX = p.get_x();
-            else if(p.get_x() > maxX)
-                maxX = p.get_x();
+            if(p.x < minX)
+                minX = p.x;
+            else if(p.x > maxX)
+                maxX = p.x;
 
-            if(p.get_y() < minY)
-                minY = p.get_y();
-            else if(p.get_y() > maxY)
-                maxY = p.get_y();
+            if(p.y < minY)
+                minY = p.y;
+            else if(p.y > maxY)
+                maxY = p.y;
         }
 
         Path<T> output;
@@ -290,7 +290,7 @@ public:
         output.emplace_back(Point<T>(maxX, minY));
         output.emplace_back(Point<T>(maxX, maxY));
         output.emplace_back(Point<T>(minX, maxY));
-        
+
         if(closePath)
             output.push_back(output[0]);
         return output;
@@ -414,7 +414,7 @@ public:
     void remove_right_of(const T &x) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
-            if(i->get_x() > x) {
+            if(i->x > x) {
                 deleted = true;
                 i = ps.erase(i);
             }
@@ -424,13 +424,13 @@ public:
     }
 
     void remove_right_of(const Point<T> &other) {
-        remove_right_of(other.get_x());
+        remove_right_of(other.x);
     }
 
     void remove_left_of(const T &x) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
-            if(i->get_x() < x) {
+            if(i->x < x) {
                 deleted = true;
                 i = ps.erase(i);
             }
@@ -440,13 +440,13 @@ public:
     }
 
     void remove_left_of(const Point<T> &other) {
-        remove_left_of(other.get_x());
+        remove_left_of(other.x);
     }
 
     void remove_above_of(const T &y) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
-            if(i->get_y() > y) {
+            if(i->y > y) {
                 deleted = true;
                 i = ps.erase(i);
             }
@@ -456,13 +456,13 @@ public:
     }
 
     void remove_above_of(const Point<T> &other) {
-        remove_above_of(other.get_y());
+        remove_above_of(other.y);
     }
 
     void remove_below_of(const T &y) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
-            if(i->get_y() < y) {
+            if(i->y < y) {
                 deleted = true;
                 i = ps.erase(i);
             }
@@ -472,7 +472,7 @@ public:
     }
 
     void remove_below_of(const Point<T> &other) {
-        remove_below_of(other.get_y());
+        remove_below_of(other.y);
     }
 
     void remove_closer_to_than(const T &distance, const Point<T> &other = Point<T>(0, 0)) {
@@ -507,8 +507,8 @@ public:
             sumY(0.0);
 
         for(const auto &i : ps) {
-            sumX += i.get_x();
-            sumY += i.get_y();
+            sumX += i.x;
+            sumY += i.y;
         }
 
         return Point<T>(sumX / size(), sumY / size());
@@ -633,62 +633,62 @@ public:
             T slope1(0.0), slope2(0.0);
             Point<T> currentIntersection;
 
-            if((i1+1)->get_x() == i1->get_x())
+            if((i1+1)->x == i1->x)
                 path1vertical = true;
             else
                 slope1 = i1->slope_to(*(i1+1));
 
-            if((i1+1)->get_y() == i1->get_y())
+            if((i1+1)->y == i1->y)
                 path1horizontal = true;
 
             for(auto i2 = other.cbegin(); i2 != other.cend()-1; ++i2) {
                 T path2vertical(false), path2horizontal(false);
 
-                if((i2+1)->get_x() == i2->get_x()) {
+                if((i2+1)->x == i2->x) {
                     if(path1vertical) continue;
                     path2vertical = true;
                 }
 
-                if((i2+1)->get_y() == i2->get_y()) {
+                if((i2+1)->y == i2->y) {
                     if(path1horizontal) continue;
                     path2horizontal = true;
                 }
 
                 if(path1vertical) {
-                    currentIntersection.set_x(i1->get_x());
+                    currentIntersection.x = i1->x;
                     if(path2horizontal)
-                        currentIntersection.set_y(i2->get_y());
+                        currentIntersection.y = i2->y;
                     else
-                        currentIntersection.set_y(
+                        currentIntersection.y =
                                                   i2->slope_to(*(i2+1))
-                                                  * currentIntersection.get_x()
-                                                  + ( (i2+1)->get_x() * i2->get_y() - i2->get_x() * (i2+1)->get_y() )
-                                                  / ( (i2+1)->get_x() - i2->get_x() )
-                                                  );
+                                                  * currentIntersection.x
+                                                  + ( (i2+1)->x * i2->y - i2->x * (i2+1)->y )
+                                                  / ( (i2+1)->x - i2->x )
+                                                  ;
                 }
                 else if(path2vertical) {
-                    currentIntersection.set_x(i2->get_x());
+                    currentIntersection.x = i2->x;
                     if(path1horizontal)
-                        currentIntersection.set_y(i1->get_y());
+                        currentIntersection.y = i1->y;
                     else
-                        currentIntersection.set_y(
+                        currentIntersection.y =
                                                   i1->slope_to(*(i1+1))
-                                                  * currentIntersection.get_x()
-                                                  + ( (i1+1)->get_x() * i1->get_y() - i1->get_x() * (i1+1)->get_y() )
-                                                  / ( (i2+1)->get_x() - i2->get_x() )
-                                                  );
+                                                  * currentIntersection.x
+                                                  + ( (i1+1)->x * i1->y - i1->x * (i1+1)->y )
+                                                  / ( (i2+1)->x - i2->x )
+                                                  ;
                 }
                 else {
                     slope2 = i2->slope_to(*(i2+1));
-                    currentIntersection.set_x( (i2->get_y() - i1->get_y() + slope1 * i1->get_x() - slope2 * i2->get_x())  /  (slope1 - slope2) );
-                    currentIntersection.set_y( slope1 * (currentIntersection.get_x() - i1->get_x()) + i1->get_y());
+                    currentIntersection.x =  (i2->y - i1->y + slope1 * i1->x - slope2 * i2->x)  /  (slope1 - slope2) ;
+                    currentIntersection.y = slope1 * (currentIntersection.x - i1->x) + i1->y;
                 }
 
-                if(     ( ((i2+1)->get_x() >= currentIntersection.get_x() && i2->get_x() <= currentIntersection.get_x() )
-                           || (i2->get_x() >= currentIntersection.get_x() && ((i2+1)->get_x() <= currentIntersection.get_x()))
+                if(     ( ((i2+1)->x >= currentIntersection.x && i2->x <= currentIntersection.x )
+                           || (i2->x >= currentIntersection.x && ((i2+1)->x <= currentIntersection.x))
                         )
-                        && ( ((i1+1)->get_x() >= currentIntersection.get_x() && i1->get_x() <= currentIntersection.get_x() )
-                            || (i1->get_x() >= currentIntersection.get_x() && ((i1+1)->get_x() <= currentIntersection.get_x()))
+                        && ( ((i1+1)->x >= currentIntersection.x && i1->x <= currentIntersection.x )
+                            || (i1->x >= currentIntersection.x && ((i1+1)->x <= currentIntersection.x))
                         )
                    )
                     intersections.push_back(currentIntersection);
@@ -718,62 +718,62 @@ public:
             T slope1(0.0), slope2(0.0);
             Point<T> currentIntersection;
 
-            if((i1+1)->get_x() == i1->get_x())
+            if((i1+1)->x == i1->x)
                 path1vertical = true;
             else
                 slope1 = i1->slope_to(*(i1+1));
 
-            if((i1+1)->get_y() == i1->get_y())
+            if((i1+1)->y == i1->y)
                 path1horizontal = true;
 
             for(auto i2 = other.cbegin(); i2 != other.cend()-1; ++i2) {
                 T path2vertical(false), path2horizontal(false);
 
-                if((i2+1)->get_x() == i2->get_x()) {
+                if((i2+1)->x == i2->x) {
                     if(path1vertical) continue;
                     path2vertical = true;
                 }
 
-                if((i2+1)->get_y() == i2->get_y()) {
+                if((i2+1)->y == i2->y) {
                     if(path1horizontal) continue;
                     path2horizontal = true;
                 }
 
                 if(path1vertical) {
-                    currentIntersection.set_x(i1->get_x());
+                    currentIntersection.x = i1->x;
                     if(path2horizontal)
-                        currentIntersection.set_y(i2->get_y());
+                        currentIntersection.y = i2->y;
                     else
-                        currentIntersection.set_y(
+                        currentIntersection.y =
                                                   i2->slope_to(*(i2+1))
-                                                  * currentIntersection.get_x()
-                                                  + ( (i2+1)->get_x() * i2->get_y() - i2->get_x() * (i2+1)->get_y() )
-                                                  / ( (i2+1)->get_x() - i2->get_x() )
-                                                  );
+                                                  * currentIntersection.x
+                                                  + ( (i2+1)->x * i2->y - i2->x * (i2+1)->y )
+                                                  / ( (i2+1)->x - i2->x )
+                                                  ;
                 }
                 else if(path2vertical) {
-                    currentIntersection.set_x(i2->get_x());
+                    currentIntersection.x = i2->x;
                     if(path1horizontal)
-                        currentIntersection.set_y(i1->get_y());
+                        currentIntersection.y = i1->y;
                     else
-                        currentIntersection.set_y(
+                        currentIntersection.y =
                                                   i1->slope_to(*(i1+1))
-                                                  * currentIntersection.get_x()
-                                                  + ( (i1+1)->get_x() * i1->get_y() - i1->get_x() * (i1+1)->get_y() )
-                                                  / ( (i2+1)->get_x() - i2->get_x() )
-                                                  );
+                                                  * currentIntersection.x
+                                                  + ( (i1+1)->x * i1->y - i1->x * (i1+1)->y )
+                                                  / ( (i2+1)->x - i2->x )
+                                                  ;
                 }
                 else {
                     slope2 = i2->slope_to(*(i2+1));
-                    currentIntersection.set_x( (i2->get_y() - i1->get_y() + slope1 * i1->get_x() - slope2 * i2->get_x())  /  (slope1 - slope2) );
-                    currentIntersection.set_y( slope1 * (currentIntersection.get_x() - i1->get_x()) + i1->get_y());
+                    currentIntersection.x = (i2->y - i1->y + slope1 * i1->x - slope2 * i2->x)  /  (slope1 - slope2);
+                    currentIntersection.y = slope1 * (currentIntersection.x - i1->x) + i1->y;
                 }
 
-                if(     ( ((i2+1)->get_x() >= currentIntersection.get_x() && i2->get_x() <= currentIntersection.get_x() )
-                           || (i2->get_x() >= currentIntersection.get_x() && ((i2+1)->get_x() <= currentIntersection.get_x()))
+                if(     ( ((i2+1)->x >= currentIntersection.x && i2->x <= currentIntersection.x )
+                           || (i2->x >= currentIntersection.x && ((i2+1)->x <= currentIntersection.x))
                         )
-                        && ( ((i1+1)->get_x() >= currentIntersection.get_x() && i1->get_x() <= currentIntersection.get_x() )
-                            || (i1->get_x() >= currentIntersection.get_x() && ((i1+1)->get_x() <= currentIntersection.get_x()))
+                        && ( ((i1+1)->x >= currentIntersection.x && i1->x <= currentIntersection.x )
+                            || (i1->x >= currentIntersection.x && ((i1+1)->x <= currentIntersection.x))
                         )
                    )
                     return true;
@@ -910,11 +910,11 @@ public:
 private:
 
     static bool compare_x(const Point<T> &lhs, const Point<T> &rhs) {
-        return lhs.get_x() < rhs.get_x();
+        return lhs.x < rhs.x;
     }
 
     static bool compare_y(const Point<T> &lhs, const Point<T> &rhs) {
-        return lhs.get_y() < rhs.get_y();
+        return lhs.y < rhs.y;
     }
 
 };
