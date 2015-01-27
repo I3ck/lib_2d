@@ -47,7 +47,7 @@ public:
         bool closePath = true,
         T radiansStart = 0,
         T radiansEnd = LIB_2D_2PI,
-        Point<T> m_center = Point<T> (0.0, 0.0)) :
+        Point<T> m_center = Point<T>{}) :
             Path<T>(nPoints),
             diameter(diameter),
             m_center(m_center) {
@@ -136,7 +136,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void rotate(T radians, Point<T> m_center = Point<T>(0, 0)) {
+    void rotate(T radians, Point<T> m_center = Point<T>{}) {
         Path<T>::rotate(radians, m_center);
         this->m_center.rotate(radians, m_center);
     }

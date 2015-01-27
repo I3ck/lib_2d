@@ -45,7 +45,7 @@ private:
             y += bernstein_polynomal(nPoints,i,t) * path[i].y;
         }
 
-        return Point<T>(x,y);
+        return Point<T>{x,y};
     }
 
 

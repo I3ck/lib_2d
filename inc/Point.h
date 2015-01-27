@@ -35,20 +35,13 @@ class Point {
 public:
     T x, y;
 
-    Point() :
-        Point(0, 0)
-    {}
-
-    Point(T x, T y) :
-        x(x),
-        y(y)
-    {}
-
+///@todo uncomment once running
+/*
     Point(std::pair<T, T> values) :
         x(values.first),
         y(values.second)
     {}
-
+*/
 //------------------------------------------------------------------------------
 
     void move_by(T x, T y) {
@@ -85,13 +78,13 @@ public:
     }
 
     void mirror_point(T xValue = 0, T yValue = 0) {
-        mirror_point(Point(xValue, yValue));
+        mirror_point(Point{xValue, yValue});
     }
 
 
 //------------------------------------------------------------------------------
 
-    void rotate(T radians, Point center = Point(0, 0)) {
+    void rotate(T radians, Point center = Point{}) {
         T newX, newY;
 
         newX = center.x + cos(radians) * (x - center.x) - sin(radians) * (y - center.y);
@@ -146,7 +139,7 @@ public:
     }
 
     T distance_to(T x, T y) const {
-        return distance_to(Point(x,y));
+        return distance_to(Point{x,y});
     }
 
 //------------------------------------------------------------------------------
@@ -165,7 +158,7 @@ public:
 //------------------------------------------------------------------------------
 
     Point center_between(Point other) const {
-        return Point(x + (other.x - x) / 2.0, y + (other.y - y) / 2.0);
+        return Point{x + (other.x - x) / 2.0, y + (other.y - y) / 2.0};
     }
 
 

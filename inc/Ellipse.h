@@ -46,7 +46,7 @@ public:
             T b,
             unsigned int nPoints,
             bool closePath = true,
-            Point<T> m_center = Point<T> (0.0, 0.0),
+            Point<T> m_center = Point<T>{},
             T angle = 0) :
 
         Path<T>(nPoints),
@@ -132,7 +132,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void rotate(T radians, Point<T> m_center = Point<T>(0, 0)) {
+    void rotate(T radians, Point<T> m_center = Point<T>{}) {
         Path<T>::rotate(radians, m_center);
         this->m_center.rotate(radians, m_center);
     }

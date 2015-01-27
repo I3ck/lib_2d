@@ -139,7 +139,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void rotate(T radians, Point<T> center = Point<T>(0, 0)) {
+    void rotate(T radians, Point<T> center = Point<T>{}) {
         for(auto &p : ps)
             p.rotate(radians, center);
     }
@@ -178,7 +178,7 @@ public:
         std::stringstream ss(input);
         std::string line("");
         while(getline(ss, line)) {
-            Point<T> point = Point<T>();
+            Point<T> point = Point<T>{};
             if(point.from_string(line))
                 ps.push_back(point);
         }
@@ -206,7 +206,7 @@ public:
     }
 
     void push_back(T x, T y) {
-        push_back(Point<T>(x, y));
+        push_back(Point<T>{x, y});
     }
 
     void push_back(const Path &other) {
@@ -219,7 +219,7 @@ public:
     }
 
     void emplace_back(T x, T y) {
-        emplace_back(Point<T>(x, y));
+        emplace_back(Point<T>{x, y});
     }
 
     void emplace_back(const Path &other) {
@@ -286,10 +286,10 @@ public:
         }
 
         Path<T> output;
-        output.emplace_back(Point<T>(minX, minY));
-        output.emplace_back(Point<T>(maxX, minY));
-        output.emplace_back(Point<T>(maxX, maxY));
-        output.emplace_back(Point<T>(minX, maxY));
+        output.emplace_back(Point<T>{minX, minY});
+        output.emplace_back(Point<T>{maxX, minY});
+        output.emplace_back(Point<T>{maxX, maxY});
+        output.emplace_back(Point<T>{minX, maxY});
 
         if(closePath)
             output.push_back(output[0]);
@@ -375,7 +375,7 @@ public:
 //------------------------------------------------------------------------------
 
     bool has_point(T x, T y) {
-        return has_point(Point<T>(x, y));
+        return has_point(Point<T>{x, y});
     }
 
 //------------------------------------------------------------------------------
@@ -475,7 +475,7 @@ public:
         remove_below_of(other.y);
     }
 
-    void remove_closer_to_than(T distance, Point<T> other = Point<T>(0, 0)) {
+    void remove_closer_to_than(T distance, Point<T> other = Point<T>{}) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->distance_to(other) < distance) {
@@ -487,7 +487,7 @@ public:
         }
     }
 
-    void remove_further_apart_to_than(T distance, Point<T> other = Point<T>(0, 0)) {
+    void remove_further_apart_to_than(T distance, Point<T> other = Point<T>{}) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->distance_to(other) > distance) {
@@ -511,7 +511,7 @@ public:
             sumY += i.y;
         }
 
-        return Point<T>(sumX / size(), sumY / size());
+        return Point<T>{sumX / size(), sumY / size()};
     }
 
 //------------------------------------------------------------------------------
@@ -529,7 +529,7 @@ public:
     }
 
     int furthest_apart(T x, T y) const {
-        return furthest_apart(Point<T>(x, y));
+        return furthest_apart(Point<T>{x, y});
     }
 
     int furthest_apart(const Path &other) const {
@@ -563,7 +563,7 @@ public:
     }
 
     int closest(T x, T y) const {
-        return closest(Point<T>(x, y));
+        return closest(Point<T>{x, y});
     }
 
     int closest(const Path &other) const {
