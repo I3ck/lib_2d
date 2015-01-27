@@ -158,7 +158,7 @@ public:
 //------------------------------------------------------------------------------
 
     Point center_between(Point other) const {
-        return Point{x + (other.x - x) / 2.0, y + (other.y - y) / 2.0};
+        return Point{(T)(x + (other.x - x) / 2.0), (T)(y + (other.y - y) / 2.0)};
     }
 
 
