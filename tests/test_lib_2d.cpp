@@ -225,50 +225,16 @@ TEST_CASE("testing Path") {
         REQUIRE(tmp.size() == 4);
     }
 
+    SECTION("testing filling other containers") {
+        std::vector< Point <T> > vec = std::vector< Point <T> >(path.begin(), path.end());
+        REQUIRE(vec.size() == 3);
+    }
+
     SECTION("testing usage of vector") {
         std::vector< Point <T> > vec = path;
         REQUIRE(vec.size() == 3);
 
         Path<T> tmp = Path<T>(vec);
-        REQUIRE(tmp.similar_to(path, MAX_DELTA));
-    }
-
-    SECTION("testing usage of deque") {
-        std::deque< Point <T> > deq = path;
-        REQUIRE(deq.size() == 3);
-
-        Path<T> tmp = Path<T>(deq);
-        REQUIRE(tmp.similar_to(path, MAX_DELTA));
-    }
-
-    SECTION("testing usage of forward list") {
-        std::forward_list< Point <T> > fl = path;
-
-        Path<T> tmp = Path<T>(fl);
-        REQUIRE(tmp.similar_to(path, MAX_DELTA));
-    }
-
-    SECTION("testing usage of list") {
-        std::list< Point <T> > l = path;
-        REQUIRE(l.size() == 3);
-
-        Path<T> tmp = Path<T>(l);
-        REQUIRE(tmp.similar_to(path, MAX_DELTA));
-    }
-
-    SECTION("testing usage of queue") {
-        std::queue< Point <T> > q = path;
-        REQUIRE(q.size() == 3);
-
-        Path<T> tmp = Path<T>(q);
-        REQUIRE(tmp.similar_to(path, MAX_DELTA));
-    }
-
-    SECTION("testing usage of stack") {
-        std::stack< Point <T> > s = path;
-        REQUIRE(s.size() == 3);
-
-        Path<T> tmp = Path<T>(s);
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 

@@ -50,15 +50,12 @@ and_many(more)
 ```  
 
 
-##easily usable as other containers
+##compatible with other containers  
 
 ```cpp
-vector< Point <T> >  
-deque< Point <T> >  
-forward_list< Point <T> >  
-list< Point <T> >  
-queue< Point <T> >  
-stack< Point <T> >  
+vector< Point <T> > vec = vector<Point <T> >(path.begin(), path.end());  
+...  
+Path<T> path = Path<T>(vec.begin(), vec.end());
 ```  
 
 
