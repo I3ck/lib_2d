@@ -1,5 +1,49 @@
-add more interpolations (splines)
+SHOULD BE ADDED:
 
-sweep algorithms
+    add more interpolations (splines)
 
-copy constructors
+    sweep algorithms
+    http://en.wikipedia.org/wiki/Sweep_line_algorithm
+
+    better intersection algorithms
+    http://en.wikipedia.org/wiki/Line_segment_intersection
+
+    add boolean operations for Path
+    http://en.wikipedia.org/wiki/Boolean_operations_on_polygons
+
+    add clipping
+    http://en.wikipedia.org/wiki/Vatti_clipping_algorithm
+    http://en.wikipedia.org/wiki/Sutherland%E2%80%93Hodgman_algorithm
+
+    add closest pair and more closest and furthest algorithms
+    http://en.wikipedia.org/wiki/Closest_pair_of_points_problem
+
+    add method to Path to make it as short as possible
+    http://en.wikipedia.org/wiki/Euclidean_shortest_path
+    http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+
+    bounding sphere
+    http://en.wikipedia.org/wiki/Bounding_sphere
+
+    point in polygon
+    http://en.wikipedia.org/wiki/Point_in_polygon
+
+    ramer douglas peucker (smart way to decrease point count)
+    http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
+
+
+
+INTERESTING:
+
+    largest empty
+    http://en.wikipedia.org/wiki/Largest_empty_rectangle
+    http://en.wikipedia.org/wiki/Largest_empty_sphere
+
+    minkowski addition
+    http://en.wikipedia.org/wiki/Minkowski_addition
+
+    star shaped polygon
+    http://en.wikipedia.org/wiki/Star-shaped_polygon
+
+    visibility polygon
+    http://en.wikipedia.org/wiki/Visibility_polygon
