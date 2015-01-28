@@ -58,6 +58,14 @@ public:
         reserve(nPoints);
     }
 
+    template<class InputIterator>
+    Path(InputIterator first, InputIterator last) {
+        while(first != last) {
+            ps.push_back(*first);
+            ++first;
+        }
+    }
+
     Path(const std::vector < Point <T> > &points) :
         ps(points){}
 

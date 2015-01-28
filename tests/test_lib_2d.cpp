@@ -214,6 +214,17 @@ TEST_CASE("testing Path") {
         REQUIRE(path.first() == path[0]);
     }
 
+    SECTION("testing building from iterators") {
+        std::vector< Point <T> > vec;
+        vec.push_back(Point<T>{});
+        vec.push_back(Point<T>{});
+        vec.push_back(Point<T>{});
+        vec.push_back(Point<T>{});
+
+        Path<T> tmp = Path<T>(vec.begin(), vec.end());
+        REQUIRE(tmp.size() == 4);
+    }
+
     SECTION("testing usage of vector") {
         std::vector< Point <T> > vec = path;
         REQUIRE(vec.size() == 3);
