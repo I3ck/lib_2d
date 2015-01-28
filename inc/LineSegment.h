@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2014 - 2015 Martin Buck
+    Copyright (c) 2015 Martin Buck
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
     to deal in the Software without restriction, including without limitation the rights to
     use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
@@ -13,24 +13,33 @@
 */
 
 /**
- * \file    lib_2d.h
+ * \file    LineSegment.h
  * \author  Martin Buck
  * \date    January 2015
  * \version 1.0
- * \brief   one header file to include them all
+ * \brief   contains the class LineSegment which defines a line segment defined by two points
+ * \todo    either define with two Points as member OR define as a Path of size 2
+ *          the Path solution might be better, since it'll make many methods available
  */
 
-#ifndef LIB_2D_H_INCLUDED
-#define LIB_2D_H_INCLUDED
+#ifndef LINESEGMENT_H_INCLUDED
+#define LINESEGMENT_H_INCLUDED
 
-#include "inc/Point.h"
-#include "inc/LineSegment.h"
-#include "inc/Path.h"
-#include "inc/Arc.h"
-#include "inc/Ellipse.h"
-#include "inc/InvolutCircle.h"
-#include "inc/InterpolationBezier.h"
-#include "inc/InterpolationLinear.h"
-#include "inc/InterpolationCosine.h"
+#include "Point.h"
 
-#endif // LIB_2D_H_INCLUDED
+namespace lib_2d {
+
+template <typename T>
+class LineSegment {
+
+    public:
+
+        Point<T> p1, p2;
+
+
+
+};
+
+} //lib_2d
+
+#endif // LINESEGMENT_H_INCLUDED
