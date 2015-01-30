@@ -770,7 +770,7 @@ public:
 //------------------------------------------------------------------------------
 
     void range(unsigned int indexStart, unsigned int indexEnd) {
-        if(indexStart >= indexEnd)
+        if(indexStart > indexEnd)
             return;
 
         if(indexStart >= size() || indexEnd >= size())
@@ -789,12 +789,12 @@ public:
     }
 
 //------------------------------------------------------------------------------
-/* not yet working
+#ifdef LIB_2D_EXPERIMENTAL
     //using http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
     void reduce_points(T epsilon) {
         *this = douglas_peucker(*this, epsilon);
     }
-*/
+#endif //LIB_2D_EXPERIMENTAL
 
 //------------------------------------------------------------------------------
 
@@ -883,13 +883,13 @@ private:
         return lhs.y < rhs.y;
     }
 
-    /* not yet working
-    Path<T> douglas_peucker(Path<T> path, T epsilon) { //rename variables to make it more readable
+#ifdef LIB_2D_EXPERIMENTAL
+    Path<T> douglas_peucker(Path<T> path, T epsilon) const { //rename variables to make it more readable
         T dmax = 0;
-        unsigned int index =0;
+        unsigned int index = 0;
         unsigned int end = path.size()-1;
 
-        for(unsigned int i=2; i < end; ++i) {
+        for(unsigned int i=1; i < end; ++i) {
             T d = distance_point_line(path[i], path[0], path[end]);
             if(d > dmax) {
                 index = i;
@@ -903,7 +903,7 @@ private:
             path1.range(0,index);
             path1 = douglas_peucker(path1, epsilon);
 
-            path2.range(index,path2.size()-1);
+            path2.range(index,end);
             path2 = douglas_peucker(path2, epsilon);
 
             path1.range(0,path1.size()-2);
@@ -918,7 +918,7 @@ private:
         }
         return path;
     }
-    */
+#endif //LIB_2D_EXPERIMENTAL
 
 };
 
