@@ -390,7 +390,7 @@ TEST_CASE("testing Path") {
         tmp.range(0,tmp.size());
         REQUIRE(tmp.size() == 3);
     }
-#ifdef LIB_2D_EXPERIMENTAL
+
     SECTION("testing point reduction") {
         Path<T> tmp = Path<T>();
         tmp.push_back(Point<T>{});
@@ -412,7 +412,6 @@ TEST_CASE("testing Path") {
         tmp.to_file("after_reduction.test");
 #endif // OUTPUT_TEST_FILES
     }
-#endif //LIB_2D_EXPERIMENTAL
 
     SECTION("testing finding of points") {
         Path<T> tmp = Path<T> ();

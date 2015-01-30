@@ -789,12 +789,10 @@ public:
     }
 
 //------------------------------------------------------------------------------
-#ifdef LIB_2D_EXPERIMENTAL
-    //using http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
+
     void reduce_points(T epsilon) {
         *this = douglas_peucker(*this, epsilon);
     }
-#endif //LIB_2D_EXPERIMENTAL
 
 //------------------------------------------------------------------------------
 
@@ -883,7 +881,7 @@ private:
         return lhs.y < rhs.y;
     }
 
-#ifdef LIB_2D_EXPERIMENTAL
+    //using http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
     Path<T> douglas_peucker(Path<T> path, T epsilon) const { //rename variables to make it more readable
         T dmax = 0;
         unsigned int index = 0;
@@ -918,7 +916,6 @@ private:
         }
         return path;
     }
-#endif //LIB_2D_EXPERIMENTAL
 
 };
 
