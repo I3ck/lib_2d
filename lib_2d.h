@@ -23,6 +23,8 @@
 #ifndef LIB_2D_H_INCLUDED
 #define LIB_2D_H_INCLUDED
 
+//#define LIB_2D_EXPERIMENTAL
+
 #include "inc/Point.h"
 #include "inc/Path.h"
 #include "inc/LineSegment.h"
