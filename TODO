@@ -9,10 +9,6 @@ SHOULD BE ADDED:
 
     add more interpolations (splines)
 
-    class LineSegment
-    with methods for intersections
-    (then use this within the intersection methods to clean up the codebase)
-
     sweep algorithms
     http://en.wikipedia.org/wiki/Sweep_line_algorithm
 
