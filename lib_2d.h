@@ -24,8 +24,8 @@
 #define LIB_2D_H_INCLUDED
 
 #include "inc/Point.h"
-#include "inc/LineSegment.h"
 #include "inc/Path.h"
+#include "inc/LineSegment.h"
 #include "inc/Rectangle.h"
 #include "inc/Arc.h"
 #include "inc/Ellipse.h"

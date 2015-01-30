@@ -481,6 +481,16 @@ TEST_CASE("testing Path") {
     }
 }
 
+TEST_CASE("testing LineSegment") {
+    lib_2d::LineSegment<T> line = lib_2d::LineSegment<T>(Point<T>{0,0}, Point<T>{1,1});
+
+    REQUIRE(line.size() == 2);
+
+#ifdef OUTPUT_TEST_FILES
+    line.to_file("line.test");
+#endif //OUTPUT_TEST_FILES
+}
+
 TEST_CASE("testing Rectangle") {
     lib_2d::Rectangle<T> rec = lib_2d::Rectangle<T>(50,100);
 

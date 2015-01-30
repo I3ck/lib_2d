@@ -18,8 +18,7 @@
  * \date    January 2015
  * \version 1.0
  * \brief   contains the class LineSegment which defines a line segment defined by two points
- * \todo    either define with two Points as member OR define as a Path of size 2
- *          the Path solution might be better, since it'll make many methods available
+ * \todo    overload methods which could be simplified (if many are being overloaded, maybe define as own class)
  */
 
 #ifndef LINESEGMENT_H_INCLUDED
@@ -30,14 +29,17 @@
 namespace lib_2d {
 
 template <typename T>
-class LineSegment {
+class LineSegment : public Path<T> {
+    using Path<T>::emplace_back;
 
-    public:
+public:
 
-        Point<T> p1, p2;
+    LineSegment(Point<T> p1,
+                Point<T> p2) {
 
-
-
+        emplace_back(p1);
+        emplace_back(p2);
+    }
 };
 
 } //lib_2d
