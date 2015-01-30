@@ -35,10 +35,6 @@ SHOULD BE ADDED:
     point in polygon
     http://en.wikipedia.org/wiki/Point_in_polygon
 
-    ramer douglas peucker (smart way to decrease point count)
-    http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
-
-
 
 INTERESTING:
 

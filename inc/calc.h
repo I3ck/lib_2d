@@ -42,6 +42,25 @@ namespace lib_2d {
         return binomial_coeff<T>(n,i) * pow(t,i) * pow(1.0-t, n-i);
     }
 
+    template <typename T>
+    T distance_point_line(Point<T> p, Point<T> l1, Point<T> l2) {
+        T a1 = l1.x;
+        T a2 = l1.y;
+
+        T b1 = l2.x;
+        T b2 = l2.y;
+
+        T c1 = p.x;
+        T c2 = p.y;
+
+        T x = (a1*a1*c1 - a1*a2*b2 + a1*a2*c2 - 2*a1*b1*c1 + a1*b2*b2 - a1*b2*c2 + a2*a2*b1 - a2*b1*b2 - a2*b1*c2 + b1*b1*c1 + b1*b2*c2)
+              /(a1*a1 - 2*a1*b1 + a2*a2 - 2*a2*b2 + b1*b1 + b2*b2);
+
+        T y = ((a2 - b2) * x + a1*b2 - a2*b1) / (a1 - b1);
+
+        return sqrt(  pow(x-p.x,2) + pow(y-p.y,2)  );   
+    }
+
 } //lib_2d
 
 #endif // CALC_H_INCLUDED

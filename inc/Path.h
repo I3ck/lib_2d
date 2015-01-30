@@ -769,6 +769,35 @@ public:
 
 //------------------------------------------------------------------------------
 
+    void range(unsigned int indexStart, unsigned int indexEnd) {
+        if(indexStart >= indexEnd)
+            return;
+
+        if(indexStart >= size() || indexEnd >= size())
+            return;
+
+        if(indexStart == 0 && indexEnd == size()-1)
+            return;
+
+        Path<T> tmp;
+
+        for(unsigned int i = indexStart; i <= indexEnd; ++i) {
+            tmp += (*this)[i];
+        }
+
+        *this = tmp;
+    }
+
+//------------------------------------------------------------------------------
+/* not yet working
+    //using http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
+    void reduce_points(T epsilon) {
+        *this = douglas_peucker(*this, epsilon);
+    }
+*/
+
+//------------------------------------------------------------------------------
+
     typename std::vector <Point<T> >::iterator begin() {
         return ps.begin();
     }
@@ -853,6 +882,43 @@ private:
     static bool compare_y(Point<T> lhs, Point<T> rhs) {
         return lhs.y < rhs.y;
     }
+
+    /* not yet working
+    Path<T> douglas_peucker(Path<T> path, T epsilon) { //rename variables to make it more readable
+        T dmax = 0;
+        unsigned int index =0;
+        unsigned int end = path.size()-1;
+
+        for(unsigned int i=2; i < end; ++i) {
+            T d = distance_point_line(path[i], path[0], path[end]);
+            if(d > dmax) {
+                index = i;
+                dmax = d;
+            }
+        }
+        if(dmax > epsilon) {
+            auto path1 = path;
+            auto path2 = path;
+
+            path1.range(0,index);
+            path1 = douglas_peucker(path1, epsilon);
+
+            path2.range(index,path2.size()-1);
+            path2 = douglas_peucker(path2, epsilon);
+
+            path1.range(0,path1.size()-2);
+            path = path1 + path2;
+        }
+        else {
+            auto p1 = path[0];
+            auto p2 = path[end];
+            path.clear();
+            path += p1;
+            path += p2;
+        }
+        return path;
+    }
+    */
 
 };
 

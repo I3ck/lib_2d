@@ -48,6 +48,7 @@ bounding_box(...)  //the minimum bounding rectangle of a Path
 convex_hul(...) //calculate the convex hull of a Path  
 intersections_with(...) //intersections between paths  
 sort_x(...) //sort by x (or y)  
+range(from,to) //get ranges of Path
 and_many(more)  
 ```  
 

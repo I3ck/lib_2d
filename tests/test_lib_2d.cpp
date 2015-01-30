@@ -376,6 +376,42 @@ TEST_CASE("testing Path") {
         REQUIRE(tmp.average_distance() == 1);
     }
 
+    SECTION("testing ranges") {
+        Path<T> tmp = Path<T>();
+        tmp.push_back(Point<T>{});
+        tmp.push_back(1,0);
+        tmp.push_back(2,0);
+        tmp.push_back(2,0);
+        tmp.push_back(2,0);
+
+        tmp.range(2,tmp.size()-1);
+        REQUIRE(tmp.size() == 3);
+
+        tmp.range(0,tmp.size());
+        REQUIRE(tmp.size() == 3);
+    }
+/*not yet working
+    SECTION("testing point reduction") {
+        Path<T> tmp = Path<T>();
+        tmp.push_back(Point<T>{});
+        tmp.push_back(1,1);
+        tmp.push_back(2,0);
+        tmp.push_back(3,1);
+        tmp.push_back(7,0);
+
+#ifdef OUTPUT_TEST_FILES
+        tmp.to_file("before_reduction.test");
+#endif // OUTPUT_TEST_FILES
+
+        tmp.reduce_points(MAX_DELTA*10000);
+        REQUIRE(tmp.size() < 5);
+
+#ifdef OUTPUT_TEST_FILES
+        tmp.to_file("after_reduction.test");
+#endif // OUTPUT_TEST_FILES
+    }
+*/
+
     SECTION("testing finding of points") {
         Path<T> tmp = Path<T> ();
         tmp.push_back(Point<T>{});
