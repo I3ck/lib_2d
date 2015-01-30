@@ -390,7 +390,7 @@ TEST_CASE("testing Path") {
         tmp.range(0,tmp.size());
         REQUIRE(tmp.size() == 3);
     }
-/*not yet working
+#ifdef LIB_2D_EXPERIMENTAL
     SECTION("testing point reduction") {
         Path<T> tmp = Path<T>();
         tmp.push_back(Point<T>{});
@@ -398,19 +398,21 @@ TEST_CASE("testing Path") {
         tmp.push_back(2,0);
         tmp.push_back(3,1);
         tmp.push_back(7,0);
+        tmp.push_back(8,0);
+        tmp.push_back(9,0);
 
 #ifdef OUTPUT_TEST_FILES
         tmp.to_file("before_reduction.test");
 #endif // OUTPUT_TEST_FILES
 
-        tmp.reduce_points(MAX_DELTA*10000);
-        REQUIRE(tmp.size() < 5);
+        tmp.reduce_points(0.1);
+        REQUIRE(tmp.size() < 7);
 
 #ifdef OUTPUT_TEST_FILES
         tmp.to_file("after_reduction.test");
 #endif // OUTPUT_TEST_FILES
     }
-*/
+#endif //LIB_2D_EXPERIMENTAL
 
     SECTION("testing finding of points") {
         Path<T> tmp = Path<T> ();
