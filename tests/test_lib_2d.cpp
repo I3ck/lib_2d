@@ -481,6 +481,24 @@ TEST_CASE("testing Path") {
     }
 }
 
+TEST_CASE("testing Rectangle") {
+    lib_2d::Rectangle<T> rec = lib_2d::Rectangle<T>(50,100);
+
+    SECTION("creation") {
+        REQUIRE(rec.size() == 5);
+
+        REQUIRE(rec.get_width() == 50);
+        REQUIRE(rec.get_height() == 100);
+        auto center = rec.center();
+        REQUIRE(center.similar_to(Point<T>{}, MAX_DELTA));
+
+#ifdef OUTPUT_TEST_FILES
+        rec.to_file("rec.test");
+#endif //OUTPUT_TEST_FILES
+    }
+}
+
+
 TEST_CASE("testing Arc") {
 
     lib_2d::Arc<T> arc = lib_2d::Arc<T>(300.0, 100);

@@ -1,3 +1,9 @@
+FIXES / IMPROVEMENTS:
+    some classes use Path::reserve, altough they dont need it
+    rename m_center to center
+    add functions (similar, equal etc. to not have to use members there)
+
+
 SHOULD BE ADDED:
 
     add more interpolations (splines)

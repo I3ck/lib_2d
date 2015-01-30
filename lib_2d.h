@@ -26,6 +26,7 @@
 #include "inc/Point.h"
 #include "inc/LineSegment.h"
 #include "inc/Path.h"
+#include "inc/Rectangle.h"
 #include "inc/Arc.h"
 #include "inc/Ellipse.h"
 #include "inc/InvolutCircle.h"

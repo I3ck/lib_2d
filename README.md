@@ -22,6 +22,7 @@ Point<T> //a point defined with two coordinates (x and y)
 Path<T> //a collection Points, which have a specified enumeration
 
 //subclasses of Path
+Rectangle<T> //a rectangle defined by width, height and center
 Arc<T> //an arc defined by diameter, center, start- and end angle
 Ellipse<T> //an ellipse
 InterpolationBezier<T> //a bezier curve interpolation  
