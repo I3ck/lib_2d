@@ -574,7 +574,7 @@ public:
             if(!ps[i].equal_to(other[i]))
                 return false;
         }
-        return false;
+        return true;
     }
 
 //------------------------------------------------------------------------------

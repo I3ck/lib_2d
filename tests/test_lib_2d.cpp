@@ -192,6 +192,13 @@ TEST_CASE("testing Path") {
     path.push_back(1.0, 0.0);
     path.push_back(-1.0, 0.0);
 
+    SECTION("testing equality and similarity") {
+        auto tmp = path;
+        REQUIRE(tmp == path);
+        REQUIRE(tmp.equal_to(path));
+        REQUIRE(is_equal(tmp, path));
+    }
+
     SECTION("testing append operators") {
         path += Point<T>{0.3, 3.3};
         REQUIRE(path.size() == 4);

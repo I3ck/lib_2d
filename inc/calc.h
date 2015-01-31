@@ -23,6 +23,8 @@
 #ifndef CALC_H_INCLUDED
 #define CALC_H_INCLUDED
 
+#include "Path.h"
+
 namespace lib_2d {
 
     unsigned long long int faculty(unsigned int number) {
@@ -32,15 +34,21 @@ namespace lib_2d {
         return f;
     }
 
+//------------------------------------------------------------------------------
+
     template <typename T>
     T binomial_coeff(unsigned int n, unsigned int k) {
         return faculty(n) / ( faculty(k) * faculty(n-k) );
     }
 
+//------------------------------------------------------------------------------
+
     template <typename T>
     T bernstein_polynomal(unsigned int n, unsigned int i, T t) {
         return binomial_coeff<T>(n,i) * pow(t,i) * pow(1.0-t, n-i);
     }
+
+//------------------------------------------------------------------------------
 
     template <typename T>
     T distance_point_line(Point<T> p, Point<T> l1, Point<T> l2) {
@@ -58,7 +66,21 @@ namespace lib_2d {
 
         T y = ((a2 - b2) * x + a1*b2 - a2*b1) / (a1 - b1);
 
-        return sqrt(  pow(x-p.x,2) + pow(y-p.y,2)  );   
+        return sqrt(  pow(x-p.x,2) + pow(y-p.y,2)  );
+    }
+
+//------------------------------------------------------------------------------
+
+    template <typename T>
+    bool is_equal(const Path<T> &a, const Path<T> b) {
+        return a.equal_to(b);
+    }
+
+//------------------------------------------------------------------------------
+
+    template <typename T>
+    bool is_similar(const Path<T> &a, const Path<T> b, T maxDistance) {
+        return a.similar_to(b, maxDistance);
     }
 
 } //lib_2d
