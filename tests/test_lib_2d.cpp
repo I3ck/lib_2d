@@ -197,6 +197,24 @@ TEST_CASE("testing Path") {
         REQUIRE(tmp == path);
         REQUIRE(tmp.equal_to(path));
         REQUIRE(is_equal(tmp, path));
+
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+        REQUIRE(is_similar(tmp, path, MAX_DELTA));
+
+
+        tmp[0].move_by(MAX_DELTA/2, 0);
+
+        REQUIRE(tmp != path);
+        REQUIRE(!tmp.equal_to(path));
+        REQUIRE(!is_equal(tmp, path));
+
+        REQUIRE(tmp.similar_to(path, MAX_DELTA));
+        REQUIRE(is_similar(tmp, path, MAX_DELTA));
+
+        tmp[0].move_by(MAX_DELTA*3, 0);
+
+        REQUIRE(!tmp.similar_to(path, MAX_DELTA));
+        REQUIRE(!is_similar(tmp, path, MAX_DELTA));      
     }
 
     SECTION("testing append operators") {
