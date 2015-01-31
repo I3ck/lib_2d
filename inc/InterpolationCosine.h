@@ -31,7 +31,6 @@ namespace lib_2d {
 
 template <typename T>
 class InterpolationCosine : public Path<T> {
-    using Path<T>::reserve;
     using Path<T>::emplace_back;
 
 public:

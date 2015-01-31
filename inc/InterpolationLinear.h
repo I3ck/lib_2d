@@ -31,7 +31,6 @@ namespace lib_2d {
 
 template <typename T>
 class InterpolationLinear : public Path<T> {
-    using Path<T>::reserve;
     using Path<T>::emplace_back;
 
 public:

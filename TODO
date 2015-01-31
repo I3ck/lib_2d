@@ -1,5 +1,4 @@
 FIXES / IMPROVEMENTS:
-    some classes use Path::reserve, altough they dont need it
     rename m_center to center
     test whether ellipse is actually rotated around its center instead of 0 0 (when constructing, same goes for others)
 

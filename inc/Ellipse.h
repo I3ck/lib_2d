@@ -33,7 +33,6 @@ namespace lib_2d {
 
 template <typename T>
 class Ellipse : public Path<T> {
-    using Path<T>::reserve;
     using Path<T>::emplace_back;
 
 private:
