@@ -23,6 +23,7 @@
 #ifndef CALC_H_INCLUDED
 #define CALC_H_INCLUDED
 
+#include "Point.h"
 #include "Path.h"
 
 namespace lib_2d {
@@ -72,11 +73,21 @@ namespace lib_2d {
 //------------------------------------------------------------------------------
 
     template <typename T>
+    bool is_equal(const Point<T> &a, const Point<T> b) {
+        return a.equal_to(b);
+    }
+
+    template <typename T>
     bool is_equal(const Path<T> &a, const Path<T> b) {
         return a.equal_to(b);
     }
 
 //------------------------------------------------------------------------------
+
+    template <typename T>
+    bool is_similar(const Point<T> &a, const Point<T> b, T maxDistance) {
+        return a.similar_to(b, maxDistance);
+    }
 
     template <typename T>
     bool is_similar(const Path<T> &a, const Path<T> b, T maxDistance) {

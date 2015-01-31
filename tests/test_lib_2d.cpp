@@ -116,10 +116,26 @@ TEST_CASE("testing Point") {
     SECTION("testing equality tests") {
         p2 = p;
         REQUIRE(p2 == p);
+        REQUIRE(p2.equal_to(p));
+        REQUIRE(is_equal(p, p2));
 
-        p.move_by(0.001, 0.0);
+        REQUIRE(p2.similar_to(p, MAX_DELTA));
+        REQUIRE(is_similar(p, p2, MAX_DELTA));
+
+        p.move_by(MAX_DELTA/2, 0.0);
 
         REQUIRE(p2 != p);
+        REQUIRE(!p2.equal_to(p));
+        REQUIRE(!is_equal(p, p2));
+
+        REQUIRE(p2.similar_to(p, MAX_DELTA));
+        REQUIRE(is_similar(p, p2, MAX_DELTA));
+
+
+        p.move_by(MAX_DELTA*3, 0.0);
+
+        REQUIRE(!p2.similar_to(p, MAX_DELTA));
+        REQUIRE(!is_similar(p, p2, MAX_DELTA));
     }
 
     SECTION("testing stringstream overload") {
@@ -214,7 +230,7 @@ TEST_CASE("testing Path") {
         tmp[0].move_by(MAX_DELTA*3, 0);
 
         REQUIRE(!tmp.similar_to(path, MAX_DELTA));
-        REQUIRE(!is_similar(tmp, path, MAX_DELTA));      
+        REQUIRE(!is_similar(tmp, path, MAX_DELTA));
     }
 
     SECTION("testing append operators") {
