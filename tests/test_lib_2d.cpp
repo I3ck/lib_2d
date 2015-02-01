@@ -565,7 +565,25 @@ TEST_CASE("testing Path") {
 
         REQUIRE(convexHull.size() == 5);
     }
+#ifdef LIB_2D_EXPERIMENTAL
+    SECTION("testing inside tests") {
+        Path<T> tmp = Path<T> ();
+        tmp.push_back(0,0);
+        tmp.push_back(3,-1);
+        tmp.push_back(3,3);
+        tmp.push_back(-5,4);
+        tmp.push_back(-6,0);
 
+        tmp.push_back(1,1);
+        tmp.push_back(2,1);
+
+        auto convexHull = tmp.convex_hull();
+
+        REQUIRE(convexHull.point_is_inside(Point<T>{1,1}));
+        REQUIRE(convexHull.point_is_inside(Point<T>{2,1}));
+
+    }
+#endif
     SECTION("testing method chaining") {
         auto tmp = path;
         auto tmp2 = path;

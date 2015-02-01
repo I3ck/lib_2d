@@ -420,6 +420,33 @@ public:
     }
 
 //------------------------------------------------------------------------------
+#ifdef LIB_2D_EXPERIMENTAL
+    bool point_is_inside(Point<T> point) {
+        if(size() <= 2)
+            return false;
+
+        auto pointOutside = ps[get_min_y_index()]; //lowest point
+        pointOutside.move_by(1, -1); //move down, certainly outside now
+
+        Path<T> ray = Path<T>();
+        ray += pointOutside;
+        ray += point;
+
+        auto intersections = ray.intersections_with(*this);
+
+        std::cout << pointOutside << std::endl;
+
+        std::cout << intersections << std::endl;
+
+        unsigned int nIntersections = intersections.size();
+
+        if (nIntersections % 2)
+            return true;
+        else
+            return false;
+    }
+#endif
+//------------------------------------------------------------------------------
 
     Path& make_unique() {
         std::set <unsigned int> nonUniqueIndexes;
