@@ -252,7 +252,7 @@ public:
     }
 
 //------------------------------------------------------------------------------
-    ///@todo use thise in bounding box and anywhere else to clear up the code
+
     T get_min_x() const {
         if(size() == 0)
             return 0; ///@todo find better error handling
@@ -307,22 +307,10 @@ public:
         if(size() <= 1)
             return *this;
 
-        T   minX(ps[0].x),
-            maxX(ps[0].x),
-            minY(ps[0].y),
-            maxY(ps[0].y);
-
-        for(auto p : ps) {
-            if(p.x < minX)
-                minX = p.x;
-            else if(p.x > maxX)
-                maxX = p.x;
-
-            if(p.y < minY)
-                minY = p.y;
-            else if(p.y > maxY)
-                maxY = p.y;
-        }
+        T minX = get_min_x();
+        T maxX = get_max_x();
+        T minY = get_min_y();
+        T maxY = get_max_y();
 
         Path<T> output;
         output.emplace_back(Point<T>{minX, minY});
