@@ -432,7 +432,7 @@ public:
         ray += pointOutside;
         ray += point;
 
-        auto intersections = ray.intersections_with(*this);
+        auto intersections = intersections_with(ray);
 
         std::cout << pointOutside << std::endl;
 
@@ -760,71 +760,9 @@ public:
         if(!intersects_with(other)) //faster than checking for intersections
             return intersections;
 
-        for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
-            bool path1vertical(false), path1horizontal(false);
-            T slope1(0.0), slope2(0.0);
-            Point<T> currentIntersection;
-
-            if((i1+1)->x == i1->x)
-                path1vertical = true;
-            else
-                slope1 = i1->slope_to(*(i1+1));
-
-            if((i1+1)->y == i1->y)
-                path1horizontal = true;
-
-            for(auto i2 = other.cbegin(); i2 != other.cend()-1; ++i2) {
-                T path2vertical(false), path2horizontal(false);
-
-                if((i2+1)->x == i2->x) {
-                    if(path1vertical) continue;
-                    path2vertical = true;
-                }
-
-                if((i2+1)->y == i2->y) {
-                    if(path1horizontal) continue;
-                    path2horizontal = true;
-                }
-
-                if(path1vertical) {
-                    currentIntersection.x = i1->x;
-                    if(path2horizontal)
-                        currentIntersection.y = i2->y;
-                    else
-                        currentIntersection.y =
-                                                  i2->slope_to(*(i2+1))
-                                                  * currentIntersection.x
-                                                  + ( (i2+1)->x * i2->y - i2->x * (i2+1)->y )
-                                                  / ( (i2+1)->x - i2->x )
-                                                  ;
-                }
-                else if(path2vertical) {
-                    currentIntersection.x = i2->x;
-                    if(path1horizontal)
-                        currentIntersection.y = i1->y;
-                    else
-                        currentIntersection.y =
-                                                  i1->slope_to(*(i1+1))
-                                                  * currentIntersection.x
-                                                  + ( (i1+1)->x * i1->y - i1->x * (i1+1)->y )
-                                                  / ( (i2+1)->x - i2->x )
-                                                  ;
-                }
-                else {
-                    slope2 = i2->slope_to(*(i2+1));
-                    currentIntersection.x =  (i2->y - i1->y + slope1 * i1->x - slope2 * i2->x)  /  (slope1 - slope2) ;
-                    currentIntersection.y = slope1 * (currentIntersection.x - i1->x) + i1->y;
-                }
-
-                if(     ( ((i2+1)->x >= currentIntersection.x && i2->x <= currentIntersection.x )
-                           || (i2->x >= currentIntersection.x && ((i2+1)->x <= currentIntersection.x))
-                        )
-                        && ( ((i1+1)->x >= currentIntersection.x && i1->x <= currentIntersection.x )
-                            || (i1->x >= currentIntersection.x && ((i1+1)->x <= currentIntersection.x))
-                        )
-                   )
-                    intersections.push_back(currentIntersection);
-            }
+        for(auto i = ps.cbegin(); i != ps.cend()-1; ++i) {
+            for(auto j = other.cbegin(); j != other.cend()-1; ++j)
+                intersections.push_back(calc_intersections(*i, *(i+1), *j, *(j+1)));
         }
         return intersections;
     }
@@ -845,69 +783,11 @@ public:
                 return false; //only can intersect if boundig boxes intersect
         }
 
-        for(auto i1 = ps.cbegin(); i1 != ps.cend()-1; ++i1) {
-            bool path1vertical(false), path1horizontal(false);
-            T slope1(0.0), slope2(0.0);
-            Point<T> currentIntersection;
-
-            if((i1+1)->x == i1->x)
-                path1vertical = true;
-            else
-                slope1 = i1->slope_to(*(i1+1));
-
-            if((i1+1)->y == i1->y)
-                path1horizontal = true;
-
-            for(auto i2 = other.cbegin(); i2 != other.cend()-1; ++i2) {
-                T path2vertical(false), path2horizontal(false);
-
-                if((i2+1)->x == i2->x) {
-                    if(path1vertical) continue;
-                    path2vertical = true;
-                }
-
-                if((i2+1)->y == i2->y) {
-                    if(path1horizontal) continue;
-                    path2horizontal = true;
-                }
-
-                if(path1vertical) {
-                    currentIntersection.x = i1->x;
-                    if(path2horizontal)
-                        currentIntersection.y = i2->y;
-                    else
-                        currentIntersection.y =
-                                                  i2->slope_to(*(i2+1))
-                                                  * currentIntersection.x
-                                                  + ( (i2+1)->x * i2->y - i2->x * (i2+1)->y )
-                                                  / ( (i2+1)->x - i2->x )
-                                                  ;
-                }
-                else if(path2vertical) {
-                    currentIntersection.x = i2->x;
-                    if(path1horizontal)
-                        currentIntersection.y = i1->y;
-                    else
-                        currentIntersection.y =
-                                                  i1->slope_to(*(i1+1))
-                                                  * currentIntersection.x
-                                                  + ( (i1+1)->x * i1->y - i1->x * (i1+1)->y )
-                                                  / ( (i2+1)->x - i2->x )
-                                                  ;
-                }
-                else {
-                    slope2 = i2->slope_to(*(i2+1));
-                    currentIntersection.x = (i2->y - i1->y + slope1 * i1->x - slope2 * i2->x)  /  (slope1 - slope2);
-                    currentIntersection.y = slope1 * (currentIntersection.x - i1->x) + i1->y;
-                }
-
-                if(     ( ((i2+1)->x >= currentIntersection.x && i2->x <= currentIntersection.x )
-                           || (i2->x >= currentIntersection.x && ((i2+1)->x <= currentIntersection.x))
-                        )
-                        && ( ((i1+1)->x >= currentIntersection.x && i1->x <= currentIntersection.x )
-                            || (i1->x >= currentIntersection.x && ((i1+1)->x <= currentIntersection.x))
-                        )
-                   )
+        for(auto i = ps.cbegin(); i != ps.cend()-1; ++i) {
+            for(auto j = other.cbegin(); j != other.cend()-1; ++j) {
+                Path<T> intersections;
+                intersections.push_back(calc_intersections(*i, *(i+1), *j, *(j+1)));
+                if(intersections.size() > 0)
                     return true;
             }
         }

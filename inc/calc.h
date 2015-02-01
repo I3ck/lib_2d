@@ -94,6 +94,86 @@ namespace lib_2d {
         return a.similar_to(b, maxDistance);
     }
 
+//------------------------------------------------------------------------------
+
+    template <typename T>
+    Path<T> calc_intersections(Point<T> p1, Point<T> p2, Point<T> q1, Point<T> q2) {
+        bool
+            pVertical(false),
+            pHorizontal(false),
+            qVertical(false),
+            qHorizontal(false);
+        T
+            pSlope(0),
+            qSlope(0);
+
+        Point<T> intersection;
+        Path<T> intersections;
+
+        if(p1.x == p2.x)
+            pVertical = true;
+        else
+            pSlope = p1.slope_to(p2);
+
+        if(p1.y == p2.y)
+            pHorizontal = true;
+
+        if(q1.x == q2.x) {
+            if(qVertical)
+                return intersections;
+            qVertical = true;
+        }
+
+        if(q1.y == q2.y) {
+            if(qHorizontal)
+                return intersections;
+            qHorizontal = true;
+        }
+
+        if(pVertical) {
+            intersection.x = p1.x;
+            if(qHorizontal)
+                intersection.y = q1.y;
+            else
+                intersection.y =
+                                          q1.slope_to(q2)
+                                          * intersection.x
+                                          + ( q2.x * q1.y - q1.x * q2.y )
+                                          / ( q2.x - q1.x )
+                                          ;
+
+        }
+
+
+
+        else if(qVertical) {
+            intersection.x = q1.x;
+            if(pHorizontal)
+                intersection.y = p1.y;
+            else
+                intersection.y =
+                                          p1.slope_to(p2)
+                                          * intersection.x
+                                          + ( p2.x * p1.y - p1.x * p2.y )
+                                          / ( q2.x - q1.x )
+                                          ;
+        }
+        else {
+            qSlope = q1.slope_to(q2);
+            intersection.x =  (q1.y - p1.y + pSlope * p1.x - qSlope * q1.x)  /  (pSlope - qSlope) ;
+            intersection.y = pSlope * (intersection.x - p1.x) + p1.y;
+        }
+
+        if(     ( (q2.x >= intersection.x && q1.x <= intersection.x )
+                   || (q1.x >= intersection.x && (q2.x <= intersection.x))
+                )
+                && ( (p2.x >= intersection.x && p1.x <= intersection.x )
+                    || (p1.x >= intersection.x && (p2.x <= intersection.x))
+                )
+           )
+            intersections.push_back(intersection);
+        return intersections;
+    }
 } //lib_2d
 
 #endif // CALC_H_INCLUDED
