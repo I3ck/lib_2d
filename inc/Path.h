@@ -303,7 +303,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    unsigned int get_min_x_index() const {
+    int get_min_x_index() const {
         if(size() == 0)
             return -1;
         T minX(ps[0].x);
@@ -318,7 +318,7 @@ public:
         return index;
     }
 
-    unsigned int get_max_x_index() const {
+    int get_max_x_index() const {
         if(size() == 0)
             return -1;
         T maxX(ps[0].x);
@@ -333,7 +333,7 @@ public:
         return index;
     }
 
-    unsigned int get_min_y_index() const {
+    int get_min_y_index() const {
         if(size() == 0)
             return -1;
         T minY(ps[0].y);
@@ -348,7 +348,7 @@ public:
         return index;
     }
 
-    unsigned int get_max_y_index() const {
+    int get_max_y_index() const {
         if(size() == 0)
             return -1;
         T maxY(ps[0].y);
