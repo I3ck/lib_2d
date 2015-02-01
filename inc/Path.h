@@ -754,7 +754,7 @@ public:
 
         Path intersections;
 
-        if(empty() || other.empty())
+        if(size() < 2 || other.size() < 2)
             return intersections;
 
         if(!intersects_with(other)) //faster than checking for intersections
@@ -834,7 +834,7 @@ public:
     //this method should be kept similar to "intersections_with"
     bool intersects_with(const Path &other) const {
 
-        if(empty() || other.empty())
+        if(size() < 2 || other.size() < 2)
             return false;
 
         if(size() > 5 && other.size() > 5) { //prevent endless recursion
