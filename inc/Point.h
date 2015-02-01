@@ -37,47 +37,55 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void move_by(T x, T y) {
+    Point& move_by(T x, T y) {
         this->x+=x;
         this->y+=y;
+        return *this;
     }
 
-    void move_by(Point other) {
+    Point& move_by(Point other) {
         this->x+=other.x;
         this->y+=other.y;
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void mirror_vertically(T xValue = 0) {
+    Point& mirror_vertically(T xValue = 0) {
         x = 2 * xValue - x;
+        return *this;
     }
 
-    void mirror_vertically(Point other) {
+    Point& mirror_vertically(Point other) {
         mirror_vertically(other.x);
+        return *this;
     }
 
-    void mirror_horizontally(T yValue = 0) {
+    Point& mirror_horizontally(T yValue = 0) {
         y = 2 * yValue - y;
+        return *this;
     }
 
-    void mirror_horizontally(Point other) {
+    Point& mirror_horizontally(Point other) {
         mirror_horizontally(other.y);
+        return *this;
     }
 
-    void mirror_point(Point other) {
+    Point& mirror_point(Point other) {
         mirror_vertically(other);
         mirror_horizontally(other);
+        return *this;
     }
 
-    void mirror_point(T xValue = 0, T yValue = 0) {
+    Point& mirror_point(T xValue = 0, T yValue = 0) {
         mirror_point(Point{xValue, yValue});
+        return *this;
     }
 
 
 //------------------------------------------------------------------------------
 
-    void rotate(T radians, Point center = Point{}) {
+    Point& rotate(T radians, Point center = Point{}) {
         T newX, newY;
 
         newX = center.x + cos(radians) * (x - center.x) - sin(radians) * (y - center.y);
@@ -85,10 +93,12 @@ public:
 
         x = newX;
         y = newY;
+        return *this;
     }
 
-    void rotate(T radians, T centerX, T centerY) {
+    Point& rotate(T radians, T centerX, T centerY) {
         rotate(radians, Point(centerX, centerY));
+        return *this;
     }
 
 //------------------------------------------------------------------------------

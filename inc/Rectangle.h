@@ -77,58 +77,68 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void move_by(T x, T y) {
+    Rectangle& move_by(T x, T y) {
         Path<T>::move_by(x, y);
         m_center.move_by(x, y);
+        return *this;
     }
 
-    void move_by(Point<T> other) {
+    Rectangle& move_by(Point<T> other) {
         Path<T>::move_by(other);
         m_center.move_by(other);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void mirror_vertically(T xValue = 0) {
+    Rectangle& mirror_vertically(T xValue = 0) {
         Path<T>::mirror_vertically(xValue);
         m_center.mirror_vertically(xValue);
+        return *this;
     }
 
-    void mirror_vertically(Point<T> other) {
+    Rectangle& mirror_vertically(Point<T> other) {
         Path<T>::mirror_vertically(other);
         m_center.mirror_vertically(other);
+        return *this;
     }
 
-    void mirror_horizontally(T yValue = 0) {
+    Rectangle& mirror_horizontally(T yValue = 0) {
         Path<T>::mirror_horizontally(yValue);
         m_center.mirror_horizontally(yValue);
+        return *this;
     }
 
-    void mirror_horizontally(Point<T> other) {
+    Rectangle& mirror_horizontally(Point<T> other) {
         Path<T>::mirror_horizontally(other);
         m_center.mirror_horizontally(other);
+        return *this;
     }
 
-    void mirror_point(Point<T> other) {
+    Rectangle& mirror_point(Point<T> other) {
         Path<T>::mirror_point(other);
         m_center.mirror_point(other);
+        return *this;
     }
 
-    void mirror_point(T xValue = 0, T yValue = 0) {
+    Rectangle& mirror_point(T xValue = 0, T yValue = 0) {
         Path<T>::mirror_point(xValue, yValue);
         m_center.mirror_point(xValue, yValue);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void rotate(T radians, Point<T> m_center = Point<T>{}) {
+    Rectangle& rotate(T radians, Point<T> m_center = Point<T>{}) {
         Path<T>::rotate(radians, m_center);
         this->m_center.rotate(radians, m_center);
+        return *this;
     }
 
-    void rotate(T radians, T centerX, T centerY) {
+    Rectangle& rotate(T radians, T centerX, T centerY) {
         Path<T>::rotate(radians, centerX, centerY);
         this->m_center.rotate(radians, centerX, centerY);
+        return *this;
     }
 
 };

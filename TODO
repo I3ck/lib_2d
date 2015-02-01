@@ -1,6 +1,5 @@
 FIXES / IMPROVEMENTS:
     test whether ellipse is actually rotated around its center instead of 0 0 (when constructing, same goes for others)
-    make methods chainable by returning references
 
 
 SHOULD BE ADDED:

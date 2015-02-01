@@ -67,58 +67,68 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void move_by(T x, T y) {
+    Path& move_by(T x, T y) {
         for(auto &p : ps)
             p.move_by(x, y);
+        return *this;
     }
 
-    void move_by(Point<T> other) {
+    Path& move_by(Point<T> other) {
         for(auto &p : ps)
             p.move_by(other);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void mirror_vertically(T xValue = 0) {
+    Path& mirror_vertically(T xValue = 0) {
         for(auto &p : ps)
             p.mirror_vertically(xValue);
+        return *this;
     }
 
-    void mirror_vertically(Point<T> other) {
+    Path& mirror_vertically(Point<T> other) {
         for(auto &p : ps)
             p.mirror_vertically(other);
+        return *this;
     }
 
-    void mirror_horizontally(T yValue = 0) {
+    Path& mirror_horizontally(T yValue = 0) {
         for(auto &p : ps)
             p.mirror_horizontally(yValue);
+        return *this;
     }
 
-    void mirror_horizontally(Point<T> other) {
+    Path& mirror_horizontally(Point<T> other) {
         for(auto &p : ps)
             p.mirror_horizontally(other);
+        return *this;
     }
 
-    void mirror_point(Point<T> other) {
+    Path& mirror_point(Point<T> other) {
         for(auto &p : ps)
             p.mirror_point(other);
+        return *this;
     }
 
-    void mirror_point(T xValue = 0, T yValue = 0) {
+    Path& mirror_point(T xValue = 0, T yValue = 0) {
         for(auto &p : ps)
             p.mirror_point(xValue, yValue);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void rotate(T radians, Point<T> center = Point<T>{}) {
+    Path& rotate(T radians, Point<T> center = Point<T>{}) {
         for(auto &p : ps)
             p.rotate(radians, center);
+        return *this;
     }
 
-    void rotate(T radians, T centerX, T centerY) {
+    Path& rotate(T radians, T centerX, T centerY) {
         for(auto &p : ps)
             p.rotate(radians, centerX, centerY);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
@@ -173,36 +183,43 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void push_back(Point<T> point) {
+    Path& push_back(Point<T> point) {
         ps.push_back(point);
+        return *this;
     }
 
-    void push_back(T x, T y) {
+    Path& push_back(T x, T y) {
         push_back(Point<T>{x, y});
+        return *this;
     }
 
-    void push_back(const Path &other) {
+    Path& push_back(const Path &other) {
         for(auto i = other.cbegin(); i != other.cend(); ++i)
             push_back(*i);
+        return *this;
     }
 
-    void emplace_back(Point<T> point) {
+    Path& emplace_back(Point<T> point) {
         ps.emplace_back(point);
+        return *this;
     }
 
-    void emplace_back(T x, T y) {
+    Path& emplace_back(T x, T y) {
         emplace_back(Point<T>{x, y});
+        return *this;
     }
 
-    void emplace_back(const Path &other) {
+    Path& emplace_back(const Path &other) {
         for(auto i = other.cbegin(); i != other.cend(); ++i)
             emplace_back(*i);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void pop_back() {
+    Path& pop_back() {
         ps.pop_back();
+        return *this;
     }
 
 //------------------------------------------------------------------------------
@@ -304,7 +321,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void make_unique() {
+    Path& make_unique() {
         std::set <unsigned int> nonUniqueIndexes;
         for(unsigned int i = 0; i < size()-1; ++i) {
             for(unsigned int j = i+1; j < size(); ++j) {
@@ -319,6 +336,7 @@ public:
                 out.push_back((*this)[i]);
         }
         *this = out;
+        return *this;
     }
 //------------------------------------------------------------------------------
 
@@ -352,38 +370,43 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void reserve(size_t i) {
+    Path& reserve(size_t i) {
         ps.reserve(i);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void clear() {
+    Path& clear() {
         ps.clear();
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void reverse() {
+    Path& reverse() {
         std::reverse(ps.begin(), ps.end());
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void remove_from(unsigned int index) {
+    Path& remove_from(unsigned int index) {
         if(size() < index)
-            return;
+            return *this;
         ps.erase(ps.begin() + index, ps.end());
+        return *this;
     }
 
-    void remove_until(unsigned int index) {
+    Path& remove_until(unsigned int index) {
         if(size() < index)
             clear();
         else
             ps.erase(ps.begin(), ps.begin() + index);
+        return *this;
     }
 
-    void remove_right_of(T x) {
+    Path& remove_right_of(T x) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->x > x) {
@@ -393,13 +416,15 @@ public:
             if(!deleted)
                 ++i;
         }
+        return *this;
     }
 
-    void remove_right_of(Point<T> other) {
+    Path& remove_right_of(Point<T> other) {
         remove_right_of(other.x);
+        return *this;
     }
 
-    void remove_left_of(T x) {
+    Path& remove_left_of(T x) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->x < x) {
@@ -409,13 +434,15 @@ public:
             if(!deleted)
                 ++i;
         }
+        return *this;
     }
 
-    void remove_left_of(Point<T> other) {
+    Path& remove_left_of(Point<T> other) {
         remove_left_of(other.x);
+        return *this;
     }
 
-    void remove_above_of(T y) {
+    Path& remove_above_of(T y) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->y > y) {
@@ -425,13 +452,15 @@ public:
             if(!deleted)
                 ++i;
         }
+        return *this;
     }
 
-    void remove_above_of(Point<T> other) {
+    Path& remove_above_of(Point<T> other) {
         remove_above_of(other.y);
+        return *this;
     }
 
-    void remove_below_of(T y) {
+    Path& remove_below_of(T y) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->y < y) {
@@ -441,13 +470,15 @@ public:
             if(!deleted)
                 ++i;
         }
+        return *this;
     }
 
-    void remove_below_of(Point<T> other) {
+    Path& remove_below_of(Point<T> other) {
         remove_below_of(other.y);
+        return *this;
     }
 
-    void remove_closer_to_than(T distance, Point<T> other = Point<T>{}) {
+    Path& remove_closer_to_than(T distance, Point<T> other = Point<T>{}) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->distance_to(other) < distance) {
@@ -457,9 +488,10 @@ public:
             if(!deleted)
                 ++i;
         }
+        return *this;
     }
 
-    void remove_further_apart_to_than(T distance, Point<T> other = Point<T>{}) {
+    Path& remove_further_apart_to_than(T distance, Point<T> other = Point<T>{}) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->distance_to(other) > distance) {
@@ -469,6 +501,7 @@ public:
             if(!deleted)
                 ++i;
         }
+        return *this;
     }
 
 //------------------------------------------------------------------------------
@@ -757,27 +790,29 @@ public:
 
 //------------------------------------------------------------------------------
 
-    void sort_x() {
+    Path& sort_x() {
         if(!empty())
             sort(ps.begin(), ps.end(), compare_x);
+        return *this;
     }
 
-    void sort_y() {
+    Path& sort_y() {
         if(!empty())
             sort(ps.begin(), ps.end(), compare_y);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void range(unsigned int indexStart, unsigned int indexEnd) {
+    Path& range(unsigned int indexStart, unsigned int indexEnd) {
         if(indexStart > indexEnd)
-            return;
+            return *this;
 
         if(indexStart >= size() || indexEnd >= size())
-            return;
+            return *this;
 
         if(indexStart == 0 && indexEnd == size()-1)
-            return;
+            return *this;
 
         Path<T> tmp;
 
@@ -786,12 +821,14 @@ public:
         }
 
         *this = tmp;
+        return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    void reduce_points(T epsilon) {
+    Path& reduce_points(T epsilon) {
         *this = douglas_peucker(*this, epsilon);
+        return *this;
     }
 
 //------------------------------------------------------------------------------
