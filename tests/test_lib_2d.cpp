@@ -557,6 +557,20 @@ TEST_CASE("testing Path") {
 
         REQUIRE(convexHull.size() == 5);
     }
+
+    SECTION("testing method chaining") {
+        auto tmp = path;
+        auto tmp2 = path;
+
+        tmp.rotate(17);
+        tmp.move_by(13,4);
+        tmp.sort_x();
+        tmp.reverse();
+
+        tmp2.rotate(17).move_by(13,4).sort_x().reverse();
+
+        REQUIRE(tmp == tmp2);
+    }
 }
 
 TEST_CASE("testing LineSegment") {
