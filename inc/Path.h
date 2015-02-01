@@ -252,6 +252,56 @@ public:
     }
 
 //------------------------------------------------------------------------------
+    ///@todo use thise in bounding box and anywhere else to clear up the code
+    T get_min_x() const {
+        if(size() == 0)
+            return 0; ///@todo find better error handling
+        T minX(ps[0].x);
+
+        for(auto p :ps) {
+            if(p.x < minX)
+                minX = p.x;
+        }
+        return minX;
+    }
+
+    T get_max_x() const {
+        if(size() == 0)
+            return 0; ///@todo find better error handling
+        T maxX(ps[0].x);
+
+        for(auto p :ps) {
+            if(p.x > maxX)
+                maxX = p.x;
+        }
+        return maxX;
+    }
+
+    T get_min_y() const {
+        if(size() == 0)
+            return 0; ///@todo find better error handling
+        T minY(ps[0].y);
+
+        for(auto p :ps) {
+            if(p.y < minY)
+                minY = p.y;
+        }
+        return minY;
+    }
+
+    T get_max_y() const {
+        if(size() == 0)
+            return 0; ///@todo find better error handling
+        T maxY(ps[0].y);
+
+        for(auto p :ps) {
+            if(p.y > maxY)
+                maxY = p.y;
+        }
+        return maxY;
+    }
+
+//------------------------------------------------------------------------------
 
     Path bounding_box(bool closePath = true) const {
         if(size() <= 1)
