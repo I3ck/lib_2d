@@ -303,6 +303,68 @@ public:
 
 //------------------------------------------------------------------------------
 
+    unsigned int get_min_x_index() const {
+        if(size() == 0)
+            return -1;
+        T minX(ps[0].x);
+        unsigned int index;
+
+        for(unsigned int i = 0; i < size(); ++i) {
+            if(ps[i].x < minX) {
+                minX = ps[i].x;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    unsigned int get_max_x_index() const {
+        if(size() == 0)
+            return -1;
+        T maxX(ps[0].x);
+        unsigned int index;
+
+        for(unsigned int i = 0; i < size(); ++i) {
+            if(ps[i].x > maxX) {
+                maxX = ps[i].x;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    unsigned int get_min_y_index() const {
+        if(size() == 0)
+            return -1;
+        T minY(ps[0].y);
+        unsigned int index;
+
+        for(unsigned int i = 0; i < size(); ++i) {
+            if(ps[i].y < minY) {
+                minY = ps[i].y;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    unsigned int get_max_y_index() const {
+        if(size() == 0)
+            return -1;
+        T maxY(ps[0].y);
+        unsigned int index;
+
+        for(unsigned int i = 0; i < size(); ++i) {
+            if(ps[i].y > maxY) {
+                maxY = ps[i].y;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+//------------------------------------------------------------------------------
+
     Path bounding_box(bool closePath = true) const {
         if(size() <= 1)
             return *this;

@@ -536,6 +536,14 @@ TEST_CASE("testing Path") {
         REQUIRE(boundingBox.size() == 5);
     }
 
+    SECTION("testing index of min and max") {
+        REQUIRE(path.get_max_x() == path[path.get_max_x_index()].x);
+        REQUIRE(path.get_min_x() == path[path.get_min_x_index()].x);
+
+        REQUIRE(path.get_max_y() == path[path.get_max_y_index()].y);
+        REQUIRE(path.get_min_y() == path[path.get_min_y_index()].y);
+    }
+
     SECTION("testing convex hull") {
         Path<T> tmp = Path<T> ();
         tmp.push_back(0,0);
