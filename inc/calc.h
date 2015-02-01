@@ -136,42 +136,41 @@ namespace lib_2d {
                 intersection.y = q1.y;
             else
                 intersection.y =
-                                          q1.slope_to(q2)
-                                          * intersection.x
-                                          + ( q2.x * q1.y - q1.x * q2.y )
-                                          / ( q2.x - q1.x )
-                                          ;
-
+                  q1.slope_to(q2)
+                  * intersection.x
+                  + ( q2.x * q1.y - q1.x * q2.y )
+                  / ( q2.x - q1.x )
+                  ;
         }
-
-
-
         else if(qVertical) {
             intersection.x = q1.x;
             if(pHorizontal)
                 intersection.y = p1.y;
             else
                 intersection.y =
-                                          p1.slope_to(p2)
-                                          * intersection.x
-                                          + ( p2.x * p1.y - p1.x * p2.y )
-                                          / ( q2.x - q1.x )
-                                          ;
+                  p1.slope_to(p2)
+                  * intersection.x
+                  + ( p2.x * p1.y - p1.x * p2.y )
+                  / ( q2.x - q1.x )
+                  ;
         }
         else {
             qSlope = q1.slope_to(q2);
-            intersection.x =  (q1.y - p1.y + pSlope * p1.x - qSlope * q1.x)  /  (pSlope - qSlope) ;
+            intersection.x = (q1.y - p1.y + pSlope * p1.x - qSlope * q1.x)
+                             /  (pSlope - qSlope) ;
             intersection.y = pSlope * (intersection.x - p1.x) + p1.y;
         }
 
-        if(     ( (q2.x >= intersection.x && q1.x <= intersection.x )
-                   || (q1.x >= intersection.x && (q2.x <= intersection.x))
-                )
-                && ( (p2.x >= intersection.x && p1.x <= intersection.x )
-                    || (p1.x >= intersection.x && (p2.x <= intersection.x))
-                )
-           )
+        if( ( (q2.x >= intersection.x && q1.x <= intersection.x )
+            || (q1.x >= intersection.x && (q2.x <= intersection.x))
+            )
+            &&
+            ( (p2.x >= intersection.x && p1.x <= intersection.x )
+            || (p1.x >= intersection.x && (p2.x <= intersection.x))
+            )
+        )
             intersections.push_back(intersection);
+
         return intersections;
     }
 } //lib_2d
