@@ -212,6 +212,17 @@ public:
         return std::pair<T, T> (x, y);
     }
 
+    T& operator[](size_t idx) {
+        if(idx == 0) return x;
+        else if(idx == 1) return y;
+        else throw std::out_of_range ("Point can only be accessed with index 0 or 1");
+    };
+    const T& operator[](size_t idx) const {
+        if(idx == 0) return x;
+        else if(idx == 1) return y;
+        else throw std::out_of_range ("Point can only be accessed with index 0 or 1");
+    };
+
 //------------------------------------------------------------------------------
 
 };
