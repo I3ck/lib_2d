@@ -804,14 +804,18 @@ TEST_CASE("testing Kdtree") {
     REQUIRE(inv.sort_x() == inv2.sort_x());
 
     Point<T> nearestInPath{13.37, 1.337};
+    Point<T> nearestInPath2{14.00, 1.337};
     inv += nearestInPath;
+    inv += nearestInPath2;
 
     Point<T> search{13.38, 1.337};
     KdTree<T> tree2 = KdTree<T>(inv);
 
-    auto find = tree2.k_nearest(search, 1);
+    auto find = tree2.k_nearest(search, 2);
 
+    std::cout << find << std::endl;
     REQUIRE(nearestInPath == find[0]);
+    REQUIRE(nearestInPath2 == find[1]);
 
     auto find2 = tree2.nearest(search);
 

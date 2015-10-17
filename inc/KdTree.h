@@ -140,7 +140,7 @@ public:
 
     Path<T> k_nearest(const Point<T> &search, size_t n) const {
         if(n < 1) return Path<T>();
-        if(is_leaf()) return Path<T>({val});
+        if(is_leaf()) return Path<T>({Point<T>(val)});
         bool otherNodeHasToBeChecked(false);
 
         auto comp = dimension_compare(search, val, dimension);
@@ -150,12 +150,12 @@ public:
         else
             res += right->k_nearest(search, n);
 
-        merge_results(res, search, n);
+        sort_and_limit(res, search, n);
 
-        if(search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
+        if(res.size() < n || search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
             res += val;
 
-        merge_results(res, search, n);
+        sort_and_limit(res, search, n);
 
         T distanceBest = search.distance_to(res.last()); //check whether
         T min = search[dimension] - distanceBest;
@@ -178,10 +178,11 @@ public:
         }
 
         if(otherNodeHasToBeChecked) {
-            if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(res.last()))
+            if(res.size() < n || search.sqr_distance_to(otherBest) < search.sqr_distance_to(res.last()))
                 res += otherBest;
         }
-        merge_results(res, search, n);
+        std::cout << res << std::endl;
+        sort_and_limit(res, search, n);
         return res;
     }
 
@@ -218,13 +219,15 @@ private:
             return (p1.y - p2.y) * (p1.y - p2.y);
     }
 
-    static inline void merge_results(Path<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
+    static inline void sort_and_limit(Path<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
         if(target.size() > maxSize) {
+            auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
+            target.remove_from( std::distance(target.begin(), uniqueIt) - 1 );
             std::sort(target.begin(), target.end(),
                 [&search](const Point<T> &a, const Point<T> &b) {
                     return search.sqr_distance_to(a) < search.sqr_distance_to(b);
                 });
-            target.remove_from(maxSize); //@todo or maxSize+1
+            target.remove_from(maxSize);
         }
     }
 
