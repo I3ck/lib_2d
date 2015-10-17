@@ -97,11 +97,10 @@ public:
     }
 
     Point<T> nearest(const Point<T> &search) const {
-        if(is_leaf()/* || search == val*/)
-            return val;
+        if(is_leaf()) return val;
 
         auto comp = dimension_compare(search, val, dimension);
-        if(comp == LT || comp == EQ) {
+        if(comp == LEFT) {
             Point<T> pointLeft = left->nearest(search);
             double distVal = search.sqr_distance_to(val);
             double distLeft = search.sqr_distance_to(  pointLeft  );
@@ -120,7 +119,7 @@ public:
 
 private:
 
-    enum Compare {LT, GT, EQ}; ///@todo move to own file?
+    enum Compare {LEFT, RIGHT};
 
     static inline void dimension_sort(Path<T> &path, size_t dimension) {
         if(dimension == 0)
@@ -140,9 +139,8 @@ private:
             val2 = rhs.y;
         }
 
-        if(val1 < val2) return LT;
-        if(val1 > val2) return GT;
-        else return EQ;
+        if(val1 <= val2) return LEFT;
+        else return RIGHT;
     }
 
     static inline T dimension_sqr_dist(const Point<T> &p1, const Point<T> &p2, size_t dimension) {
