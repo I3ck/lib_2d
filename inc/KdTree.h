@@ -96,6 +96,48 @@ public:
         return !left && !right;
     }
 
+    Point<T> nearest(const Point<T> &search) const {
+        if(is_leaf()) return val;
+        bool otherNodeHasToBeChecked(false);
+
+        auto comp = dimension_compare(search, val, dimension);
+        Point<T> best;
+        if(comp == LEFT && left)
+            best = left->nearest(search);
+        else
+            best = right->nearest(search);
+
+        if(search.sqr_distance_to(val) < search.sqr_distance_to(best))
+            best = val;
+
+        T distanceBest = search.distance_to(best);
+        T min = search[dimension] - distanceBest;
+        T max = search[dimension] + distanceBest;
+        Point<T> otherBest;
+
+        if(comp == LEFT && right) { //check right now
+            auto pTest = right->val;
+            if(max >= pTest[dimension]) {
+                otherBest = pTest;
+                otherNodeHasToBeChecked = true;
+            }
+        }
+        else if (left) { //check left
+            auto pTest = left->val;
+            if(min <= pTest[dimension]) {
+                otherBest = pTest;
+                otherNodeHasToBeChecked = true;
+            }
+        }
+
+        if(otherNodeHasToBeChecked) {
+            if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(best))
+                best = otherBest;
+        }
+
+        return best;
+    }
+
     Path<T> k_nearest(const Point<T> &search, size_t n) const {
         if(n < 1) return Path<T>();
         if(is_leaf()) return Path<T>({val});

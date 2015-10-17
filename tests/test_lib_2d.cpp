@@ -812,4 +812,8 @@ TEST_CASE("testing Kdtree") {
     auto find = tree2.k_nearest(search, 1);
 
     REQUIRE(nearestInPath == find[0]);
+
+    auto find2 = tree2.nearest(search);
+
+    REQUIRE(nearestInPath == find2);
 }
