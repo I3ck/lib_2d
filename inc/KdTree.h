@@ -60,10 +60,7 @@ public:
             pathLeft.reserve(median - 1);
             pathRight.reserve(median - 1);
 
-            if(dimension == 0)
-                path.sort_x();
-            else
-                path.sort_y();
+            dimension_sort(path, dimension);
 
             for(size_t i = 0; i < path.size(); ++i) {
                 if(i < median)
@@ -104,6 +101,17 @@ public:
             create a list of size k, walk to the nearest and keep adding / popping when addin newer ones
         */
     }
+
+private:
+
+    static inline void dimension_sort(Path<T> &path, size_t dimension) {
+        if(dimension == 0)
+            path.sort_x();
+        else
+            path.sort_y();
+    }
+
+
 };
 
 } //lib_2d
