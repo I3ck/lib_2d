@@ -796,4 +796,10 @@ TEST_CASE("testing cosine interpolation") {
 TEST_CASE("testing Kdtree") {
     InvolutCircle<T> inv = InvolutCircle<T>(1.0, 100);
     KdTree<T> tree = KdTree<T>(inv);
+
+    REQUIRE(tree.size() == 100);
+
+    auto inv2 = tree.to_path();
+
+    REQUIRE(inv.sort_x() == inv2.sort_x());
 }

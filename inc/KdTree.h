@@ -79,6 +79,22 @@ public:
             if(pathRight.size() > 0) right = std::unique_ptr<KdTree>(new KdTree(pathRight, dimension+1));
         }
     }
+
+    size_t size() const {
+        size_t out(0);
+        if(left)  out += left->size();
+        out +=1;
+        if(right) out += right->size();
+        return out;
+    }
+
+    Path<T> to_path() const {
+        Path<T> out;
+        if(left) out += left->to_path();
+        out += val;
+        if(right) out += right->to_path();
+        return out;
+    }
 };
 
 } //lib_2d
