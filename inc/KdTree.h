@@ -98,6 +98,12 @@ public:
     bool is_leaf() const {
         return !left && !right;
     }
+
+    Path<T> k_nearest(size_t k) const {
+        /*@todo
+            create a list of size k, walk to the nearest and keep adding / popping when addin newer ones
+        */
+    }
 };
 
 } //lib_2d
