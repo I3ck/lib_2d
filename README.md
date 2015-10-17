@@ -2,7 +2,7 @@
 A c++ library for paths defined by points within the 2d space (using floating point data types)  
 using Catch as testing framework https://github.com/philsquared/Catch  
 
-
+##version 0.7
 
 ##templated  
 tested for:  
@@ -20,6 +20,7 @@ currently, the following classes are supported:
 ```cpp
 Point<T> //a point defined with two coordinates (x and y)  
 Path<T> //a collection Points, which have a specified enumeration
+KdTree<T> //search tree to quickly find nearest neighbors
 
 //subclasses of Path
 LineSegment<T> //a line segment defined by start and end point
