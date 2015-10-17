@@ -194,8 +194,8 @@ public:
     }
 
     Path& push_back(const Path &other) {
-        for(auto i = other.cbegin(); i != other.cend(); ++i)
-            push_back(*i);
+        ps.reserve( ps.size() + other.size() );
+        ps.insert( ps.end(), other.cbegin(), other.cend() );
         return *this;
     }
 
@@ -210,8 +210,8 @@ public:
     }
 
     Path& emplace_back(const Path &other) {
-        for(auto i = other.cbegin(); i != other.cend(); ++i)
-            emplace_back(*i);
+        ps.reserve( ps.size() + other.size() );
+        ps.insert( ps.end(), other.cbegin(), other.cend() );
         return *this;
     }
 
