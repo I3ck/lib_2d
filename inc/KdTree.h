@@ -49,7 +49,7 @@ private:
     const int dimension;
 
 public:
-    KdTree(Path<T> path, int dim = 0) : dimension(dim % 2) {
+    KdTree(Path<T> path, int dim = 0) : dimension(dim % 2) { ///@todo no assignment / copy const, make second, public const without dimension and make this one here private
         if(path.size() == 1)
             val = path.first();
 
