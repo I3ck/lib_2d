@@ -46,11 +46,10 @@ private:
 
     Point<T> val;
 
-    int dimension; ///@todo const
+    const int dimension;
 
 public:
-    KdTree(Path<T> path, int dim = 0) {
-        dimension = dim % 2;
+    KdTree(Path<T> path, int dim = 0) : dimension(dim % 2) {
         if(path.size() == 1)
             val = path.first();
 
