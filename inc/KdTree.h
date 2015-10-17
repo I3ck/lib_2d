@@ -96,21 +96,26 @@ public:
         return !left && !right;
     }
 
-    Point<T> nearest(const Point<T> &search) const {
-        if(is_leaf()) return val;
+    Path<T> k_nearest(const Point<T> &search, size_t n) const {
+        if(n < 1) return Path<T>();
+        if(is_leaf()) return Path<T>({val});
         bool otherNodeHasToBeChecked(false);
 
         auto comp = dimension_compare(search, val, dimension);
-        Point<T> best;
+        Path<T> res;
         if(comp == LEFT && left)
-            best = left->nearest(search);
+            res += left->k_nearest(search, n);
         else
-            best = right->nearest(search);
+            res += right->k_nearest(search, n);
 
-        if(search.sqr_distance_to(val) < search.sqr_distance_to(best))
-            best = val;
+        merge_results(res, search, n);
 
-        T distanceBest = search.distance_to(best);
+        if(search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
+            res += val;
+
+        merge_results(res, search, n);
+
+        T distanceBest = search.distance_to(res.last()); //check whether
         T min = search[dimension] - distanceBest;
         T max = search[dimension] + distanceBest;
         Point<T> otherBest;
@@ -131,17 +136,11 @@ public:
         }
 
         if(otherNodeHasToBeChecked) {
-            if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(best))
-                best = otherBest;
+            if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(res.last()))
+                res += otherBest;
         }
-
-        return best;
-    }
-
-    Path<T> k_nearest(size_t k) const {
-        /*@todo
-            create a list of size k, walk to the nearest and keep adding / popping when addin newer ones
-        */
+        merge_results(res, search, n);
+        return res;
     }
 
 private:
@@ -175,6 +174,16 @@ private:
             return (p1.x - p2.x) * (p1.x - p2.x);
         else
             return (p1.y - p2.y) * (p1.y - p2.y);
+    }
+
+    static inline void merge_results(Path<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
+        if(target.size() > maxSize) {
+            std::sort(target.begin(), target.end(),
+                [&search](const Point<T> &a, const Point<T> &b) {
+                    return search.sqr_distance_to(a) < search.sqr_distance_to(b);
+                });
+            target.remove_from(maxSize); //@todo or maxSize+1
+        }
     }
 
 

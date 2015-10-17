@@ -809,7 +809,7 @@ TEST_CASE("testing Kdtree") {
     Point<T> search{13.38, 1.337};
     KdTree<T> tree2 = KdTree<T>(inv);
 
-    auto find = tree2.nearest(search);
+    auto find = tree2.k_nearest(search, 1);
 
-    REQUIRE(nearestInPath == find);
+    REQUIRE(nearestInPath == find[0]);
 }
