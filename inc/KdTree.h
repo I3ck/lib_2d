@@ -96,6 +96,10 @@ public:
         return !left && !right;
     }
 
+    Point<T> nearest(const Point<T> &search) const {
+
+    }
+
     Path<T> k_nearest(size_t k) const {
         /*@todo
             create a list of size k, walk to the nearest and keep adding / popping when addin newer ones
@@ -104,11 +108,29 @@ public:
 
 private:
 
+    enum Compare {LT, GT, EQ}; ///@todo move to own file?
+
     static inline void dimension_sort(Path<T> &path, size_t dimension) {
         if(dimension == 0)
             path.sort_x();
         else
             path.sort_y();
+    }
+
+    static inline Compare dimension_compare(const Point<T> &lhs, const Point<T> &rhs, size_t dimension) {
+        T val1, val2;
+        if(dimension == 0) {
+            val1 = lhs.x;
+            val2 = rhs.x;
+        }
+        else {
+            val1 = lhs.y;
+            val2 = rhs.y;
+        }
+
+        if(val1 < val2) return LT;
+        if(val2 > val1) return GT;
+        else return EQ;
     }
 
 
