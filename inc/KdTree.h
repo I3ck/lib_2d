@@ -94,6 +94,10 @@ public:
         if(right) out += right->to_path();
         return out;
     }
+
+    bool is_leaf() const {
+        return !left && !right;
+    }
 };
 
 } //lib_2d
