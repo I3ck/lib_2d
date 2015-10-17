@@ -1,9 +1,10 @@
 FIXES / IMPROVEMENTS:
     test whether ellipse is actually rotated around its center instead of 0 0 (when constructing, same goes for others)
     size_t for all indexes?
-    proper usage of const references
     add kdtree to readme
     convex hull
+    tests for LDouble failing (segmentation fault)
+    inline smaller functions
 
 
 SHOULD BE ADDED:

@@ -41,7 +41,7 @@ class Path {
 protected:
     std::vector < Point <T> > ps;
 
-    T ccw(Point<T> p1,Point<T> p2, Point<T> p3) const {
+    T ccw(const Point<T> &p1,const Point<T> &p2, const Point<T> &p3) const {
         return (p2.x - p1.x)*(p3.y - p1.y) - (p2.y - p1.y)*(p3.x - p1.x);
     }
 
@@ -73,7 +73,7 @@ public:
         return *this;
     }
 
-    Path& move_by(Point<T> other) {
+    Path& move_by(const Point<T> &other) {
         for(auto &p : ps)
             p.move_by(other);
         return *this;
@@ -87,7 +87,7 @@ public:
         return *this;
     }
 
-    Path& mirror_vertically(Point<T> other) {
+    Path& mirror_vertically(const Point<T> &other) {
         for(auto &p : ps)
             p.mirror_vertically(other);
         return *this;
@@ -99,13 +99,13 @@ public:
         return *this;
     }
 
-    Path& mirror_horizontally(Point<T> other) {
+    Path& mirror_horizontally(const Point<T> &other) {
         for(auto &p : ps)
             p.mirror_horizontally(other);
         return *this;
     }
 
-    Path& mirror_point(Point<T> other) {
+    Path& mirror_point(const Point<T> &other) {
         for(auto &p : ps)
             p.mirror_point(other);
         return *this;
@@ -421,7 +421,7 @@ public:
 
 //------------------------------------------------------------------------------
 #ifdef LIB_2D_EXPERIMENTAL
-    bool point_is_inside(Point<T> point) {
+    bool point_is_inside(const Point<T> &point) {
         if(size() <= 2)
             return false;
 
@@ -448,7 +448,7 @@ public:
 #endif
 //------------------------------------------------------------------------------
 
-    Path& make_unique() {
+    Path& make_unique() { ///@todo use std::unique
         std::set <unsigned int> nonUniqueIndexes;
         for(unsigned int i = 0; i < size()-1; ++i) {
             for(unsigned int j = i+1; j < size(); ++j) {
@@ -481,7 +481,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool has_point(Point<T> point) {
+    bool has_point(const Point<T> &point) {
         for(const auto &p : ps) {
             if(p.equal_to(point))
                 return true;
@@ -546,7 +546,7 @@ public:
         return *this;
     }
 
-    Path& remove_right_of(Point<T> other) {
+    Path& remove_right_of(const Point<T> &other) {
         remove_right_of(other.x);
         return *this;
     }
@@ -564,7 +564,7 @@ public:
         return *this;
     }
 
-    Path& remove_left_of(Point<T> other) {
+    Path& remove_left_of(const Point<T> &other) {
         remove_left_of(other.x);
         return *this;
     }
@@ -582,7 +582,7 @@ public:
         return *this;
     }
 
-    Path& remove_above_of(Point<T> other) {
+    Path& remove_above_of(const Point<T> &other) {
         remove_above_of(other.y);
         return *this;
     }
@@ -600,7 +600,7 @@ public:
         return *this;
     }
 
-    Path& remove_below_of(Point<T> other) {
+    Path& remove_below_of(const Point<T> &other) {
         remove_below_of(other.y);
         return *this;
     }
@@ -648,7 +648,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    int furthest_apart(Point<T> other) const {
+    int furthest_apart(const Point<T> &other) const {
         T maxDistance(0);
         int furthestIndex(-1);
         for (unsigned int i = 0; i < size(); ++i) {
@@ -680,7 +680,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    int closest(Point<T> other) const {
+    int closest(const Point<T> &other) const {
         int closestIndex(-1);
         if(size() == 0)
             return closestIndex;
@@ -739,7 +739,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    int index_of(Point<T> other) {
+    int index_of(const Point<T> &other) {
         for(auto p = ps.cbegin(); p != ps.cend(); ++p) {
                 if (*p == other)
                     return (p - ps.cbegin());
@@ -917,11 +917,11 @@ public:
 
 private:
 
-    static bool compare_x(Point<T> lhs, Point<T> rhs) {
+    static bool compare_x(const Point<T> &lhs, const Point<T> &rhs) {
         return lhs.x < rhs.x;
     }
 
-    static bool compare_y(Point<T> lhs, Point<T> rhs) {
+    static bool compare_y(const Point<T> &lhs, const Point<T> &rhs) {
         return lhs.y < rhs.y;
     }
 
@@ -960,7 +960,6 @@ private:
         }
         return path;
     }
-
 };
 
 } //lib_2d

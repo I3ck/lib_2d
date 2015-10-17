@@ -92,9 +92,7 @@ public:
         return out;
     }
 
-    bool is_leaf() const {
-        return !left && !right;
-    }
+
 
     Point<T> nearest(const Point<T> &search) const {
         if(is_leaf()) return val;
@@ -189,6 +187,10 @@ private:
 
     enum Compare {LEFT, RIGHT};
 
+    bool is_leaf() const {
+        return !left && !right;
+    }
+    
     static inline void dimension_sort(Path<T> &path, size_t dimension) {
         if(dimension == 0)
             path.sort_x();

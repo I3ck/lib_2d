@@ -43,7 +43,7 @@ public:
         return *this;
     }
 
-    Point& move_by(Point other) {
+    Point& move_by(const Point &other) {
         this->x+=other.x;
         this->y+=other.y;
         return *this;
@@ -56,7 +56,7 @@ public:
         return *this;
     }
 
-    Point& mirror_vertically(Point other) {
+    Point& mirror_vertically(const Point &other) {
         mirror_vertically(other.x);
         return *this;
     }
@@ -66,12 +66,12 @@ public:
         return *this;
     }
 
-    Point& mirror_horizontally(Point other) {
+    Point& mirror_horizontally(const Point &other) {
         mirror_horizontally(other.y);
         return *this;
     }
 
-    Point& mirror_point(Point other) {
+    Point& mirror_point(const Point &other) {
         mirror_vertically(other);
         mirror_horizontally(other);
         return *this;
@@ -137,7 +137,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    T distance_to(Point other) const {
+    T distance_to(const Point &other) const {
         return sqrt(  pow(x-other.x,2) + pow(y-other.y,2)  );
     }
 
@@ -145,7 +145,7 @@ public:
         return distance_to(Point{x,y});
     }
 
-    T sqr_distance_to(Point other) const {
+    T sqr_distance_to(const Point &other) const {
         return pow(x-other.x,2) + pow(y-other.y,2);
     }
 
@@ -155,20 +155,20 @@ public:
 
 //------------------------------------------------------------------------------
 
-    T slope_to(Point other) const {
+    T slope_to(const Point &other) const {
         return (other.y - y) / (other.x - x);
     }
 
 //------------------------------------------------------------------------------
 
     ///@todo rename to 'radians_to'
-    T rad_to(Point other) const {
+    T rad_to(const Point &other) const {
         return atan2(other.y - y, other.x - x);
     }
 
 //------------------------------------------------------------------------------
 
-    Point center_between(Point other) const {
+    Point center_between(const Point &other) const {
         return Point{(T)(x + (other.x - x) / 2.0), (T)(y + (other.y - y) / 2.0)};
     }
 
@@ -183,7 +183,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool equal_to (Point other) const {
+    bool equal_to (const Point &other) const {
         if (x == other.x && y == other.y)
             return true;
         return false;
@@ -191,15 +191,15 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool operator == (Point other) const {
+    bool operator == (const Point &other) const {
         return equal_to(other);
     }
 
-    bool operator != (Point other) const {
+    bool operator != (const Point &other) const {
         return !equal_to(other);
     }
 
-    bool operator < (Point other) const {
+    bool operator < (const Point &other) const {
         return x < other.x || (x == other.x && y < other.y);
     }
 

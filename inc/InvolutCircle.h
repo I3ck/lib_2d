@@ -81,7 +81,7 @@ public:
         return *this;
     }
 
-    InvolutCircle& move_by(Point<T> other) {
+    InvolutCircle& move_by(const Point<T> &other) {
         Path<T>::move_by(other);
         m_center.move_by(other);
         return *this;
@@ -95,7 +95,7 @@ public:
         return *this;
     }
 
-    InvolutCircle& mirror_vertically(Point<T> other) {
+    InvolutCircle& mirror_vertically(const Point<T> &other) {
         Path<T>::mirror_vertically(other);
         m_center.mirror_vertically(other);
         return *this;
@@ -107,13 +107,13 @@ public:
         return *this;
     }
 
-    InvolutCircle& mirror_horizontally(Point<T> other) {
+    InvolutCircle& mirror_horizontally(const Point<T> &other) {
         Path<T>::mirror_horizontally(other);
         m_center.mirror_horizontally(other);
         return *this;
     }
 
-    InvolutCircle& mirror_point(Point<T> other) {
+    InvolutCircle& mirror_point(const Point<T> &other) {
         Path<T>::mirror_point(other);
         m_center.mirror_point(other);
         return *this;
