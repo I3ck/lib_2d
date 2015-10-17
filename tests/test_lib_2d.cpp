@@ -792,3 +792,8 @@ TEST_CASE("testing cosine interpolation") {
     cosine.to_file("cosine.test");
 #endif // OUTPUT_TEST_FILES
 }
+
+TEST_CASE("testing Kdtree") {
+    InvolutCircle<T> inv = InvolutCircle<T>(1.0, 100);
+    KdTree<T> tree = KdTree<T>(inv);
+}
