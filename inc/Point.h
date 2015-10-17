@@ -145,6 +145,14 @@ public:
         return distance_to(Point{x,y});
     }
 
+    T sqr_distance_to(Point other) const {
+        return pow(x-other.x,2) + pow(y-other.y,2);
+    }
+
+    T sqr_distance_to(T x, T y) const {
+        return sqr_distance_to(Point{x,y});
+    }
+
 //------------------------------------------------------------------------------
 
     T slope_to(Point other) const {

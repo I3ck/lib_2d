@@ -802,4 +802,14 @@ TEST_CASE("testing Kdtree") {
     auto inv2 = tree.to_path();
 
     REQUIRE(inv.sort_x() == inv2.sort_x());
+
+    Point<T> nearestInPath{13.37, 1.337};
+    inv += nearestInPath;
+
+    Point<T> search{13.38, 1.337};
+    KdTree<T> tree2 = KdTree<T>(inv);
+
+    auto find = tree2.nearest(search);
+
+    REQUIRE(nearestInPath == find);
 }

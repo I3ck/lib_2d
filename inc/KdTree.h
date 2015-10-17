@@ -97,7 +97,19 @@ public:
     }
 
     Point<T> nearest(const Point<T> &search) const {
+        if(is_leaf()/* || search == val*/)
+            return val;
 
+        auto comp = dimension_compare(search, val, dimension);
+        if(comp == LT || comp == EQ) {
+            Point<T> pointLeft = left->nearest(search);
+            double distVal = search.sqr_distance_to(val);
+            double distLeft = search.sqr_distance_to(  pointLeft  );
+            if( distVal < distLeft) return val;
+            else return pointLeft; ///@todo else case has to check hyperplane
+        }
+        else
+            return right->nearest(search);
     }
 
     Path<T> k_nearest(size_t k) const {
@@ -129,8 +141,15 @@ private:
         }
 
         if(val1 < val2) return LT;
-        if(val2 > val1) return GT;
+        if(val1 > val2) return GT;
         else return EQ;
+    }
+
+    static inline T dimension_sqr_dist(const Point<T> &p1, const Point<T> &p2, size_t dimension) {
+        if(dimension == 0)
+            return (p1.x - p2.x) * (p1.x - p2.x);
+        else
+            return (p1.y - p2.y) * (p1.y - p2.y);
     }
 
 
