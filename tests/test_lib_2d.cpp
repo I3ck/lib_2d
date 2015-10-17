@@ -813,7 +813,6 @@ TEST_CASE("testing Kdtree") {
 
     auto find = tree2.k_nearest(search, 2);
 
-    std::cout << find << std::endl;
     REQUIRE(nearestInPath == find[0]);
     REQUIRE(nearestInPath2 == find[1]);
 

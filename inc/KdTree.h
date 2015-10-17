@@ -181,7 +181,6 @@ public:
             if(res.size() < n || search.sqr_distance_to(otherBest) < search.sqr_distance_to(res.last()))
                 res += otherBest;
         }
-        std::cout << res << std::endl;
         sort_and_limit(res, search, n);
         return res;
     }
