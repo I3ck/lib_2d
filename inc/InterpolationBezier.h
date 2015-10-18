@@ -36,6 +36,21 @@ class InterpolationBezier : public Path<T> {
 
 private:
 
+    unsigned long long int faculty(unsigned int number) {
+        unsigned long long int f = 1;
+        for(unsigned int i =1; i <= number; ++i)
+            f *= i;
+        return f;
+    }
+
+    T binomial_coeff(unsigned int n, unsigned int k) {
+        return faculty(n) / ( faculty(k) * faculty(n-k) );
+    }
+
+    T bernstein_polynomal(unsigned int n, unsigned int i, T t) {
+        return binomial_coeff(n,i) * pow(t,i) * pow(1.0-t, n-i);
+    }
+
     Point<T> control_polygon(const Path<T> &path, unsigned int nPoints, T t) {
         T x(0), y(0);
 
