@@ -89,7 +89,7 @@ public:
         T newX, newY;
 
         newX = center.x + cos(radians) * (x - center.x) - sin(radians) * (y - center.y);
-        newY = center.y + sin(radians) * (x - center.y) + cos(radians) * (y - center.y);
+        newY = center.y + sin(radians) * (x - center.x) + cos(radians) * (y - center.y);
 
         x = newX;
         y = newY;
