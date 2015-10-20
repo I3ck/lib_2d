@@ -31,6 +31,56 @@ namespace lib_2d {
 //------------------------------------------------------------------------------
 
     template <typename T>
+    int turn(const Point<T> &p, const Point<T> &q, const Point<T> &r) {
+        Point<T> pq = direction(p, q);
+        Point<T> qr = direction(q, r);
+
+        if(cclockwise(pq, qr)) return 1;
+        if(clockwise(pq, qr)) return -1;
+        else return 0;
+    }
+
+//------------------------------------------------------------------------------
+
+    template <typename T>
+    bool clockwise(const Point<T> &dir1, const Point<T> &dir2) {
+        return cross(dir1, dir2) < 0;
+    }
+
+    template <typename T>
+    bool cclockwise(const Point<T> &dir1, const Point<T> &dir2) {
+        return cross(dir1, dir2) > 0;
+    }
+
+    template <typename T>
+    bool colinear(const Point<T> &dir1, const Point<T> &dir2) {
+        return cross(dir1, dir2) == 0;
+    }
+
+//------------------------------------------------------------------------------
+
+    template <typename T>
+    Point<T> direction(const Point<T> &p1, const Point<T> &p2) {
+        return Point<T>({p2.x - p1.x, p2.y - p1.y});
+    }
+
+//------------------------------------------------------------------------------
+
+    template <typename T>
+    T dot(const Point<T> &p1, const Point<T> &p2) {
+        return p1.x * p2.x + p1.y * p2.y;
+    }
+
+//------------------------------------------------------------------------------
+
+    template <typename T>
+    T cross(const Point<T> &p1, const Point<T> &p2) {
+        return p1.x * p2.y - p2.x * p1.y;
+    }
+
+//------------------------------------------------------------------------------
+
+    template <typename T>
     T distance_point_line(Point<T> p, Point<T> l1, Point<T> l2) {
         T a1 = l1.x;
         T a2 = l1.y;
