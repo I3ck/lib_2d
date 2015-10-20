@@ -26,6 +26,7 @@
 #include <set>
 #include <algorithm>
 #include <utility>
+#include <iostream>
 
 #include "Point.h"
 #include "Path.h"
@@ -51,10 +52,16 @@ public:
 
         const Point<T> start = path.first();
         Point<T> prev = start;
-        for(int i = 0; maxIter < 0 || i < maxIter; ++i) {
+        for(int i = 0; maxIter == -1 || i < maxIter ; ++i) {
+            std::cout << i << std::endl;
             Point<T> next;
 
-            auto candidates = tree.k_nearest(prev, nNearest + hull.size()); ///@todo exclude first, since it will be the search itself
+            //std::cout << "before tree" << std::endl;
+            //std::cout << tree.to_path() << std::endl;
+            auto candidates = tree.k_nearest(prev, nNearest/* + hull.size()*/); ///@todo exclude first, since it will be the search itself
+            //std::cout << "after tree" << std::endl;
+            candidates.remove_until(1);
+            //std::cout << candidates << std::endl;
 
             std::sort(candidates.begin(), candidates.end(), [&](const Point<T> &p1, const Point<T> &p2){
                 //return true if p1 better than p2
@@ -76,17 +83,21 @@ public:
 
                 return false;
             });
+            
+            //std::cout << "AFTER SORT" << std::endl;
 
 
-            if(candidates.size() < 2) break;
-            next = candidates[1]; //ignore prev
-
-            if(std::any_of(path.begin(), path.end(), [&next](const Point<T> &p){return p == next;}))
-                break;
+            if(candidates.size() < 1) continue;
+            for (size_t j = 0; j < candidates.size(); ++j) {
+                next = candidates[j];
+                if(std::none_of(hull.begin(), hull.end(), [&next](const Point<T> &p){return p == next;}))
+                    break;
+            }
 
             hull += next;
             prev = next;
         }
+        return hull;
     }
 };
 
