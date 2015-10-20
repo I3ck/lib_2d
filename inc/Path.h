@@ -439,7 +439,7 @@ public:
 
             auto candidates = tree.k_nearest(prev, nNearest + hull.size()); ///@todo exclude first, since it will be the search itself
 
-            next = [&]() {
+            auto candidatesSorted = [&]() {
                 std::sort(candidates.begin(), candidates.end(), [&](const Point<T> &p1, const Point<T> &p2){
                     //return true if p1 better than p2
                     if(p1 == start) return false;
@@ -462,10 +462,15 @@ public:
                 });
             };
 
+            if(candidatesSorted.size() < 2) break;
+            next = candidatesSorted[1]; //ignore prev
+
             if(std::any_of(path.begin(), path.end(), [&next](const Point<T> &p){return p == next;}))
                 break;
-        }
 
+            hull += next;
+            prev = next;
+        }
     }
 
 
