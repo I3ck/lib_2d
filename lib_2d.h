@@ -36,5 +36,6 @@
 #include "inc/InterpolationBezier.h"
 #include "inc/InterpolationLinear.h"
 #include "inc/InterpolationCosine.h"
+#include "inc/Factory2D.h"
 
 #endif // LIB_2D_H_INCLUDED

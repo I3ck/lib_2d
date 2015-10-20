@@ -421,60 +421,6 @@ public:
 
 //------------------------------------------------------------------------------
 
-    //gift wrapping combined with knearest
-    //(warning, needs more testing)
-    Path concave_hull(size_t nNearest, int maxIter = -1, bool closePath = true) const {
-        Path hull;
-        if(nNearest > size()) return hull;
-
-        auto path = *this;
-        path.sort_x();
-
-        const auto tree = KdTree(path);
-
-        const Point<T> start = path.first();
-        Point<T> prev = start;
-        for(int i = 0; maxIter < 0 || i < maxIter; ++i) {
-            Point<T> next;
-
-            auto candidates = tree.k_nearest(prev, nNearest + hull.size()); ///@todo exclude first, since it will be the search itself
-
-            auto candidatesSorted = [&]() {
-                std::sort(candidates.begin(), candidates.end(), [&](const Point<T> &p1, const Point<T> &p2){
-                    //return true if p1 better than p2
-                    if(p1 == start) return false;
-                    if(p2 == start) return true;
-
-                    bool p1Elem = any_of(hull.begin(), hull.end(), [&p1](const Point<T> &h){return h == p1;});
-                    bool p2Elem = any_of(hull.begin(), hull.end(), [&p2](const Point<T> &h){return h == p2;});
-
-                    if      (p1Elem && !p2Elem) return true;
-                    else if (!p2Elem && p1Elem) return false;
-                    else if (p1Elem && p2Elem) return false;
-
-                    auto trn = turn(prev, p1, p2);
-                    if      (trn < 0) return true;
-                    else if (trn > 0) return false;
-
-                    if(prev.sqr_distance_to(p1) < prev.sqr_distance_to(p2)) return true;
-
-                    return false;
-                });
-            };
-
-            if(candidatesSorted.size() < 2) break;
-            next = candidatesSorted[1]; //ignore prev
-
-            if(std::any_of(path.begin(), path.end(), [&next](const Point<T> &p){return p == next;}))
-                break;
-
-            hull += next;
-            prev = next;
-        }
-    }
-
-
-//------------------------------------------------------------------------------
 #ifdef LIB_2D_EXPERIMENTAL
     bool point_is_inside(const Point<T> &point) {
         if(size() <= 2)
