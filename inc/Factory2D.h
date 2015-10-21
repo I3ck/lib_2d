@@ -52,16 +52,20 @@ public:
 
         const Point<T> start = path.first();
         Point<T> prev = start;
-        for(int i = 0; maxIter == -1 || i < maxIter ; ++i) {
+        hull += start;
+        for(int i = 1; maxIter == -1 || i < maxIter ; ++i) {
             std::cout << i << std::endl;
             Point<T> next;
 
-            //std::cout << "before tree" << std::endl;
+            std::cout << "before tree" << std::endl;
+            std::cout << "tree size: " << tree.size() << std::endl;
+            std::cout << "prev: " << prev << std::endl;
+            std::cout << "nNearest :" << nNearest << std::endl;
             //std::cout << tree.to_path() << std::endl;
-            auto candidates = tree.k_nearest(prev, nNearest/* + hull.size()*/); ///@todo exclude first, since it will be the search itself
-            //std::cout << "after tree" << std::endl;
-            candidates.remove_until(1);
-            //std::cout << candidates << std::endl;
+            auto candidates = tree.k_nearest(prev, nNearest + hull.size()); ///@todo exclude first, since it will be the search itself
+            std::cout << "after tree" << std::endl;
+            //candidates.remove_until(1);
+            std::cout << candidates << std::endl;
 
             std::sort(candidates.begin(), candidates.end(), [&](const Point<T> &p1, const Point<T> &p2){
                 //return true if p1 better than p2
@@ -71,28 +75,24 @@ public:
                 bool p1Elem = any_of(hull.begin(), hull.end(), [&p1](const Point<T> &h){return h == p1;});
                 bool p2Elem = any_of(hull.begin(), hull.end(), [&p2](const Point<T> &h){return h == p2;});
 
-                if      (p1Elem && !p2Elem) return true;
-                else if (!p2Elem && p1Elem) return false;
+                if      (p1Elem && !p2Elem) return false;
+                else if (!p1Elem && p2Elem) return true;
                 else if (p1Elem && p2Elem) return false;
 
                 auto trn = turn(prev, p1, p2);
                 if      (trn < 0) return true;
                 else if (trn > 0) return false;
 
-                if(prev.sqr_distance_to(p1) < prev.sqr_distance_to(p2)) return true;
+                if(prev.sqr_distance_to(p1) < prev.sqr_distance_to(p2)) return false;
 
                 return false;
             });
             
-            //std::cout << "AFTER SORT" << std::endl;
+            std::cout << "AFTER SORT" << std::endl;
 
 
             if(candidates.size() < 1) continue;
-            for (size_t j = 0; j < candidates.size(); ++j) {
-                next = candidates[j];
-                if(std::none_of(hull.begin(), hull.end(), [&next](const Point<T> &p){return p == next;}))
-                    break;
-            }
+            next = candidates[0];
 
             hull += next;
             prev = next;
