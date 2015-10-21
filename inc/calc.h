@@ -43,7 +43,7 @@ namespace lib_2d {
 //------------------------------------------------------------------------------
 
     template <typename T>
-    bool clockwise(const Point<T> &dir1, const Point<T> &dir2) {
+    bool clockwise(const Point<T> &dir1, const Point<T> &dir2) { ///@todo dir type
         return cross(dir1, dir2) < 0;
     }
 
@@ -61,7 +61,9 @@ namespace lib_2d {
 
     template <typename T>
     Point<T> direction(const Point<T> &p1, const Point<T> &p2) {
-        return Point<T>({p2.x - p1.x, p2.y - p1.y});
+        Point<T> out({p2.x - p1.x, p2.y - p1.y});
+        out.normalize();
+        return out;
     }
 
 //------------------------------------------------------------------------------
