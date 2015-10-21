@@ -145,8 +145,9 @@ public:
         Path<T> res;
         if(comp == LEFT && left)
             res += left->k_nearest(search, n);
-        else
+        else if(right)
             res += right->k_nearest(search, n);
+        ///@todo else return ?
 
         sort_and_limit(res, search, n);
 
