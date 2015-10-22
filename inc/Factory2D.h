@@ -45,6 +45,7 @@ public:
     static Path<T> concave_hull(Path<T> path, size_t nNearest, int maxIter = -1, bool closePath = true) {
         const bool dbg(false);
         Path<T> hull;
+        if(path.size() < 3) return hull;
         if(nNearest > path.size()) return hull;
 
         path.sort_x();
@@ -53,8 +54,8 @@ public:
 
         const Point<T> start = path.first();
         Point<T> prev = start;
-        hull += start;
-        for(int i = 1; maxIter == -1 || i < maxIter ; ++i) {
+        hull += path[1];
+        for(int i = 2; maxIter == -1 || i < maxIter ; ++i) {
             if(dbg) std::cout << i << std::endl;
             Point<T> next;
 
@@ -70,8 +71,8 @@ public:
 
             std::sort(candidates.begin(), candidates.end(), [&](const Point<T> &p1, const Point<T> &p2){
                 //return true if p1 better than p2
-                if(p1 == start) return false;
-                if(p2 == start) return true;
+//                if(/*hull.size() > nNearest && */p1 == start) return false;
+//                if(/*hull.size() > nNearest && */p2 == start) return true;
 
                 bool p1Elem = any_of(hull.begin(), hull.end(), [&p1](const Point<T> &h){return h == p1;});
                 bool p2Elem = any_of(hull.begin(), hull.end(), [&p2](const Point<T> &h){return h == p2;});
@@ -99,6 +100,8 @@ public:
             prev = next;
             if(next == start) break;
         }
+        hull += start;
+        hull += hull[0]; ///@todo add a "close" boolean flag?
         return hull;
     }
 };
