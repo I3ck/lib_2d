@@ -43,6 +43,7 @@ public:
     //gift wrapping combined with knearest
     //(warning, needs more testing)
     static Path<T> concave_hull(Path<T> path, size_t nNearest, int maxIter = -1, bool closePath = true) {
+        const bool dbg(false);
         Path<T> hull;
         if(nNearest > path.size()) return hull;
 
@@ -54,18 +55,18 @@ public:
         Point<T> prev = start;
         hull += start;
         for(int i = 1; maxIter == -1 || i < maxIter ; ++i) {
-            std::cout << i << std::endl;
+            if(dbg) std::cout << i << std::endl;
             Point<T> next;
 
-            std::cout << "before tree" << std::endl;
-            std::cout << "tree size: " << tree.size() << std::endl;
-            std::cout << "prev: " << prev << std::endl;
-            std::cout << "nNearest :" << nNearest << std::endl;
+            if(dbg) std::cout << "before tree" << std::endl;
+            if(dbg) std::cout << "tree size: " << tree.size() << std::endl;
+            if(dbg) std::cout << "prev: " << prev << std::endl;
+            if(dbg) std::cout << "nNearest :" << nNearest << std::endl;
             //std::cout << tree.to_path() << std::endl;
             auto candidates = tree.k_nearest(prev, nNearest); ///@todo exclude first, since it will be the search itself
-            std::cout << "after tree" << std::endl;
+            if(dbg) std::cout << "after tree" << std::endl;
             //candidates.remove_until(1);
-            std::cout << candidates << std::endl;
+            if(dbg) std::cout << candidates << std::endl;
 
             std::sort(candidates.begin(), candidates.end(), [&](const Point<T> &p1, const Point<T> &p2){
                 //return true if p1 better than p2
@@ -88,7 +89,7 @@ public:
                 return true;
             });
             
-            std::cout << "AFTER SORT" << std::endl;
+            if(dbg) std::cout << "AFTER SORT" << std::endl;
 
 
             if(candidates.size() < 1) continue;
@@ -96,6 +97,7 @@ public:
 
             hull += next;
             prev = next;
+            if(next == start) break;
         }
         return hull;
     }
