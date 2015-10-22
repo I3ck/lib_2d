@@ -137,46 +137,40 @@ public:
     }
 
     Path<T> k_nearest(const Point<T> &search, size_t n) const {
-        if(n < 1) return Path<T>();
-        if(is_leaf()) return Path<T>({Point<T>(val)});
-        bool otherNodeHasToBeChecked(false);
-        Path<T> res;
-        if(res.size() < n || search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
-            res += val;
+        if(n < 1) return Path<T>(); //no real search if n < 1
+        if(is_leaf()) return Path<T>({Point<T>(val)}); //no further recursion, return current value
 
+        Path<T> res; //nearest neighbors of search
+        if(res.size() < n || search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
+            res += val; //add current node if there is still room or if it is closer than the currently worst candidate
+
+        //decide which side to check and recurse into it
         auto comp = dimension_compare(search, val, dimension);
         if(comp == LEFT) {
             if(left) res += left->k_nearest(search, n);
         } else if(right) {
             res += right->k_nearest(search, n);
         }
-        ///@todo else return ?
 
+        //only keep the required number of candidates and sort them by distance
         sort_and_limit(res, search, n);
 
+        //check whether other side might have candidates aswell
+        T distanceBest 	= search.distance_to(res.last());
+        T borderLeft 	= search[dimension] - distanceBest;
+        T borderRight 	= search[dimension] + distanceBest;
 
-        sort_and_limit(res, search, n);
-
-        T distanceBest = search.distance_to(res.last()); //check whether
-        T borderLeft = search[dimension] - distanceBest;
-        T borderRight = search[dimension] + distanceBest;
-
-        if(comp == LEFT) {
-            if(right) {
-                if(res.size() < n || borderRight >= val[dimension])
-                    otherNodeHasToBeChecked = true;
-            }
+        //check whether distances to other side are smaller than currently worst candidate
+        //and recurse into the "wrong" direction, to check for possibly additional candidates
+        if(comp == LEFT && right) {
+            if(res.size() < n || borderRight >= val[dimension])
+                res += right->k_nearest(search, n);
         }
-        else if (left) {
+        else if (comp == RIGHT && left) {
             if(res.size() < n || borderLeft <= val[dimension])
-                otherNodeHasToBeChecked = true;
+                res += left->k_nearest(search, n);
         }
 
-        if(otherNodeHasToBeChecked) {
-            if(comp == LEFT) {
-                if(right) res += right->k_nearest(search, n);
-            } else if(left) res += left->k_nearest(search, n);
-        }
         sort_and_limit(res, search, n);
         return res;
     }
