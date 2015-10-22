@@ -143,10 +143,11 @@ public:
 
         auto comp = dimension_compare(search, val, dimension);
         Path<T> res;
-        if(comp == LEFT && left)
-            res += left->k_nearest(search, n);
-        else if(right)
+        if(comp == LEFT) {
+            if(left) res += left->k_nearest(search, n);
+        } else if(right) {
             res += right->k_nearest(search, n);
+        }
         ///@todo else return ?
 
         sort_and_limit(res, search, n);
@@ -161,24 +162,30 @@ public:
         T max = search[dimension] + distanceBest;
         Point<T> otherBest;
 
-        if(comp == LEFT && right) { //check right now
-            auto pTest = right->val;
-            if(max >= pTest[dimension]) {
-                otherBest = pTest;
-                otherNodeHasToBeChecked = true;
+        if(comp == LEFT) { //check right now
+            if(right) {
+                auto pTest = right->val;
+                if(res.size() < n || max >= pTest[dimension]) {
+                    otherBest = pTest;
+                    otherNodeHasToBeChecked = true;
+                }
             }
         }
         else if (left) { //check left
             auto pTest = left->val;
-            if(min <= pTest[dimension]) {
+            if(res.size() < n|| min <= pTest[dimension]) {
                 otherBest = pTest;
                 otherNodeHasToBeChecked = true;
             }
         }
 
         if(otherNodeHasToBeChecked) {
-            if(res.size() < n || search.sqr_distance_to(otherBest) < search.sqr_distance_to(res.last()))
-                res += otherBest;
+            if(res.size() < n || search.sqr_distance_to(otherBest) < search.sqr_distance_to(res.last())) {
+                if(comp == LEFT)
+                    res += right->k_nearest(search, n);
+                else
+                    res += left->k_nearest(search, n);
+            }
         }
         sort_and_limit(res, search, n);
         return res;
@@ -224,7 +231,7 @@ private:
     static inline void sort_and_limit(Path<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
         if(target.size() > maxSize) {
             auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
-            target.remove_from( std::distance(target.begin(), uniqueIt) - 1 );
+            target.remove_from( std::distance(target.begin(), uniqueIt));
             std::sort(target.begin(), target.end(),
                 [&search](const Point<T> &a, const Point<T> &b) {
                     return search.sqr_distance_to(a) < search.sqr_distance_to(b);

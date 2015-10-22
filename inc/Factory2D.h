@@ -80,8 +80,8 @@ public:
                 else if (p1Elem && p2Elem) return false;
 
                 auto trn = turn(prev, p1, p2);
-                if      (trn < 0) return true;
-                else if (trn > 0) return false;
+                if      (trn < 0) return false;
+                else if (trn > 0) return true;
 
                 if(prev.sqr_distance_to(p1) < prev.sqr_distance_to(p2)) return false;
 
