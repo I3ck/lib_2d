@@ -92,45 +92,39 @@ public:
         return out;
     }
 
-
-
     Point<T> nearest(const Point<T> &search) const {
-        if(is_leaf()) return val;
-        bool otherNodeHasToBeChecked(false);
+        if(is_leaf()) return val; //reached the end, return current value
 
         auto comp = dimension_compare(search, val, dimension);
-        Point<T> best;
+        Point<T> best; //nearest neighbor of search
         if(comp == LEFT && left)
             best = left->nearest(search);
-        else
+        else if(comp == RIGHT && right)
             best = right->nearest(search);
 
         if(search.sqr_distance_to(val) < search.sqr_distance_to(best))
-            best = val;
+            best = val; //make this value the best if it is closer than the checked side
 
-        T distanceBest = search.distance_to(best);
-        T min = search[dimension] - distanceBest;
-        T max = search[dimension] + distanceBest;
+        //check whether other side might have candidates aswell
+        T distanceBest 	= search.distance_to(best);
+        T borderLeft 	= search[dimension] - distanceBest;
+        T borderRight 	= search[dimension] + distanceBest;
         Point<T> otherBest;
 
-        if(comp == LEFT && right) { //check right now
-            auto pTest = right->val;
-            if(max >= pTest[dimension]) {
-                otherBest = pTest;
-                otherNodeHasToBeChecked = true;
+        //check whether distances to other side are smaller than currently worst candidate
+        //and recurse into the "wrong" direction, to check for possibly additional candidates
+        if(comp == LEFT && right) {
+            if(borderRight >= val[dimension]) {
+                otherBest = right->nearest(search);
+                if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(best))
+                    best = otherBest;
             }
         }
-        else if (left) { //check left
-            auto pTest = left->val;
-            if(min <= pTest[dimension]) {
-                otherBest = pTest;
-                otherNodeHasToBeChecked = true;
-            }
-        }
-
-        if(otherNodeHasToBeChecked) {
-            if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(best))
-                best = otherBest;
+        else if (comp == RIGHT && left) {
+            if(borderLeft <= val[dimension])
+                otherBest = left->nearest(search);
+                if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(best))
+                    best = otherBest;
         }
 
         return best;
