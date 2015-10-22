@@ -158,19 +158,17 @@ public:
         sort_and_limit(res, search, n);
 
         T distanceBest = search.distance_to(res.last()); //check whether
-        T min = search[previous_dimension(dimension)] - distanceBest;
-        T max = search[previous_dimension(dimension)] + distanceBest;
+        T borderLeft = search[dimension] - distanceBest;
+        T borderRight = search[dimension] + distanceBest;
 
-        if(comp == LEFT) { //check right now
+        if(comp == LEFT) {
             if(right) {
-                auto pTest = right->val;
-                if(res.size() < n || max >= pTest[previous_dimension(dimension)])
+                if(res.size() < n || borderRight >= val[dimension])
                     otherNodeHasToBeChecked = true;
             }
         }
-        else if (left) { //check left
-            auto pTest = left->val;
-            if(res.size() < n || min <= pTest[previous_dimension(dimension)])
+        else if (left) {
+            if(res.size() < n || borderLeft <= val[dimension])
                 otherNodeHasToBeChecked = true;
         }
 
@@ -189,11 +187,6 @@ private:
 
     bool is_leaf() const {
         return !left && !right;
-    }
-
-    static inline size_t previous_dimension(size_t dimension) {
-        if(dimension == 0) return 1;
-        return 0;
     }
     
     static inline void dimension_sort(Path<T> &path, size_t dimension) {
