@@ -140,9 +140,11 @@ public:
         if(n < 1) return Path<T>();
         if(is_leaf()) return Path<T>({Point<T>(val)});
         bool otherNodeHasToBeChecked(false);
+        Path<T> res;
+        if(res.size() < n || search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
+            res += val;
 
         auto comp = dimension_compare(search, val, dimension);
-        Path<T> res;
         if(comp == LEFT) {
             if(left) res += left->k_nearest(search, n);
         } else if(right) {
@@ -152,40 +154,30 @@ public:
 
         sort_and_limit(res, search, n);
 
-        if(res.size() < n || search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
-            res += val;
 
         sort_and_limit(res, search, n);
 
         T distanceBest = search.distance_to(res.last()); //check whether
-        T min = search[dimension] - distanceBest;
-        T max = search[dimension] + distanceBest;
-        Point<T> otherBest;
+        T min = search[previous_dimension(dimension)] - distanceBest;
+        T max = search[previous_dimension(dimension)] + distanceBest;
 
         if(comp == LEFT) { //check right now
             if(right) {
                 auto pTest = right->val;
-                if(res.size() < n || max >= pTest[dimension]) {
-                    otherBest = pTest;
+                if(res.size() < n || max >= pTest[previous_dimension(dimension)])
                     otherNodeHasToBeChecked = true;
-                }
             }
         }
         else if (left) { //check left
             auto pTest = left->val;
-            if(res.size() < n|| min <= pTest[dimension]) {
-                otherBest = pTest;
+            if(res.size() < n || min <= pTest[previous_dimension(dimension)])
                 otherNodeHasToBeChecked = true;
-            }
         }
 
         if(otherNodeHasToBeChecked) {
-            if(res.size() < n || search.sqr_distance_to(otherBest) < search.sqr_distance_to(res.last())) {
-                if(comp == LEFT)
-                    res += right->k_nearest(search, n);
-                else
-                    res += left->k_nearest(search, n);
-            }
+            if(comp == LEFT) {
+                if(right) res += right->k_nearest(search, n);
+            } else if(left) res += left->k_nearest(search, n);
         }
         sort_and_limit(res, search, n);
         return res;
@@ -197,6 +189,11 @@ private:
 
     bool is_leaf() const {
         return !left && !right;
+    }
+
+    static inline size_t previous_dimension(size_t dimension) {
+        if(dimension == 0) return 1;
+        return 0;
     }
     
     static inline void dimension_sort(Path<T> &path, size_t dimension) {

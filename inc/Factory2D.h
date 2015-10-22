@@ -62,7 +62,7 @@ public:
             std::cout << "prev: " << prev << std::endl;
             std::cout << "nNearest :" << nNearest << std::endl;
             //std::cout << tree.to_path() << std::endl;
-            auto candidates = tree.k_nearest(prev, nNearest + hull.size()); ///@todo exclude first, since it will be the search itself
+            auto candidates = tree.k_nearest(prev, nNearest); ///@todo exclude first, since it will be the search itself
             std::cout << "after tree" << std::endl;
             //candidates.remove_until(1);
             std::cout << candidates << std::endl;
@@ -85,7 +85,7 @@ public:
 
                 if(prev.sqr_distance_to(p1) < prev.sqr_distance_to(p2)) return false;
 
-                return false;
+                return true;
             });
             
             std::cout << "AFTER SORT" << std::endl;
