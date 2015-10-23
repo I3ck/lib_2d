@@ -203,7 +203,40 @@ public:
         return res;
     }
 
-    ///@todo aabox search
+    Path<T> in_box(const Point<T> &search, T xSize, T ySize) const {
+        if(xSize <= 0.0 || ySize <= 0.0) return Path<T>(); //no real search if width or height <= 0
+
+        Path<T> res; //all points within the box
+        if(   dimension_dist(search, val, 0) <= 0.5 * xSize
+           && dimension_dist(search, val, 1) <= 0.5 * ySize)
+            res += val; //add current node if it is within the search box
+
+        if(is_leaf()) return res; //no children, return result
+
+        //decide which side to check and recurse into it
+        auto comp = dimension_compare(search, val, dimension);
+        if(comp == LEFT) {
+            if(left) res += left->in_box(search, xSize, ySize);
+        } else if(right) {
+            res += right->in_box(search, xSize, ySize);
+        }
+
+        T borderLeft 	= search[dimension] - 0.5 * (dimension == 0 ? xSize : ySize);
+        T borderRight 	= search[dimension] + 0.5 * (dimension == 0 ? xSize : ySize);
+
+        //check whether distances to other side are smaller than radius
+        //and recurse into the "wrong" direction, to check for possibly additional candidates
+        if(comp == LEFT && right) {
+            if(borderRight >= val[dimension])
+                res += right->in_box(search, xSize, ySize);
+        }
+        else if (comp == RIGHT && left) {
+            if(borderLeft <= val[dimension])
+                res += left->in_box(search, xSize, ySize);
+        }
+
+        return res;
+    }
 
 private:
 
@@ -220,6 +253,10 @@ private:
             path.sort_y();
     }
 
+    static inline T dimension_dist(const Point<T> &lhs, const Point<T> &rhs, size_t dimension) {
+        return std::fabs( lhs[dimension] - rhs[dimension] );
+    }
+
     static inline Compare dimension_compare(const Point<T> &lhs, const Point<T> &rhs, size_t dimension) {
         T val1, val2;
         if(dimension == 0) {
@@ -233,13 +270,6 @@ private:
 
         if(val1 <= val2) return LEFT;
         else return RIGHT;
-    }
-
-    static inline T dimension_sqr_dist(const Point<T> &p1, const Point<T> &p2, size_t dimension) {
-        if(dimension == 0)
-            return (p1.x - p2.x) * (p1.x - p2.x);
-        else
-            return (p1.y - p2.y) * (p1.y - p2.y);
     }
 
     static inline void sort_and_limit(Path<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
