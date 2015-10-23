@@ -795,7 +795,7 @@ TEST_CASE("testing cosine interpolation") {
 
 TEST_CASE("testing Kdtree") {
     InvolutCircle<T> inv = InvolutCircle<T>(1.0, 100);
-    KdTree<T> tree = KdTree<T>(inv);
+    KdTree<T> tree(inv);
 
     REQUIRE(tree.size() == 100);
 
@@ -809,7 +809,7 @@ TEST_CASE("testing Kdtree") {
     inv += nearestInPath2;
 
     Point<T> search{13.38, 1.337};
-    KdTree<T> tree2 = KdTree<T>(inv);
+    KdTree<T> tree2(inv);
 
     auto find = tree2.k_nearest(search, 2);
 
