@@ -169,6 +169,42 @@ public:
         return res;
     }
 
+    Path<T> in_circle(const Point<T> &search, T radius) const {
+        if(radius <= 0.0) return Path<T>(); //no real search if radius <= 0
+
+        Path<T> res; //all points within the sphere
+        if(search.distance_to(val) <= radius)
+            res += val; //add current node if it is within the search radius
+
+        if(is_leaf()) return res; //no children, return result
+
+        //decide which side to check and recurse into it
+        auto comp = dimension_compare(search, val, dimension);
+        if(comp == LEFT) {
+            if(left) res += left->in_circle(search, radius);
+        } else if(right) {
+            res += right->in_circle(search, radius);
+        }
+
+        T borderLeft 	= search[dimension] - radius;
+        T borderRight 	= search[dimension] + radius;
+
+        //check whether distances to other side are smaller than radius
+        //and recurse into the "wrong" direction, to check for possibly additional candidates
+        if(comp == LEFT && right) {
+            if(borderRight >= val[dimension])
+                res += right->in_circle(search, radius);
+        }
+        else if (comp == RIGHT && left) {
+            if(borderLeft <= val[dimension])
+                res += left->in_circle(search, radius);
+        }
+
+        return res;
+    }
+
+    ///@todo aabox search
+
 private:
 
     enum Compare {LEFT, RIGHT};
