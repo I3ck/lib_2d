@@ -258,17 +258,7 @@ private:
     }
 
     static inline Compare dimension_compare(const Point<T> &lhs, const Point<T> &rhs, size_t dimension) {
-        T val1, val2;
-        if(dimension == 0) {
-            val1 = lhs.x;
-            val2 = rhs.x;
-        }
-        else {
-            val1 = lhs.y;
-            val2 = rhs.y;
-        }
-
-        if(val1 <= val2) return LEFT;
+        if(lhs[dimension] <= rhs[dimension]) return LEFT;
         else return RIGHT;
     }
 
