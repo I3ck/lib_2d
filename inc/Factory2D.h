@@ -50,7 +50,7 @@ public:
 
         path.sort_x();
 
-        const auto tree = KdTree<double>(path);
+        const KdTree<T> tree(path);
 
         const Point<T> start = path.first();
         Point<T> prev = start;

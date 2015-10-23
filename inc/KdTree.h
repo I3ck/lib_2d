@@ -53,7 +53,12 @@ private:
 //------------------------------------------------------------------------------
 
 public:
-    KdTree(Path<T> path, int dim = 0) : dimension(dim % 2) { ///@todo no assignment / copy const, make second, public const without dimension and make this one here private
+    KdTree& operator=(const KdTree&) = delete;
+    KdTree(const KdTree&) = delete;
+
+//------------------------------------------------------------------------------
+
+    KdTree(Path<T> path, int dim = 0) : dimension(dim % 2) {
         if(path.size() == 1)
             val = path.first();
 
@@ -121,7 +126,7 @@ public:
         T borderRight 	= search[dimension] + distanceBest;
         Point<T> otherBest;
 
-        //check whether distances to other side are smaller than currently worst candidate
+        //check whether distances to other side are smaller than currently best
         //and recurse into the "wrong" direction, to check for possibly additional candidates
         if(comp == LEFT && right) {
             if(borderRight >= val[dimension]) {
