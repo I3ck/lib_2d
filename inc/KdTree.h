@@ -40,6 +40,8 @@ class KdTree {
 
 private:
 
+    enum Compare {LEFT, RIGHT};
+
     std::unique_ptr<KdTree<T> >
         left,
         right;
@@ -47,6 +49,8 @@ private:
     Point<T> val;
 
     const int dimension;
+
+//------------------------------------------------------------------------------
 
 public:
     KdTree(Path<T> path, int dim = 0) : dimension(dim % 2) { ///@todo no assignment / copy const, make second, public const without dimension and make this one here private
@@ -76,6 +80,8 @@ public:
         }
     }
 
+//------------------------------------------------------------------------------
+
     size_t size() const {
         size_t out(0);
         if(left)  out += left->size();
@@ -84,6 +90,8 @@ public:
         return out;
     }
 
+//------------------------------------------------------------------------------
+
     Path<T> to_path() const {
         Path<T> out;
         if(left) out += left->to_path();
@@ -91,6 +99,8 @@ public:
         if(right) out += right->to_path();
         return out;
     }
+
+//------------------------------------------------------------------------------
 
     Point<T> nearest(const Point<T> &search) const {
         if(is_leaf()) return val; //reached the end, return current value
@@ -129,6 +139,8 @@ public:
 
         return best;
     }
+
+//------------------------------------------------------------------------------
 
     Path<T> k_nearest(const Point<T> &search, size_t n) const {
         if(n < 1) return Path<T>(); //no real search if n < 1
@@ -169,6 +181,8 @@ public:
         return res;
     }
 
+//------------------------------------------------------------------------------
+
     Path<T> in_circle(const Point<T> &search, T radius) const {
         if(radius <= 0.0) return Path<T>(); //no real search if radius <= 0
 
@@ -202,6 +216,8 @@ public:
 
         return res;
     }
+
+//------------------------------------------------------------------------------
 
     Path<T> in_box(const Point<T> &search, T xSize, T ySize) const {
         if(xSize <= 0.0 || ySize <= 0.0) return Path<T>(); //no real search if width or height <= 0
@@ -238,14 +254,16 @@ public:
         return res;
     }
 
+//------------------------------------------------------------------------------
+
 private:
 
-    enum Compare {LEFT, RIGHT};
-
-    bool is_leaf() const {
+    inline bool is_leaf() const {
         return !left && !right;
     }
-    
+
+//------------------------------------------------------------------------------
+
     static inline void dimension_sort(Path<T> &path, size_t dimension) {
         if(dimension == 0)
             path.sort_x();
@@ -262,6 +280,8 @@ private:
         else return RIGHT;
     }
 
+//------------------------------------------------------------------------------
+
     static inline void sort_and_limit(Path<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
         if(target.size() > maxSize) {
             auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
@@ -273,10 +293,8 @@ private:
             target.remove_from(maxSize);
         }
     }
-
-
 };
 
 } //lib_2d
 
-#endif // POINT_H_INCLUDED
+#endif //KDTREE_H_INCLUDED
