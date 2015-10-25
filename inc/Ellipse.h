@@ -32,8 +32,8 @@
 namespace lib_2d {
 
 template <typename T>
-class Ellipse : public Path<T> {
-    using Path<T>::emplace_back;
+class Ellipse : public PointCloud<T> {
+    using PointCloud<T>::emplace_back;
 
 private:
     T a, b, angle;
@@ -48,7 +48,7 @@ public:
             Point<T> m_center = Point<T>{},
             T angle = 0) :
 
-        Path<T>(nPoints),
+        PointCloud<T>(nPoints),
         a(a),
         b(b),
         angle(angle),
@@ -88,13 +88,13 @@ public:
 //------------------------------------------------------------------------------
 
     Ellipse& move_by(T x, T y) {
-        Path<T>::move_by(x, y);
+        PointCloud<T>::move_by(x, y);
         m_center.move_by(x, y);
         return *this;
     }
 
     Ellipse& move_by(Point<T> other) {
-        Path<T>::move_by(other);
+        PointCloud<T>::move_by(other);
         m_center.move_by(other);
         return *this;
     }
@@ -102,37 +102,37 @@ public:
 //------------------------------------------------------------------------------
 
     Ellipse& mirror_vertically(T xValue = 0) {
-        Path<T>::mirror_vertically(xValue);
+        PointCloud<T>::mirror_vertically(xValue);
         m_center.mirror_vertically(xValue);
         return *this;
     }
 
     Ellipse& mirror_vertically(Point<T> other) {
-        Path<T>::mirror_vertically(other);
+        PointCloud<T>::mirror_vertically(other);
         m_center.mirror_vertically(other);
         return *this;
     }
 
     Ellipse& mirror_horizontally(T yValue = 0) {
-        Path<T>::mirror_horizontally(yValue);
+        PointCloud<T>::mirror_horizontally(yValue);
         m_center.mirror_horizontally(yValue);
         return *this;
     }
 
     Ellipse& mirror_horizontally(Point<T> other) {
-        Path<T>::mirror_horizontally(other);
+        PointCloud<T>::mirror_horizontally(other);
         m_center.mirror_horizontally(other);
         return *this;
     }
 
     Ellipse& mirror_point(Point<T> other) {
-        Path<T>::mirror_point(other);
+        PointCloud<T>::mirror_point(other);
         m_center.mirror_point(other);
         return *this;
     }
 
     Ellipse& mirror_point(T xValue = 0, T yValue = 0) {
-        Path<T>::mirror_point(xValue, yValue);
+        PointCloud<T>::mirror_point(xValue, yValue);
         m_center.mirror_point(xValue, yValue);
         return *this;
     }
@@ -140,13 +140,13 @@ public:
 //------------------------------------------------------------------------------
 
     Ellipse& rotate(T radians, Point<T> m_center = Point<T>{}) {
-        Path<T>::rotate(radians, m_center);
+        PointCloud<T>::rotate(radians, m_center);
         this->m_center.rotate(radians, m_center);
         return *this;
     }
 
     Ellipse& rotate(T radians, T centerX, T centerY) {
-        Path<T>::rotate(radians, centerX, centerY);
+        PointCloud<T>::rotate(radians, centerX, centerY);
         this->m_center.rotate(radians, centerX, centerY);
         return *this;
     }
@@ -154,4 +154,4 @@ public:
 
 } //lib_2d
 
-#endif // ELLIPSE_H_INCLUDED
+#endif // ELLIPSE_H_INCLUDED

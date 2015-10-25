@@ -42,9 +42,9 @@ public:
 
     //gift wrapping combined with knearest
     //(warning, needs more testing)
-    static Path<T> concave_hull(Path<T> path, size_t nNearest, int maxIter = -1, bool closePath = true) {
+    static PointCloud<T> concave_hull(PointCloud<T> path, size_t nNearest, int maxIter = -1, bool closePath = true) {
         const bool dbg(false);
-        Path<T> hull;
+        PointCloud<T> hull;
         if(path.size() < 3) return hull;
         if(nNearest > path.size()) return hull;
 

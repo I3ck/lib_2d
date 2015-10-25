@@ -13,13 +13,12 @@
 */
 
 /**
- * \file    Path.h
+ * \file    PointCloud.h
  * \author  Martin Buck
  * \date    November 2014
  * \version 1.0
- * \brief   contains the class Path which represents a collection of numerical points in 2d space
+ * \brief   contains the class PointCloud which represents a collection of numerical points in 2d space
  *          the data is defined as a vector <Point>
- *          Path provides several methods to work with such a dataset
  */
 
 #ifndef PATH_H_INCLUDED
@@ -36,7 +35,7 @@
 namespace lib_2d {
 
 template <typename T>
-class Path {
+class PointCloud {
 
 protected:
     std::vector < Point <T> > ps;
@@ -46,34 +45,34 @@ protected:
     }
 
 public:
-    Path(){};
+    PointCloud(){};
 
-    Path(unsigned int nPoints) {
+    PointCloud(unsigned int nPoints) {
         reserve(nPoints);
     }
 
     template<class InputIterator>
-    Path(InputIterator first, InputIterator last) {
+    PointCloud(InputIterator first, InputIterator last) {
         while(first != last) {
             ps.push_back(*first);
             ++first;
         }
     }
 
-    Path(const std::vector < Point <T> > &points) :
+    PointCloud(const std::vector < Point <T> > &points) :
         ps(points){}
 
-    ~Path(){};
+    ~PointCloud(){};
 
 //-----remove-------------------------------------------------------------------------
 
-    Path& move_by(T x, T y) {
+    PointCloud& move_by(T x, T y) {
         for(auto &p : ps)
             p.move_by(x, y);
         return *this;
     }
 
-    Path& move_by(const Point<T> &other) {
+    PointCloud& move_by(const Point<T> &other) {
         for(auto &p : ps)
             p.move_by(other);
         return *this;
@@ -81,37 +80,37 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path& mirror_vertically(T xValue = 0) {
+    PointCloud& mirror_vertically(T xValue = 0) {
         for(auto &p : ps)
             p.mirror_vertically(xValue);
         return *this;
     }
 
-    Path& mirror_vertically(const Point<T> &other) {
+    PointCloud& mirror_vertically(const Point<T> &other) {
         for(auto &p : ps)
             p.mirror_vertically(other);
         return *this;
     }
 
-    Path& mirror_horizontally(T yValue = 0) {
+    PointCloud& mirror_horizontally(T yValue = 0) {
         for(auto &p : ps)
             p.mirror_horizontally(yValue);
         return *this;
     }
 
-    Path& mirror_horizontally(const Point<T> &other) {
+    PointCloud& mirror_horizontally(const Point<T> &other) {
         for(auto &p : ps)
             p.mirror_horizontally(other);
         return *this;
     }
 
-    Path& mirror_point(const Point<T> &other) {
+    PointCloud& mirror_point(const Point<T> &other) {
         for(auto &p : ps)
             p.mirror_point(other);
         return *this;
     }
 
-    Path& mirror_point(T xValue = 0, T yValue = 0) {
+    PointCloud& mirror_point(T xValue = 0, T yValue = 0) {
         for(auto &p : ps)
             p.mirror_point(xValue, yValue);
         return *this;
@@ -119,13 +118,13 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path& rotate(T radians, Point<T> center = Point<T>{}) {
+    PointCloud& rotate(T radians, Point<T> center = Point<T>{}) {
         for(auto &p : ps)
             p.rotate(radians, center);
         return *this;
     }
 
-    Path& rotate(T radians, T centerX, T centerY) {
+    PointCloud& rotate(T radians, T centerX, T centerY) {
         for(auto &p : ps)
             p.rotate(radians, centerX, centerY);
         return *this;
@@ -183,33 +182,33 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path& push_back(Point<T> point) {
+    PointCloud& push_back(Point<T> point) {
         ps.push_back(point);
         return *this;
     }
 
-    Path& push_back(T x, T y) {
+    PointCloud& push_back(T x, T y) {
         push_back(Point<T>{x, y});
         return *this;
     }
 
-    Path& push_back(const Path &other) {
+    PointCloud& push_back(const PointCloud &other) {
         ps.reserve( ps.size() + other.size() );
         ps.insert( ps.end(), other.cbegin(), other.cend() );
         return *this;
     }
 
-    Path& emplace_back(Point<T> point) {
+    PointCloud& emplace_back(Point<T> point) {
         ps.emplace_back(point);
         return *this;
     }
 
-    Path& emplace_back(T x, T y) {
+    PointCloud& emplace_back(T x, T y) {
         emplace_back(Point<T>{x, y});
         return *this;
     }
 
-    Path& emplace_back(const Path &other) {
+    PointCloud& emplace_back(const PointCloud &other) {
         ps.reserve( ps.size() + other.size() );
         ps.insert( ps.end(), other.cbegin(), other.cend() );
         return *this;
@@ -217,7 +216,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path& pop_back() {
+    PointCloud& pop_back() {
         ps.pop_back();
         return *this;
     }
@@ -365,7 +364,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path bounding_box(bool closePath = true) const {
+    PointCloud bounding_box(bool closePath = true) const {
         if(size() <= 1)
             return *this;
 
@@ -374,7 +373,7 @@ public:
         T minY = get_min_y();
         T maxY = get_max_y();
 
-        Path<T> output;
+        PointCloud<T> output;
         output.emplace_back(Point<T>{minX, minY});
         output.emplace_back(Point<T>{maxX, minY});
         output.emplace_back(Point<T>{maxX, maxY});
@@ -389,27 +388,27 @@ public:
 //------------------------------------------------------------------------------
 
     //Andrew's monotone chain convex hull algorithm
-    Path convex_hull(bool closePath = true) const {
+    PointCloud convex_hull(bool closePath = true) const {
         int n = size();
-        Path<T> path = *this;
+        PointCloud<T> path = *this;
 
         std::sort(path.begin(), path.end());
 
-        Path<T> lower;
+        PointCloud<T> lower;
         for (int i = 0; i < n; ++i) {
             while (lower.size() >= 2 && ccw(lower[lower.size()-2], lower[lower.size()-1], path[i]) <= 0)
                 lower.pop_back();
             lower.push_back(path[i]);
         }
 
-        Path<T> upper;
+        PointCloud<T> upper;
         for (int i = n-1; i >= 0; i--) {
             while (upper.size() >= 2 && ccw(upper[upper.size()-2], upper[upper.size()-1], path[i]) <= 0)
                 upper.pop_back();
             upper.push_back(path[i]);
         }
 
-        Path<T> output;
+        PointCloud<T> output;
         output.push_back(lower);
         output.push_back(upper);
         output.make_unique();
@@ -449,7 +448,7 @@ public:
 #endif
 //------------------------------------------------------------------------------
 
-    Path& make_unique() { ///@todo use std::unique
+    PointCloud& make_unique() { ///@todo use std::unique
         std::set <unsigned int> nonUniqueIndexes;
         for(unsigned int i = 0; i < size()-1; ++i) {
             for(unsigned int j = i+1; j < size(); ++j) {
@@ -458,7 +457,7 @@ public:
                 }
             }
         }
-        auto out = Path<T>();
+        auto out = PointCloud<T>();
         for(unsigned int i = 0; i < size(); ++i) {
             if(nonUniqueIndexes.find(i) == nonUniqueIndexes.end())
                 out.push_back((*this)[i]);
@@ -498,35 +497,35 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path& reserve(size_t i) {
+    PointCloud& reserve(size_t i) {
         ps.reserve(i);
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    Path& clear() {
+    PointCloud& clear() {
         ps.clear();
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    Path& reverse() {
+    PointCloud& reverse() {
         std::reverse(ps.begin(), ps.end());
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    Path& remove_from(unsigned int index) {
+    PointCloud& remove_from(unsigned int index) {
         if(size() < index)
             return *this;
         ps.erase(ps.begin() + index, ps.end());
         return *this;
     }
 
-    Path& remove_until(unsigned int index) {
+    PointCloud& remove_until(unsigned int index) {
         if(size() < index)
             clear();
         else
@@ -534,7 +533,7 @@ public:
         return *this;
     }
 
-    Path& remove_right_of(T x) {
+    PointCloud& remove_right_of(T x) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->x > x) {
@@ -547,12 +546,12 @@ public:
         return *this;
     }
 
-    Path& remove_right_of(const Point<T> &other) {
+    PointCloud& remove_right_of(const Point<T> &other) {
         remove_right_of(other.x);
         return *this;
     }
 
-    Path& remove_left_of(T x) {
+    PointCloud& remove_left_of(T x) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->x < x) {
@@ -565,12 +564,12 @@ public:
         return *this;
     }
 
-    Path& remove_left_of(const Point<T> &other) {
+    PointCloud& remove_left_of(const Point<T> &other) {
         remove_left_of(other.x);
         return *this;
     }
 
-    Path& remove_above_of(T y) {
+    PointCloud& remove_above_of(T y) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->y > y) {
@@ -583,12 +582,12 @@ public:
         return *this;
     }
 
-    Path& remove_above_of(const Point<T> &other) {
+    PointCloud& remove_above_of(const Point<T> &other) {
         remove_above_of(other.y);
         return *this;
     }
 
-    Path& remove_below_of(T y) {
+    PointCloud& remove_below_of(T y) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->y < y) {
@@ -601,12 +600,12 @@ public:
         return *this;
     }
 
-    Path& remove_below_of(const Point<T> &other) {
+    PointCloud& remove_below_of(const Point<T> &other) {
         remove_below_of(other.y);
         return *this;
     }
 
-    Path& remove_closer_to_than(T distance, Point<T> other = Point<T>{}) {
+    PointCloud& remove_closer_to_than(T distance, Point<T> other = Point<T>{}) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->distance_to(other) < distance) {
@@ -619,7 +618,7 @@ public:
         return *this;
     }
 
-    Path& remove_further_apart_to_than(T distance, Point<T> other = Point<T>{}) {
+    PointCloud& remove_further_apart_to_than(T distance, Point<T> other = Point<T>{}) {
         for(auto i = ps.begin(); i!= ps.end();) {
             bool deleted(false);
             if(i->distance_to(other) > distance) {
@@ -665,7 +664,7 @@ public:
         return furthest_apart(Point<T>{x, y});
     }
 
-    int furthest_apart(const Path &other) const {
+    int furthest_apart(const PointCloud &other) const {
         T maxDistance(0);
         int furthestIndex(-1);
 
@@ -699,7 +698,7 @@ public:
         return closest(Point<T>{x, y});
     }
 
-    int closest(const Path &other) const {
+    int closest(const PointCloud &other) const {
         int closestIndex(-1);
         if(size() == 0 || other.size() == 0)
             return closestIndex;
@@ -716,7 +715,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool similar_to(const Path &other, T maxDistance) const {
+    bool similar_to(const PointCloud &other, T maxDistance) const {
         if(size() != other.size())
             return false;
         for(unsigned int i = 0; i < size(); ++i) {
@@ -728,7 +727,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool equal_to (const Path &other) const {
+    bool equal_to (const PointCloud &other) const {
         if(size() != other.size())
             return false;
         for(unsigned int i = 0; i < size(); ++i) {
@@ -751,9 +750,9 @@ public:
 //------------------------------------------------------------------------------
 
     //this method should be kept similar to "intersects_with"
-    Path intersections_with(const Path &other) const {
+    PointCloud intersections_with(const PointCloud &other) const {
 
-        Path intersections;
+        PointCloud intersections;
 
         if(size() < 2 || other.size() < 2)
             return intersections;
@@ -771,7 +770,7 @@ public:
 //------------------------------------------------------------------------------
 
     //this method should be kept similar to "intersections_with"
-    bool intersects_with(const Path &other) const {
+    bool intersects_with(const PointCloud &other) const {
 
         if(size() < 2 || other.size() < 2)
             return false;
@@ -786,7 +785,7 @@ public:
 
         for(auto i = ps.cbegin(); i != ps.cend()-1; ++i) {
             for(auto j = other.cbegin(); j != other.cend()-1; ++j) {
-                Path<T> intersections;
+                PointCloud<T> intersections;
                 intersections.push_back(calc_intersections(*i, *(i+1), *j, *(j+1)));
                 if(intersections.size() > 0)
                     return true;
@@ -798,13 +797,13 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path& sort_x() {
+    PointCloud& sort_x() {
         if(!empty())
             sort(ps.begin(), ps.end(), compare_x);
         return *this;
     }
 
-    Path& sort_y() {
+    PointCloud& sort_y() {
         if(!empty())
             sort(ps.begin(), ps.end(), compare_y);
         return *this;
@@ -812,7 +811,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path& range(unsigned int indexStart, unsigned int indexEnd) {
+    PointCloud& range(unsigned int indexStart, unsigned int indexEnd) {
         if(indexStart > indexEnd)
             return *this;
 
@@ -822,7 +821,7 @@ public:
         if(indexStart == 0 && indexEnd == size()-1)
             return *this;
 
-        Path<T> tmp;
+        PointCloud<T> tmp;
 
         for(unsigned int i = indexStart; i <= indexEnd; ++i) {
             tmp += (*this)[i];
@@ -834,7 +833,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path& reduce_points(T epsilon) {
+    PointCloud& reduce_points(T epsilon) {
         *this = douglas_peucker(*this, epsilon);
         return *this;
     }
@@ -867,31 +866,31 @@ public:
 
 //------------------------------------------------------------------------------
 
-    bool operator == (const Path &other) const {
+    bool operator == (const PointCloud &other) const {
         return equal_to(other);
     }
 
-    bool operator != (const Path &other) const {
+    bool operator != (const PointCloud &other) const {
         return !equal_to(other);
     }
 
-    Path<T>& operator += (const Path<T> &other) {
+    PointCloud<T>& operator += (const PointCloud<T> &other) {
         push_back(other);
         return *this;
     }
 
-    Path<T>& operator += (Point<T> other) {
+    PointCloud<T>& operator += (Point<T> other) {
         push_back(other);
         return *this;
     }
 
-    Path<T> operator + (const Path<T> &other) const {
+    PointCloud<T> operator + (const PointCloud<T> &other) const {
         auto out = *this;
         out.push_back(other);
         return out;
     }
 
-    Path<T> operator + (Point<T> other) const {
+    PointCloud<T> operator + (Point<T> other) const {
         auto out = *this;
         out.push_back(other);
         return out;
@@ -911,7 +910,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    friend std::ostream &operator << (std::ostream &os, const Path &path) {
+    friend std::ostream &operator << (std::ostream &os, const PointCloud &path) {
         os << path.to_string();
         return os;
     }
@@ -927,7 +926,7 @@ private:
     }
 
     //using http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
-    Path<T> douglas_peucker(Path<T> path, T epsilon) const { ///@todo rename variables to make it more readable
+    PointCloud<T> douglas_peucker(PointCloud<T> path, T epsilon) const { ///@todo rename variables to make it more readable
         T dmax = 0;
         unsigned int index = 0;
         unsigned int end = path.size()-1;

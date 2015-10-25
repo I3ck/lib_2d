@@ -109,7 +109,7 @@ namespace lib_2d {
     }
 
     template <typename T>
-    bool is_equal(const Path<T> &a, const Path<T> b) {
+    bool is_equal(const PointCloud<T> &a, const PointCloud<T> b) {
         return a.equal_to(b);
     }
 
@@ -121,14 +121,14 @@ namespace lib_2d {
     }
 
     template <typename T>
-    bool is_similar(const Path<T> &a, const Path<T> b, T maxDistance) {
+    bool is_similar(const PointCloud<T> &a, const PointCloud<T> b, T maxDistance) {
         return a.similar_to(b, maxDistance);
     }
 
 //------------------------------------------------------------------------------
 
     template <typename T>
-    Path<T> calc_intersections(Point<T> p1, Point<T> p2, Point<T> q1, Point<T> q2) {
+    PointCloud<T> calc_intersections(Point<T> p1, Point<T> p2, Point<T> q1, Point<T> q2) {
         bool
             pVertical(false),
             pHorizontal(false),
@@ -139,7 +139,7 @@ namespace lib_2d {
             qSlope(0);
 
         Point<T> intersection;
-        Path<T> intersections;
+        PointCloud<T> intersections;
 
         if(p1.x == p2.x)
             pVertical = true;

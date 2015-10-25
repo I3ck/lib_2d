@@ -31,8 +31,8 @@
 namespace lib_2d {
 
 template <typename T>
-class InterpolationBezier : public Path<T> {
-    using Path<T>::emplace_back;
+class InterpolationBezier : public PointCloud<T> {
+    using PointCloud<T>::emplace_back;
 
 private:
 
@@ -51,7 +51,7 @@ private:
         return binomial_coeff(n,i) * pow(t,i) * pow(1.0-t, n-i);
     }
 
-    Point<T> control_polygon(const Path<T> &path, unsigned int nPoints, T t) {
+    Point<T> control_polygon(const PointCloud<T> &path, unsigned int nPoints, T t) {
         T x(0), y(0);
 
         for(unsigned int i = 0; i <= nPoints; ++i) {
@@ -66,8 +66,8 @@ private:
 public:
 
     InterpolationBezier(unsigned int nPoints,
-                        const Path<T> &path) : ///@todo find proper name for path
-        Path<T>(nPoints) {
+                        const PointCloud<T> &path) : ///@todo find proper name for path
+        PointCloud<T>(nPoints) {
 
         T pDistance = 1.0 / (T)(nPoints);
 

@@ -30,14 +30,14 @@
 namespace lib_2d {
 
 template <typename T>
-class InterpolationCosine : public Path<T> {
-    using Path<T>::emplace_back;
+class InterpolationCosine : public PointCloud<T> {
+    using PointCloud<T>::emplace_back;
 
 public:
 
     InterpolationCosine(unsigned int nPoints,
-                        const Path<T> &path) : ///@todo find proper name for path
-        Path<T> (nPoints) {
+                        const PointCloud<T> &path) : ///@todo find proper name for path
+        PointCloud<T> (nPoints) {
 
         T pDistance = path.length() / (T)(nPoints-1);
 

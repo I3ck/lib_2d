@@ -29,8 +29,8 @@
 namespace lib_2d {
 
 template <typename T>
-class LineSegment : public Path<T> {
-    using Path<T>::emplace_back;
+class LineSegment : public PointCloud<T> {
+    using PointCloud<T>::emplace_back;
 
 public:
 

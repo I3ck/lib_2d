@@ -58,13 +58,13 @@ public:
 
 //------------------------------------------------------------------------------
 
-    KdTree(Path<T> path, int dim = 0) : dimension(dim % 2) {
+    KdTree(PointCloud<T> path, int dim = 0) : dimension(dim % 2) {
         if(path.size() == 1)
             val = path.first();
 
         else if(path.size() > 1) {
             size_t median = path.size() / 2;
-            Path<T> pathLeft, pathRight;
+            PointCloud<T> pathLeft, pathRight;
 
             pathLeft.reserve(median - 1);
             pathRight.reserve(median - 1);
@@ -97,8 +97,8 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path<T> to_path() const {
-        Path<T> out;
+    PointCloud<T> to_path() const {
+        PointCloud<T> out;
         if(left) out += left->to_path();
         out += val;
         if(right) out += right->to_path();
@@ -147,11 +147,11 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path<T> k_nearest(const Point<T> &search, size_t n) const {
-        if(n < 1) return Path<T>(); //no real search if n < 1
-        if(is_leaf()) return Path<T>({Point<T>(val)}); //no further recursion, return current value
+    PointCloud<T> k_nearest(const Point<T> &search, size_t n) const {
+        if(n < 1) return PointCloud<T>(); //no real search if n < 1
+        if(is_leaf()) return PointCloud<T>({Point<T>(val)}); //no further recursion, return current value
 
-        Path<T> res; //nearest neighbors of search
+        PointCloud<T> res; //nearest neighbors of search
         if(res.size() < n || search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
             res += val; //add current node if there is still room or if it is closer than the currently worst candidate
 
@@ -188,10 +188,10 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path<T> in_circle(const Point<T> &search, T radius) const {
-        if(radius <= 0.0) return Path<T>(); //no real search if radius <= 0
+    PointCloud<T> in_circle(const Point<T> &search, T radius) const {
+        if(radius <= 0.0) return PointCloud<T>(); //no real search if radius <= 0
 
-        Path<T> res; //all points within the sphere
+        PointCloud<T> res; //all points within the sphere
         if(search.distance_to(val) <= radius)
             res += val; //add current node if it is within the search radius
 
@@ -224,10 +224,10 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Path<T> in_box(const Point<T> &search, T xSize, T ySize) const {
-        if(xSize <= 0.0 || ySize <= 0.0) return Path<T>(); //no real search if width or height <= 0
+    PointCloud<T> in_box(const Point<T> &search, T xSize, T ySize) const {
+        if(xSize <= 0.0 || ySize <= 0.0) return PointCloud<T>(); //no real search if width or height <= 0
 
-        Path<T> res; //all points within the box
+        PointCloud<T> res; //all points within the box
         if(   dimension_dist(search, val, 0) <= 0.5 * xSize
            && dimension_dist(search, val, 1) <= 0.5 * ySize)
             res += val; //add current node if it is within the search box
@@ -269,7 +269,7 @@ private:
 
 //------------------------------------------------------------------------------
 
-    static inline void dimension_sort(Path<T> &path, size_t dimension) {
+    static inline void dimension_sort(PointCloud<T> &path, size_t dimension) {
         if(dimension == 0)
             path.sort_x();
         else
@@ -287,7 +287,7 @@ private:
 
 //------------------------------------------------------------------------------
 
-    static inline void sort_and_limit(Path<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
+    static inline void sort_and_limit(PointCloud<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
         if(target.size() > maxSize) {
             auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
             target.remove_from( std::distance(target.begin(), uniqueIt));

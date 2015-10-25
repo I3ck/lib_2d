@@ -202,8 +202,8 @@ TEST_CASE("testing Point") {
     }
 }
 
-TEST_CASE("testing Path") {
-    Path<T> path = Path<T>();
+TEST_CASE("testing PointCloud") {
+    PointCloud<T> path = PointCloud<T>();
     path.push_back(0.0, 0.0);
     path.push_back(1.0, 0.0);
     path.push_back(-1.0, 0.0);
@@ -262,7 +262,7 @@ TEST_CASE("testing Path") {
         vec.push_back(Point<T>{});
         vec.push_back(Point<T>{});
 
-        Path<T> tmp = Path<T>(vec.begin(), vec.end());
+        PointCloud<T> tmp = PointCloud<T>(vec.begin(), vec.end());
         REQUIRE(tmp.size() == 4);
     }
 
@@ -275,7 +275,7 @@ TEST_CASE("testing Path") {
         std::vector< Point <T> > vec = path;
         REQUIRE(vec.size() == 3);
 
-        Path<T> tmp = Path<T>(vec);
+        PointCloud<T> tmp = PointCloud<T>(vec);
         REQUIRE(tmp.similar_to(path, MAX_DELTA));
     }
 
@@ -334,11 +334,11 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing intersections between paths") {
-        Path<T> tmp = Path<T> ();
+        PointCloud<T> tmp = PointCloud<T> ();
         tmp.push_back(-100,0);
         tmp.push_back(100,0);
 
-        Path<T> tmp2 = Path<T> ();
+        PointCloud<T> tmp2 = PointCloud<T> ();
         REQUIRE(!tmp.intersects_with(tmp2));
         tmp2.push_back(0,-100);
         tmp2.push_back(0,100);
@@ -354,11 +354,11 @@ TEST_CASE("testing Path") {
         REQUIRE(intersections[0].similar_to(shouldIntersection,MAX_DELTA));
         REQUIRE(tmp.intersects_with(tmp2));
 
-        tmp = Path<T> ();
+        tmp = PointCloud<T> ();
         tmp.push_back(-100,100);
         tmp.push_back(100,-100);
 
-        tmp2 = Path<T> ();
+        tmp2 = PointCloud<T> ();
         tmp2.push_back(100,100);
         tmp2.push_back(-100,-100);
 
@@ -369,7 +369,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing sorting") {
-        Path<T> tmp = Path<T> ();
+        PointCloud<T> tmp = PointCloud<T> ();
         tmp.push_back(1,100);
         tmp.push_back(2,99);
         tmp.push_back(3,98);
@@ -391,7 +391,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing closest and furthest") {
-        Path<T> tmp = Path<T> ();
+        PointCloud<T> tmp = PointCloud<T> ();
         tmp.push_back(1,100);
         tmp.push_back(9,92);
         tmp.push_back(10,91);
@@ -400,7 +400,7 @@ TEST_CASE("testing Path") {
 
         REQUIRE(( tmp[tmp.closest(Point<T>{})] ) == ( Point<T>{10,91} ));
 
-        Path<T> tmp2 = Path<T> ();
+        PointCloud<T> tmp2 = PointCloud<T> ();
         tmp2.push_back(Point<T>());
 
         REQUIRE(( tmp[tmp.furthest_apart(tmp2)] ) == ( Point<T>{1,100} ));
@@ -409,7 +409,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing average distance") {
-        Path<T> tmp = Path<T>();
+        PointCloud<T> tmp = PointCloud<T>();
         tmp.push_back(Point<T>{});
         tmp.push_back(1,0);
         tmp.push_back(2,0);
@@ -418,7 +418,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing ranges") {
-        Path<T> tmp = Path<T>();
+        PointCloud<T> tmp = PointCloud<T>();
         tmp.push_back(Point<T>{});
         tmp.push_back(1,0);
         tmp.push_back(2,0);
@@ -433,7 +433,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing point reduction") {
-        Path<T> tmp = Path<T>();
+        PointCloud<T> tmp = PointCloud<T>();
         tmp.push_back(Point<T>{});
         tmp.push_back(1,1);
         tmp.push_back(2,0);
@@ -455,7 +455,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing finding of points") {
-        Path<T> tmp = Path<T> ();
+        PointCloud<T> tmp = PointCloud<T> ();
         tmp.push_back(Point<T>{});
         tmp.push_back(1,0);
         tmp.push_back(2,0);
@@ -466,7 +466,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing removal of points") {
-        Path<T> tmp = Path<T> ();
+        PointCloud<T> tmp = PointCloud<T> ();
         tmp.push_back(Point<T>{});
         tmp.push_back(1,0);
         tmp.push_back(2,0);
@@ -516,7 +516,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing bounding box") {
-        Path<T> tmp = Path<T> ();
+        PointCloud<T> tmp = PointCloud<T> ();
         tmp.push_back(0,0);
         tmp.push_back(3,-1);
         tmp.push_back(3,3);
@@ -545,7 +545,7 @@ TEST_CASE("testing Path") {
     }
 
     SECTION("testing convex hull") {
-        Path<T> tmp = Path<T> ();
+        PointCloud<T> tmp = PointCloud<T> ();
         tmp.push_back(0,0);
         tmp.push_back(3,-1);
         tmp.push_back(3,3);
@@ -567,7 +567,7 @@ TEST_CASE("testing Path") {
     }
 #ifdef LIB_2D_EXPERIMENTAL
     SECTION("testing inside tests") {
-        Path<T> tmp = Path<T> ();
+        PointCloud<T> tmp = PointCloud<T> ();
         tmp.push_back(0,0);
         tmp.push_back(3,-1);
         tmp.push_back(3,3);
@@ -755,7 +755,7 @@ TEST_CASE("testing InvolutCircle") {
 }
 
 TEST_CASE("testing bezier interpolation") {
-    Path<T> tmp = Path<T> ();
+    PointCloud<T> tmp = PointCloud<T> ();
     tmp.push_back(Point<T>{});
     tmp.push_back(1,1);
     tmp.push_back(2,-5);
@@ -768,7 +768,7 @@ TEST_CASE("testing bezier interpolation") {
 }
 
 TEST_CASE("testing linear interpolation") {
-    Path<T> tmp = Path<T> ();
+    PointCloud<T> tmp = PointCloud<T> ();
     tmp.push_back(Point<T>{});
     tmp.push_back(1,1);
     tmp.push_back(2,-5);
@@ -781,7 +781,7 @@ TEST_CASE("testing linear interpolation") {
 }
 
 TEST_CASE("testing cosine interpolation") {
-    Path<T> tmp = Path<T> ();
+    PointCloud<T> tmp = PointCloud<T> ();
     tmp.push_back(Point<T>{});
     tmp.push_back(1,1);
     tmp.push_back(2,-5);
