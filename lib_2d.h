@@ -28,7 +28,7 @@
 #include "inc/Point.h"
 #include "inc/Topology.h"
 #include "inc/PointCloud.h"
-#include "inc/SubPointCloud.h"
+#include "inc/TopologicalPointCloud.h"
 #include "inc/KdTree.h"
 #include "inc/LineSegment.h"
 #include "inc/Rectangle.h"

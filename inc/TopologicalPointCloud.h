@@ -13,15 +13,15 @@
 */
 
 /**
- * \file    SubPointCloud.h
+ * \file    TopologicalPointCloud.h
  * \author  Martin Buck
  * \date    October 2015
  * \version 1.0
- * \brief   contains the class SubPointCloud which is used to only mark certain points of a PointCloud
+ * \brief   contains the class TopologicalPointCloud which is used to only mark certain points of a PointCloud
  */
 
-#ifndef SubPointCloud_H_INCLUDED
-#define SubPointCloud_H_INCLUDED
+#ifndef TOPOLOGICALPOINTCLOUD_H_INCLUDED
+#define TOPOLOGICALPOINTCLOUD_H_INCLUDED
 
 #include <vector>
 #include <set>
@@ -35,13 +35,13 @@
 namespace lib_2d {
 
 template <typename T>
-class SubPointCloud { ///@todo rename to topological PC or similar
+class TopologicalPointCloud {
 
 protected:
     Topology<1> topology;
     PointCloud<T>* pc;
 public:
-    SubPointCloud() : pc(nullptr){};
+    TopologicalPointCloud() : pc(nullptr){};
 
     void push_back(size_t pId) {
         topology.push_back({pId});
@@ -54,13 +54,13 @@ public:
     }
 
     ///@todo remove from PC once solely used from here
-    SubPointCloud& sort_x() {
+    TopologicalPointCloud& sort_x() {
         std::sort(topology.begin(), topology.end(),
             [](size_t lhs, size_t rhs){return get_point(lhs).x < get_point(rhs).x; });
         return *this;
     }
 
-    SubPointCloud& sort_y() {
+    TopologicalPointCloud& sort_y() {
         std::sort(topology.begin(), topology.end(),
             [](size_t lhs, size_t rhs){return get_point(lhs).y < get_point(rhs).y; });
         return *this;
@@ -80,4 +80,4 @@ private:
 
 } //lib_2d
 
-#endif // SubPointCloud_H_INCLUDED
+#endif // TOPOLOGICALPOINTCLOUD_H_INCLUDED
