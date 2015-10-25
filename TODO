@@ -1,3 +1,14 @@
+BEFORE NEXT RELEASE
+    remove all topological dependend methods from PointCloud
+
+    Topology => size_t vec which defines how "big" an element is
+
+    PointCloud <- Path <- SpecificPath
+    PC => only points
+    Path => path from Point1 to PointN
+    SpecifictPath => some path using some Points (e.g. convexHull of a PC)
+
+
 FIXES / IMPROVEMENTS:
     test whether ellipse is actually rotated around its center instead of 0 0 (when constructing, same goes for others)
     size_t for all indexes?
