@@ -2,7 +2,7 @@
 A c++ library for paths defined by points within the 2d space (using floating point data types)  
 using Catch as testing framework https://github.com/philsquared/Catch  
 
-##version 0.7
+##version 0.8
 
 ##templated  
 tested for:  
