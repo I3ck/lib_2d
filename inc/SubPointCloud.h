@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2014 - 2015 Martin Buck
+    Copyright (c) 2015 Martin Buck
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
     to deal in the Software without restriction, including without limitation the rights to
     use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
@@ -13,31 +13,48 @@
 */
 
 /**
- * \file    lib_2d.h
+ * \file    SubPointCloud.h
  * \author  Martin Buck
- * \date    January 2015
+ * \date    October 2015
  * \version 1.0
- * \brief   one header file to include them all
+ * \brief   contains the class SubPointCloud which is used to only mark certain points of a PointCloud
  */
 
-#ifndef LIB_2D_H_INCLUDED
-#define LIB_2D_H_INCLUDED
+#ifndef SubPointCloud_H_INCLUDED
+#define SubPointCloud_H_INCLUDED
 
-//#define LIB_2D_EXPERIMENTAL
+#include <vector>
+#include <set>
+#include <fstream>
+#include <algorithm>
+#include <utility>
+#include <array>
 
-#include "inc/Point.h"
-#include "inc/Topology.h"
-#include "inc/PointCloud.h"
-#include "inc/SubPointCloud.h"
-#include "inc/KdTree.h"
-#include "inc/LineSegment.h"
-#include "inc/Rectangle.h"
-#include "inc/Arc.h"
-#include "inc/Ellipse.h"
-#include "inc/InvolutCircle.h"
-#include "inc/InterpolationBezier.h"
-#include "inc/InterpolationLinear.h"
-#include "inc/InterpolationCosine.h"
-#include "inc/Factory2D.h"
+#include "Point.h"
 
-#endif // LIB_2D_H_INCLUDED
+namespace lib_2d {
+
+template <typename T>
+class SubPointCloud {
+
+protected:
+    Topology<1> topology;
+    PointCloud<T>* pc;
+public:
+    SubPointCloud() : pc(nullptr){};
+
+    void push_back(size_t pId) {
+        topology.push_back({pId});
+    }
+
+    PointCloud<T> as_pointcloud() const {
+        PointCloud<T> result;
+        for (size_t i = 0; i < topology.n_elements(); ++i)
+            result.push_back(   (*pc)[  (topology[i])[0]  ]   );
+    }
+
+};
+
+} //lib_2d
+
+#endif // SubPointCloud_H_INCLUDED

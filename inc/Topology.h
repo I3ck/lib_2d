@@ -17,7 +17,7 @@
  * \author  Martin Buck
  * \date    October 2015
  * \version 1.0
- * \brief   contains the class Topology which defines lines / triangles / quads etc.
+ * \brief   contains the class Topology which defines ordered points / lines / triangles / quads etc.
  */
 
 #ifndef TOPOLOGY_H_INCLUDED
