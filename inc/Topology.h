@@ -40,18 +40,18 @@ class Topology {
     using Element = std::array<size_t, ELEMENTSIZE>;
 
 protected:
-    std::vector < size_t > top;
+    std::vector < Element > elements;
 public:
     Topology(){};
 
     Topology(unsigned int nElements) {
-        top.reserve(ELEMENTSIZE * nElements);
+        elements.reserve(nElements);
     }
 
     template<class InputIterator>
     Topology(InputIterator first, InputIterator last) {
         while(first != last) {
-            top.push_back(*first);
+            elements.push_back(*first);
             ++first;
         }
     }
@@ -61,93 +61,110 @@ public:
 //------------------------------------------------------------------------------
 
     Topology& push_back(const Element &e) {
-        for (const auto &i : e)
-            top.push_back(i);
+        elements.push_back(e);
         return *this;
     }
 
     Topology& emplace_back(Element e) {
-        for (const auto &i : e)
-            top.emplace_back(i);
+        elements.emplace_back(e);
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
     Topology& pop_back() {
-        for(size_t i = 0; i < ELEMENTSIZE; ++i)
-            top.pop_back();
+        elements.pop_back();
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
     size_t n_elements() const {
-        return top.size() / ELEMENTSIZE;
+        return elements.size();
     }
 
 //------------------------------------------------------------------------------
 
     Element first() const {
-        Element e;
-        for(unsigned int i = 0; i < ELEMENTSIZE; ++i)
-            e[i] = top[i];
-        return e;
+        return elements[0];
     }
 
     Element last() const {
-        Element e;
-        for(unsigned int i = top.size() - 1 - ELEMENTSIZE; i < top.size(); ++i)
-            e[i - top.size() - 1 - ELEMENTSIZE] = top[i];
-        return e;
+        return elements[elements.size() - 1];
     }
 
 //------------------------------------------------------------------------------
 
     bool empty() const {
-        return top.empty();
+        return elements.empty();
     }
 
 //------------------------------------------------------------------------------
 
     Topology& reserve_elements(size_t i) {
-        top.reserve(i * ELEMENTSIZE);
+        elements.reserve(i);
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
     Topology& clear() {
-        top.clear();
+        elements.clear();
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    Topology& reverse() {
-        std::reverse(top.begin(), top.end());
+    Topology& reverse() { ///@todo several versions (reverse element order, reverse each element)
+        std::reverse(elements.begin(), elements.end());
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
     bool equal_to (const Topology &other) const {
-        if(top.size() != other.top.size())
+        if(elements.size() != other.elements.size())
             return false;
-        for(size_t i = 0; i < top.size(); ++i) {
-            if(top[i]  != other.top[i])
+        for(size_t i = 0; i < elements.size(); ++i) {
+            if(elements[i]  != elements.top[i])
                 return false;
         }
         return true;
+    }
+//------------------------------------------------------------------------------
+
+    typename std::vector <Element>::iterator begin() {
+        return elements.begin();
+    }
+
+    typename std::vector <Element>::iterator end() {
+        return elements.end();
+    }
+
+    typename std::vector <Element>::const_iterator cbegin() const {
+        return elements.cbegin();
+    }
+
+    typename std::vector <Element>::const_iterator cend() const {
+        return elements.cend();
+    }
+
+    typename std::vector <Element>::reverse_iterator rbegin() {
+        return elements.rbegin();
+    }
+
+    typename std::vector <Element>::reverse_iterator rend() {
+        return elements.rend();
     }
 
 //------------------------------------------------------------------------------
 
     Element operator [] (unsigned int i) const {
-        Element e;
-        for(size_t j = 0; j < ELEMENTSIZE; ++j)
-            e[j] = top[ELEMENTSIZE * i + j];
-        return e;
+        return elements[i];
+    }
+
+    Element& operator [] (unsigned int i) {
+        return elements[i];
     }
 
 };

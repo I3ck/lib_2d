@@ -35,7 +35,7 @@
 namespace lib_2d {
 
 template <typename T>
-class SubPointCloud {
+class SubPointCloud { ///@todo rename to topological PC or similar
 
 protected:
     Topology<1> topology;
@@ -50,7 +50,30 @@ public:
     PointCloud<T> as_pointcloud() const {
         PointCloud<T> result;
         for (size_t i = 0; i < topology.n_elements(); ++i)
-            result.push_back(   (*pc)[  (topology[i])[0]  ]   );
+            result.push_back(get_tpoint(i));
+    }
+
+    ///@todo remove from PC once solely used from here
+    SubPointCloud& sort_x() {
+        std::sort(topology.begin(), topology.end(),
+            [](size_t lhs, size_t rhs){return get_point(lhs).x < get_point(rhs).x; });
+        return *this;
+    }
+
+    SubPointCloud& sort_y() {
+        std::sort(topology.begin(), topology.end(),
+            [](size_t lhs, size_t rhs){return get_point(lhs).y < get_point(rhs).y; });
+        return *this;
+    }
+
+private:
+
+    inline Point<T> get_tpoint(size_t tId) {
+        return get_point(topology[tId][0]);
+    }
+
+    inline Point<T> get_point(size_t pId) {
+        return (*pc)[pId];
     }
 
 };
