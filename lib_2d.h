@@ -26,6 +26,7 @@
 //#define LIB_2D_EXPERIMENTAL
 
 #include "inc/Point.h"
+#include "inc/Topology.h"
 #include "inc/PointCloud.h"
 #include "inc/KdTree.h"
 #include "inc/LineSegment.h"
