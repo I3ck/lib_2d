@@ -813,8 +813,8 @@ TEST_CASE("testing Kdtree") {
 
     auto find = tree2.k_nearest(search, 2);
 
-    REQUIRE(nearestInPath == find[0]);
-    REQUIRE(nearestInPath2 == find[1]);
+    REQUIRE(nearestInPath == inv.get_point(find[0][0]));
+    REQUIRE(nearestInPath2 == inv.get_point(find[1][0]));
 
     auto find2 = tree2.nearest(search);
 

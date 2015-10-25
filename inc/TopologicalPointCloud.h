@@ -37,6 +37,8 @@ namespace lib_2d {
 template <typename T>
 class TopologicalPointCloud {
 
+    using Element = std::array<size_t, 1>;
+
 protected:
     Topology<1> topology;
     PointCloud<T>* pc;
@@ -44,7 +46,7 @@ public:
     TopologicalPointCloud() : pc(nullptr){};
 
     void push_back(size_t pId) {
-        topology.push_back({pId});
+        topology.push_back(Element{pId});
     }
 
     PointCloud<T> as_pointcloud() const {
@@ -64,6 +66,22 @@ public:
         std::sort(topology.begin(), topology.end(),
             [](size_t lhs, size_t rhs){return get_point(lhs).y < get_point(rhs).y; });
         return *this;
+    }
+
+    Point<T> first() const {
+        return get_tpoint(0);
+    }
+
+    Point<T> last() const {
+        return get_tpoint(topology.n_elements() - 1);
+    }
+
+    PointCloud<T>* get_parent() {
+        return pc;
+    }
+
+    void set_parent(PointCloud<T>* p) {
+        pc = p;
     }
 
 private:

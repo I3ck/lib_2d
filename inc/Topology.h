@@ -65,8 +65,20 @@ public:
         return *this;
     }
 
+    Topology& push_back(const Topology &other) {
+        for(const auto &e : other)
+            elements.push_back(e);
+        return *this;
+    }
+
     Topology& emplace_back(Element e) {
         elements.emplace_back(e);
+        return *this;
+    }
+
+    Topology& emplace_back(const Topology &other) {
+        for(auto e : other)
+            elements.emplace_back(e);
         return *this;
     }
 
@@ -165,6 +177,16 @@ public:
 
     Element& operator [] (unsigned int i) {
         return elements[i];
+    }
+
+    Topology& operator += (const Topology &other) {
+        push_back(other);
+        return *this;
+    }
+
+    Topology& operator += (size_t other) {
+        push_back(other);
+        return *this;
     }
 
 };

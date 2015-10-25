@@ -31,7 +31,7 @@
 #include <utility>
 
 #include "Point.h"
-#include "PointCloud.h"
+#include "TopologicalPointCloud.h"
 
 namespace lib_2d {
 
@@ -46,7 +46,9 @@ private:
         left,
         right;
 
-    Point<T> val;
+    size_t pId;
+
+    PointCloud<T>* parent;
 
     const int dimension;
 
@@ -58,30 +60,33 @@ public:
 
 //------------------------------------------------------------------------------
 
-    KdTree(PointCloud<T> path, int dim = 0) : dimension(dim % 2) {
-        if(path.size() == 1)
-            val = path.first();
+    KdTree(TopologicalPointCloud<T>* tpc, int dim = 0) : dimension(dim % 2), parent(tpc) {
+        parent = tpc->get_parent();
+        if(tpc->n_elements() == 1)
+            pId = tpc->first();
 
-        else if(path.size() > 1) {
-            size_t median = path.size() / 2;
-            PointCloud<T> pathLeft, pathRight;
+        else if(parent->n_elements() > 1) {
+            size_t median = tpc->n_elements() / 2;
+            TopologicalPointCloud<T> tpcL, tpcR;
+            tpcL.set_parent(parent);
+            tpcR.set_parent(parent);
 
-            pathLeft.reserve(median - 1);
-            pathRight.reserve(median - 1);
+            tpcL.reserve(median - 1);
+            tpcR.reserve(median - 1);
 
-            dimension_sort(path, dimension);
+            dimension_sort(tpc, dimension);
 
-            for(size_t i = 0; i < path.size(); ++i) {
+            for(size_t i = 0; i < tpc.n_elements(); ++i) {
                 if(i < median)
-                    pathLeft.emplace_back(path[i]);
+                    tpcL.emplace_back(tpc[i]);
                 else if(i > median)
-                    pathRight.emplace_back(path[i]);
+                    tpcR.emplace_back(tpc[i]);
             }
 
-            val = path[median];
+            pId = tpc[median];
 
-            if(pathLeft.size() > 0)  left =  std::unique_ptr<KdTree>(new KdTree(pathLeft, dimension+1));
-            if(pathRight.size() > 0) right = std::unique_ptr<KdTree>(new KdTree(pathRight, dimension+1));
+            if(tpcL.n_elements() > 0)  left = std::unique_ptr<KdTree>(new KdTree(tpcL, dimension+1));
+            if(tpcR.n_elements() > 0) right = std::unique_ptr<KdTree>(new KdTree(tpcR, dimension+1));
         }
     }
 
@@ -97,63 +102,65 @@ public:
 
 //------------------------------------------------------------------------------
 
-    PointCloud<T> to_path() const {
-        PointCloud<T> out;
-        if(left) out += left->to_path();
-        out += val;
-        if(right) out += right->to_path();
+    Topology<1> to_topology() const {
+        Topology<1> out;
+        if(left) out.push_back(left->to_topology());
+        out.push_back(pId);
+        if(right) out.push_back(right->to_topology());
         return out;
     }
 
 //------------------------------------------------------------------------------
 
-    Point<T> nearest(const Point<T> &search) const {
-        if(is_leaf()) return val; //reached the end, return current value
-
-        auto comp = dimension_compare(search, val, dimension);
-        Point<T> best; //nearest neighbor of search
+    size_t nearest(const Point<T> &search) const {
+        if(is_leaf()) return pId; //reached the end, return current value
+        auto val = parent->get_point(pId);
+        auto comp = dimension_compare(search, val , dimension);
+        size_t idBest; //nearest neighbor of search
         if(comp == LEFT && left)
-            best = left->nearest(search);
+            idBest = left->nearest(search);
         else if(comp == RIGHT && right)
-            best = right->nearest(search);
+            idBest = right->nearest(search);
 
-        if(search.sqr_distance_to(val) < search.sqr_distance_to(best))
-            best = val; //make this value the best if it is closer than the checked side
+        if(search.sqr_distance_to(val) < search.sqr_distance_to(parent->get_point(idBest)))
+            idBest = pId; //make this value the best if it is closer than the checked side
 
         //check whether other side might have candidates aswell
-        T distanceBest 	= search.distance_to(best);
+        T distanceBest 	= search.distance_to(parent->get_point(idBest));
         T borderLeft 	= search[dimension] - distanceBest;
         T borderRight 	= search[dimension] + distanceBest;
-        Point<T> otherBest;
+        size_t idOtherBest;
 
         //check whether distances to other side are smaller than currently best
         //and recurse into the "wrong" direction, to check for possibly additional candidates
         if(comp == LEFT && right) {
             if(borderRight >= val[dimension]) {
-                otherBest = right->nearest(search);
-                if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(best))
-                    best = otherBest;
+                idOtherBest = right->nearest(search);
+                if(search.sqr_distance_to(parent->get_point(idOtherBest)) < search.sqr_distance_to(parent->get_point(idBest)))
+                    idBest = idOtherBest;
             }
         }
         else if (comp == RIGHT && left) {
             if(borderLeft <= val[dimension])
-                otherBest = left->nearest(search);
-                if(search.sqr_distance_to(otherBest) < search.sqr_distance_to(best))
-                    best = otherBest;
+                idOtherBest = left->nearest(search);
+                if(search.sqr_distance_to(parent->get_point(idOtherBest)) < search.sqr_distance_to(parent->get_point(idBest)))
+                    idBest = idOtherBest;
         }
 
-        return best;
+        return idBest;
     }
 
 //------------------------------------------------------------------------------
 
-    PointCloud<T> k_nearest(const Point<T> &search, size_t n) const {
-        if(n < 1) return PointCloud<T>(); //no real search if n < 1
-        if(is_leaf()) return PointCloud<T>({Point<T>(val)}); //no further recursion, return current value
+    Topology<1> k_nearest(const Point<T> &search, size_t n) const {
+        if(n < 1) return Topology<1>(); //no real search if n < 1
+        if(is_leaf()) return Topology<1>({pId}); //no further recursion, return current value
 
-        PointCloud<T> res; //nearest neighbors of search
-        if(res.size() < n || search.sqr_distance_to(val) < search.sqr_distance_to(res.last()))
-            res += val; //add current node if there is still room or if it is closer than the currently worst candidate
+        auto val = parent->get_point(pId);
+
+        Topology<1> res; //nearest neighbors of search
+        if(res.n_elements() < n || search.sqr_distance_to(val) < search.sqr_distance_to(  parent->get_point(res.last()[0])  ))
+            res += pId; //add current node if there is still room or if it is closer than the currently worst candidate
 
         //decide which side to check and recurse into it
         auto comp = dimension_compare(search, val, dimension);
@@ -164,36 +171,38 @@ public:
         }
 
         //only keep the required number of candidates and sort them by distance
-        sort_and_limit(res, search, n);
+        sort_and_limit(res, parent, search, n);
 
         //check whether other side might have candidates aswell
-        T distanceBest 	= search.distance_to(res.last());
+        T distanceBest 	= search.distance_to(parent->get_point(res.last()[0]));
         T borderLeft 	= search[dimension] - distanceBest;
         T borderRight 	= search[dimension] + distanceBest;
 
         //check whether distances to other side are smaller than currently worst candidate
         //and recurse into the "wrong" direction, to check for possibly additional candidates
         if(comp == LEFT && right) {
-            if(res.size() < n || borderRight >= val[dimension])
+            if(res.n_elements() < n || borderRight >= val[dimension])
                 res += right->k_nearest(search, n);
         }
         else if (comp == RIGHT && left) {
-            if(res.size() < n || borderLeft <= val[dimension])
+            if(res.n_elements() < n || borderLeft <= val[dimension])
                 res += left->k_nearest(search, n);
         }
 
-        sort_and_limit(res, search, n);
+        sort_and_limit(res, parent, search, n);
         return res;
     }
 
 //------------------------------------------------------------------------------
 
-    PointCloud<T> in_circle(const Point<T> &search, T radius) const {
-        if(radius <= 0.0) return PointCloud<T>(); //no real search if radius <= 0
+    Topology<1> in_circle(const Point<T> &search, T radius) const {
+        if(radius <= 0.0) return Topology<1>(); //no real search if radius <= 0
 
-        PointCloud<T> res; //all points within the sphere
+        auto val = parent->get_point(pId);
+
+        Topology<1> res; //all points within the sphere
         if(search.distance_to(val) <= radius)
-            res += val; //add current node if it is within the search radius
+            res += pId; //add current node if it is within the search radius
 
         if(is_leaf()) return res; //no children, return result
 
@@ -224,13 +233,15 @@ public:
 
 //------------------------------------------------------------------------------
 
-    PointCloud<T> in_box(const Point<T> &search, T xSize, T ySize) const {
-        if(xSize <= 0.0 || ySize <= 0.0) return PointCloud<T>(); //no real search if width or height <= 0
+    Topology<1> in_box(const Point<T> &search, T xSize, T ySize) const {
+        if(xSize <= 0.0 || ySize <= 0.0) return Topology<1>(); //no real search if width or height <= 0
 
-        PointCloud<T> res; //all points within the box
+        auto val = parent->get_point(pId);
+
+        Topology<1> res; //all points within the box
         if(   dimension_dist(search, val, 0) <= 0.5 * xSize
            && dimension_dist(search, val, 1) <= 0.5 * ySize)
-            res += val; //add current node if it is within the search box
+            res += pId; //add current node if it is within the search box
 
         if(is_leaf()) return res; //no children, return result
 
@@ -287,13 +298,13 @@ private:
 
 //------------------------------------------------------------------------------
 
-    static inline void sort_and_limit(PointCloud<T> &target, const Point<T> &search, size_t maxSize) { ///@todo rename
-        if(target.size() > maxSize) {
-            auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
-            target.remove_from( std::distance(target.begin(), uniqueIt));
+    static inline void sort_and_limit(Topology<1> &target, const PointCloud<T>* pc, const Point<T> &search, size_t maxSize) { ///@todo rename
+        if(target.n_elements() > maxSize) {
+            //auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
+            //target.remove_from( std::distance(target.begin(), uniqueIt));
             std::sort(target.begin(), target.end(),
-                [&search](const Point<T> &a, const Point<T> &b) {
-                    return search.sqr_distance_to(a) < search.sqr_distance_to(b);
+                [&search, &pc](size_t a, size_t b) {
+                    return search.sqr_distance_to(pc->get_point(a)) < search.sqr_distance_to(pc->get_point(b));
                 });
             target.remove_from(maxSize);
         }
