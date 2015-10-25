@@ -24,7 +24,7 @@
 #define CALC_H_INCLUDED
 
 #include "Point.h"
-#include "Path.h"
+#include "PointCloud.h"
 
 namespace lib_2d {
 

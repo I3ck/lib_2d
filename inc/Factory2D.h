@@ -29,7 +29,7 @@
 #include <iostream>
 
 #include "Point.h"
-#include "Path.h"
+#include "PointCloud.h"
 #include "KdTree.h"
 
 namespace lib_2d {
@@ -89,7 +89,7 @@ public:
 
                 return true;
             });
-            
+
             if(dbg) std::cout << "AFTER SORT" << std::endl;
 
 

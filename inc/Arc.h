@@ -25,7 +25,7 @@
 #define ARC_H_INCLUDED
 
 #include "constants.h"
-#include "Path.h"
+#include "PointCloud.h"
 #include "Point.h"
 
 

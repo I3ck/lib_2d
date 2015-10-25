@@ -25,7 +25,7 @@
 
 #include "calc.h"
 #include "constants.h"
-#include "Path.h"
+#include "PointCloud.h"
 #include "Point.h"
 
 namespace lib_2d {

@@ -21,8 +21,8 @@
  *          the data is defined as a vector <Point>
  */
 
-#ifndef PATH_H_INCLUDED
-#define PATH_H_INCLUDED
+#ifndef POINTCLOUD_H_INCLUDED
+#define POINTCLOUD_H_INCLUDED
 
 #include <vector>
 #include <set>
