@@ -814,7 +814,6 @@ TEST_CASE("testing Kdtree") {
 
     KdTree<T> tree2(&topInv);
 
-    ///@TODO BELOW CAUSING CRASHES
     auto find = tree2.k_nearest(search, 2);
 
     //REQUIRE(nearestInPath == inv.get_point(find[0][0]));
