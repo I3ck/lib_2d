@@ -156,30 +156,44 @@ public:
 //------------------------------------------------------------------------------
 
     Topology<1> k_nearest(const Point<T> &search, size_t n) const {
+        std::cout << "START" << std::endl;
         if(n < 1) return Topology<1>(); //no real search if n < 1
-        if(is_leaf()) return Topology<1>({pId}); //no further recursion, return current value
+        if(is_leaf()) return Topology<1>(Element{pId}); //no further recursion, return current value
 
+        std::cout << "NO LEAF" << std::endl;
         auto val = parent->get_point(pId);
 
+        std::cout << "PAST GET_POINT" << std::endl;
         Topology<1> res; //nearest neighbors of search
         if(res.n_elements() < n || search.sqr_distance_to(val) < search.sqr_distance_to(  parent->get_point(res.last()[0])  ))
-            res += pId; //add current node if there is still room or if it is closer than the currently worst candidate
+            res += Element({pId}); //add current node if there is still room or if it is closer than the currently worst candidate
+        std::cout << "PAST VAL CHECK" << std::endl;
 
         //decide which side to check and recurse into it
         auto comp = dimension_compare(search, val, dimension);
+
+        std::cout << "PAST COMPARE" << std::endl;
         if(comp == LEFT) {
             if(left) res += left->k_nearest(search, n);
         } else if(right) {
             res += right->k_nearest(search, n);
         }
 
+        std::cout << "PAST LEFT/RIGHT" << std::endl;
+
         //only keep the required number of candidates and sort them by distance
         sort_and_limit(res, parent->get_parent(), search, n);
+        std::cout << "PAST SORT&LIMIT" << std::endl;
+
+
+        std::cout << "REST.FIRST" << res.first()[0] << std::endl;
+        std::cout << "REST.LAST" << res.last()[0] << std::endl;
 
         //check whether other side might have candidates aswell
         T distanceBest 	= search.distance_to(parent->get_point(res.last()[0]));
         T borderLeft 	= search[dimension] - distanceBest;
         T borderRight 	= search[dimension] + distanceBest;
+        std::cout << "PAST DEFINING BORDERS" << std::endl;
 
         //check whether distances to other side are smaller than currently worst candidate
         //and recurse into the "wrong" direction, to check for possibly additional candidates
@@ -191,6 +205,7 @@ public:
             if(res.n_elements() < n || borderLeft <= val[dimension])
                 res += left->k_nearest(search, n);
         }
+        std::cout << "PAST OTHER SIDE" << std::endl;
 
         sort_and_limit(res, parent->get_parent(), search, n);
         return res;

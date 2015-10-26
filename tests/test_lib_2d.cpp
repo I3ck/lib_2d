@@ -815,13 +815,13 @@ TEST_CASE("testing Kdtree") {
     KdTree<T> tree2(&topInv);
 
     ///@TODO BELOW CAUSING CRASHES
-    //auto find = tree2.k_nearest(search, 2);
-/*
+    auto find = tree2.k_nearest(search, 2);
+
     //REQUIRE(nearestInPath == inv.get_point(find[0][0]));
     //REQUIRE(nearestInPath2 == inv.get_point(find[1][0]));
 
-    auto find2 = tree2.nearest(search);
+    ///@TODO BELOW CAUSING CRASHES
+    //auto find2 = tree2.nearest(search);
 
     //REQUIRE(nearestInPath == find2);
-    */
 }

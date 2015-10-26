@@ -44,6 +44,10 @@ protected:
 public:
     Topology(){};
 
+    Topology(Element e) {
+        elements.push_back(e);
+    }
+
     Topology(unsigned int nElements) {
         elements.reserve(nElements);
     }
@@ -201,7 +205,7 @@ public:
         return *this;
     }
 
-    Topology& operator += (size_t other) {
+    Topology& operator += (Element other) {
         push_back(other);
         return *this;
     }
