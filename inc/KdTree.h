@@ -38,6 +38,8 @@ namespace lib_2d {
 template <typename T>
 class KdTree {
 
+using Element = std::array<size_t, 1>;
+
 private:
 
     enum Compare {LEFT, RIGHT};
@@ -48,7 +50,7 @@ private:
 
     size_t pId;
 
-    PointCloud<T>* parent;
+    TopologicalPointCloud<T>* parent; ///@todo rename to tpc or similar
 
     const int dimension;
 
@@ -60,16 +62,15 @@ public:
 
 //------------------------------------------------------------------------------
 
-    KdTree(TopologicalPointCloud<T>* tpc, int dim = 0) : dimension(dim % 2), parent(tpc) {
-        parent = tpc->get_parent();
-        if(tpc->n_elements() == 1)
-            pId = tpc->first();
+    KdTree(TopologicalPointCloud<T> tpc, int dim = 0) : dimension(dim % 2), parent(&tpc) {
+        if(tpc.n_elements() == 1)
+            pId = tpc.first_id();
 
-        else if(parent->n_elements() > 1) {
-            size_t median = tpc->n_elements() / 2;
+        else if(tpc.n_elements() > 1) {
+            size_t median = tpc.n_elements() / 2;
             TopologicalPointCloud<T> tpcL, tpcR;
-            tpcL.set_parent(parent);
-            tpcR.set_parent(parent);
+            tpcL.set_parent(tpc.get_parent());
+            tpcR.set_parent(tpc.get_parent());
 
             tpcL.reserve(median - 1);
             tpcR.reserve(median - 1);
@@ -78,12 +79,12 @@ public:
 
             for(size_t i = 0; i < tpc.n_elements(); ++i) {
                 if(i < median)
-                    tpcL.emplace_back(tpc[i]);
+                    tpcL.push_back_id(tpc.get_id(i));
                 else if(i > median)
-                    tpcR.emplace_back(tpc[i]);
+                    tpcR.push_back_id(tpc.get_id(i));
             }
 
-            pId = tpc[median];
+            pId = tpc.get_id(median);
 
             if(tpcL.n_elements() > 0)  left = std::unique_ptr<KdTree>(new KdTree(tpcL, dimension+1));
             if(tpcR.n_elements() > 0) right = std::unique_ptr<KdTree>(new KdTree(tpcR, dimension+1));
@@ -171,7 +172,7 @@ public:
         }
 
         //only keep the required number of candidates and sort them by distance
-        sort_and_limit(res, parent, search, n);
+        sort_and_limit(res, parent->get_parent(), search, n);
 
         //check whether other side might have candidates aswell
         T distanceBest 	= search.distance_to(parent->get_point(res.last()[0]));
@@ -189,7 +190,7 @@ public:
                 res += left->k_nearest(search, n);
         }
 
-        sort_and_limit(res, parent, search, n);
+        sort_and_limit(res, parent->get_parent(), search, n);
         return res;
     }
 
@@ -280,7 +281,7 @@ private:
 
 //------------------------------------------------------------------------------
 
-    static inline void dimension_sort(PointCloud<T> &path, size_t dimension) {
+    static inline void dimension_sort(TopologicalPointCloud<T> &path, size_t dimension) {
         if(dimension == 0)
             path.sort_x();
         else
@@ -303,8 +304,8 @@ private:
             //auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
             //target.remove_from( std::distance(target.begin(), uniqueIt));
             std::sort(target.begin(), target.end(),
-                [&search, &pc](size_t a, size_t b) {
-                    return search.sqr_distance_to(pc->get_point(a)) < search.sqr_distance_to(pc->get_point(b));
+                [&search, &pc](Element a, Element b) {
+                    return search.sqr_distance_to(pc->get_point(a[0])) < search.sqr_distance_to(pc->get_point(b[0]));
                 });
             target.remove_from(maxSize);
         }

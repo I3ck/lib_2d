@@ -66,8 +66,8 @@ public:
     }
 
     Topology& push_back(const Topology &other) {
-        for(const auto &e : other)
-            elements.push_back(e);
+        for(auto e = other.cbegin(); e != other.cend(); ++e)
+            elements.push_back(*e);
         return *this;
     }
 
@@ -113,9 +113,8 @@ public:
 
 //------------------------------------------------------------------------------
 
-    Topology& reserve_elements(size_t i) {
+    void reserve_elements(size_t i) {
         elements.reserve(i);
-        return *this;
     }
 
 //------------------------------------------------------------------------------
@@ -143,6 +142,24 @@ public:
         }
         return true;
     }
+
+//------------------------------------------------------------------------------
+
+    Topology& remove_from(unsigned int index) {
+        if(n_elements() < index)
+            return *this;
+        elements.erase(elements.begin() + index, elements.end());
+        return *this;
+    }
+
+    Topology& remove_until(unsigned int index) {
+        if(n_elements() < index)
+            elements.clear();
+        else
+            elements.erase(elements.begin(), elements.begin() + index);
+        return *this;
+    }
+
 //------------------------------------------------------------------------------
 
     typename std::vector <Element>::iterator begin() {

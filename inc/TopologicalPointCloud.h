@@ -45,6 +45,13 @@ protected:
 public:
     TopologicalPointCloud() : pc(nullptr){};
 
+    TopologicalPointCloud(PointCloud<T>* points)
+        : pc(points) {
+        topology.reserve_elements(points->size());
+        for(size_t i = 0; i < points->size(); ++i)
+            topology.push_back(Element{i});
+    }
+
     void push_back(size_t pId) {
         topology.push_back(Element{pId});
     }
@@ -58,13 +65,13 @@ public:
     ///@todo remove from PC once solely used from here
     TopologicalPointCloud& sort_x() {
         std::sort(topology.begin(), topology.end(),
-            [](size_t lhs, size_t rhs){return get_point(lhs).x < get_point(rhs).x; });
+            [this](Element lhs, Element rhs){return get_point(lhs[0]).x < get_point(rhs[0]).x; });
         return *this;
     }
 
     TopologicalPointCloud& sort_y() {
         std::sort(topology.begin(), topology.end(),
-            [](size_t lhs, size_t rhs){return get_point(lhs).y < get_point(rhs).y; });
+            [this](Element lhs, Element rhs){return get_point(lhs[0]).y < get_point(rhs[0]).y; });
         return *this;
     }
 
@@ -72,8 +79,16 @@ public:
         return get_tpoint(0);
     }
 
+    size_t first_id() const {
+        return topology[0][0];
+    }
+
     Point<T> last() const {
         return get_tpoint(topology.n_elements() - 1);
+    }
+
+    size_t last_id() const {
+        return topology[topology.n_elements() - 1][0];
     }
 
     PointCloud<T>* get_parent() {
@@ -84,7 +99,21 @@ public:
         pc = p;
     }
 
-private:
+    size_t n_elements() const {
+        return topology.n_elements();
+    }
+
+    void reserve(size_t n) {
+        topology.reserve_elements(n);
+    }
+
+    void push_back_id(size_t i) {
+        topology.emplace_back(Element{i});
+    }
+
+    size_t get_id(size_t i) const {
+        return topology[i][0];
+    }
 
     inline Point<T> get_tpoint(size_t tId) {
         return get_point(topology[tId][0]);
