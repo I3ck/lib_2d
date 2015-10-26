@@ -62,32 +62,34 @@ public:
 
 //------------------------------------------------------------------------------
 
-    KdTree(TopologicalPointCloud<T> tpc, int dim = 0) : dimension(dim % 2), parent(&tpc) {
-        if(tpc.n_elements() == 1)
-            pId = tpc.first_id();
+    KdTree(TopologicalPointCloud<T>* tpc, int dim = 0) : dimension(dim % 2), parent(tpc) {
+        if(tpc->n_elements() == 1)
+            pId = tpc->first_id();
 
-        else if(tpc.n_elements() > 1) {
-            size_t median = tpc.n_elements() / 2;
-            TopologicalPointCloud<T> tpcL, tpcR;
-            tpcL.set_parent(tpc.get_parent());
-            tpcR.set_parent(tpc.get_parent());
+        else if(tpc->n_elements() > 1) {
+            size_t median = tpc->n_elements() / 2;
+            std::shared_ptr<TopologicalPointCloud<T>>
+                tpcL = std::make_shared<TopologicalPointCloud<T>>(),
+                tpcR = std::make_shared<TopologicalPointCloud<T>>();
+            tpcL->set_parent(tpc->get_parent());
+            tpcR->set_parent(tpc->get_parent());
 
-            tpcL.reserve(median - 1);
-            tpcR.reserve(median - 1);
+            tpcL->reserve(median - 1);
+            tpcR->reserve(median - 1);
 
-            dimension_sort(tpc, dimension);
+            dimension_sort(*tpc, dimension);
 
-            for(size_t i = 0; i < tpc.n_elements(); ++i) {
+            for(size_t i = 0; i < tpc->n_elements(); ++i) {
                 if(i < median)
-                    tpcL.push_back_id(tpc.get_id(i));
+                    tpcL->push_back_id(tpc->get_id(i));
                 else if(i > median)
-                    tpcR.push_back_id(tpc.get_id(i));
+                    tpcR->push_back_id(tpc->get_id(i));
             }
 
-            pId = tpc.get_id(median);
+            pId = tpc->get_id(median);
 
-            if(tpcL.n_elements() > 0)  left = std::unique_ptr<KdTree>(new KdTree(tpcL, dimension+1));
-            if(tpcR.n_elements() > 0) right = std::unique_ptr<KdTree>(new KdTree(tpcR, dimension+1));
+            if(tpcL->n_elements() > 0)  left = std::unique_ptr<KdTree>(new KdTree(tpcL.get(), dimension+1));
+            if(tpcR->n_elements() > 0) right = std::unique_ptr<KdTree>(new KdTree(tpcR.get(), dimension+1));
         }
     }
 
