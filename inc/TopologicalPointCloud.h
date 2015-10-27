@@ -29,6 +29,7 @@
 #include <algorithm>
 #include <utility>
 #include <array>
+#include <memory>
 
 #include "Point.h"
 
@@ -41,11 +42,11 @@ class TopologicalPointCloud {
 
 protected:
     Topology<1> topology;
-    PointCloud<T>* pc;
+    std::shared_ptr<PointCloud<T>> pc;
 public:
-    TopologicalPointCloud() : pc(nullptr){};
+    TopologicalPointCloud() {};
 
-    TopologicalPointCloud(PointCloud<T>* points)
+    TopologicalPointCloud(std::shared_ptr<PointCloud<T>> points)
         : pc(points) {
         topology.reserve_elements(points->size());
         for(size_t i = 0; i < points->size(); ++i)
@@ -91,11 +92,11 @@ public:
         return topology[topology.n_elements() - 1][0];
     }
 
-    PointCloud<T>* get_parent() {
+    std::shared_ptr<PointCloud<T>> get_parent() {
         return pc;
     }
 
-    void set_parent(PointCloud<T>* p) {
+    void set_parent(std::shared_ptr<PointCloud<T>> p) {
         pc = p;
     }
 

@@ -794,10 +794,10 @@ TEST_CASE("testing cosine interpolation") {
 }
 
 TEST_CASE("testing Kdtree") {
-    InvolutCircle<T> inv = InvolutCircle<T>(1.0, 100);
-    TopologicalPointCloud<T> topInv(&inv);
+    std::shared_ptr<InvolutCircle<T>> inv = std::make_shared<InvolutCircle<T>>(1.0, 100);
+    std::shared_ptr<TopologicalPointCloud<T>> topInv = std::make_shared<TopologicalPointCloud<T>>(inv);
 
-    KdTree<T> tree(&topInv);
+    KdTree<T> tree(topInv);
 
     REQUIRE(tree.size() == 100);
 
@@ -807,17 +807,21 @@ TEST_CASE("testing Kdtree") {
 
     Point<T> nearestInPath{13.37, 1.337};
     Point<T> nearestInPath2{14.00, 1.337};
-    inv += nearestInPath;
-    inv += nearestInPath2;
+
+
+    ///@todo muse push these into topology aswell!
+    inv->push_back(nearestInPath);
+    inv->push_back(nearestInPath2);
 
     Point<T> search{13.38, 1.337};
 
-    KdTree<T> tree2(&topInv);
+    KdTree<T> tree2(topInv);
 
     auto find = tree2.k_nearest(search, 2);
 
-    //REQUIRE(nearestInPath == inv.get_point(find[0][0]));
-    //REQUIRE(nearestInPath2 == inv.get_point(find[1][0]));
+    REQUIRE(tree2.size() == 102);
+    REQUIRE(nearestInPath == inv->get_point(find[0][0]));
+    REQUIRE(nearestInPath2 == inv->get_point(find[1][0]));
 
     ///@TODO BELOW CAUSING CRASHES
     //auto find2 = tree2.nearest(search);

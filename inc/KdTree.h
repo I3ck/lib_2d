@@ -50,7 +50,7 @@ private:
 
     size_t pId;
 
-    TopologicalPointCloud<T>* parent; ///@todo rename to tpc or similar
+    std::shared_ptr<TopologicalPointCloud<T>> parent; ///@todo rename to tpc or similar
 
     const int dimension;
 
@@ -62,7 +62,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    KdTree(TopologicalPointCloud<T>* tpc, int dim = 0) : dimension(dim % 2), parent(tpc) {
+    KdTree(std::shared_ptr<TopologicalPointCloud<T>> tpc, int dim = 0) : dimension(dim % 2), parent(tpc) {
         if(tpc->n_elements() == 1)
             pId = tpc->first_id();
 
@@ -77,7 +77,7 @@ public:
             tpcL->reserve(median - 1);
             tpcR->reserve(median - 1);
 
-            dimension_sort(*tpc, dimension);
+            dimension_sort(tpc, dimension);
 
             for(size_t i = 0; i < tpc->n_elements(); ++i) {
                 if(i < median)
@@ -88,8 +88,8 @@ public:
 
             pId = tpc->get_id(median);
 
-            if(tpcL->n_elements() > 0)  left = std::unique_ptr<KdTree>(new KdTree(tpcL.get(), dimension+1));
-            if(tpcR->n_elements() > 0) right = std::unique_ptr<KdTree>(new KdTree(tpcR.get(), dimension+1));
+            if(tpcL->n_elements() > 0)  left = std::unique_ptr<KdTree>(new KdTree(tpcL, dimension+1));
+            if(tpcR->n_elements() > 0) right = std::unique_ptr<KdTree>(new KdTree(tpcR, dimension+1));
         }
     }
 
@@ -298,11 +298,11 @@ private:
 
 //------------------------------------------------------------------------------
 
-    static inline void dimension_sort(TopologicalPointCloud<T> &path, size_t dimension) {
+    static inline void dimension_sort(std::shared_ptr<TopologicalPointCloud<T>> path, size_t dimension) {
         if(dimension == 0)
-            path.sort_x();
+            path->sort_x();
         else
-            path.sort_y();
+            path->sort_y();
     }
 
     static inline T dimension_dist(const Point<T> &lhs, const Point<T> &rhs, size_t dimension) {
@@ -316,7 +316,7 @@ private:
 
 //------------------------------------------------------------------------------
 
-    static inline void sort_and_limit(Topology<1> &target, const PointCloud<T>* pc, const Point<T> &search, size_t maxSize) { ///@todo rename
+    static inline void sort_and_limit(Topology<1> &target, const std::shared_ptr<PointCloud<T>> pc, const Point<T> &search, size_t maxSize) { ///@todo rename
         if(target.n_elements() > maxSize) {
             //auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
             //target.remove_from( std::distance(target.begin(), uniqueIt));
