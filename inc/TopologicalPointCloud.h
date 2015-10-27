@@ -124,6 +124,12 @@ public:
         return (*pc)[pId];
     }
 
+    ///@todo add all other analog methods and return this
+    void push_back(Point<T> p) {
+        pc->push_back(p);
+        push_back_id(pc->size() - 1);
+    }
+
 };
 
 } //lib_2d

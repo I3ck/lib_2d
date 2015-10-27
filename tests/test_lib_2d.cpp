@@ -810,8 +810,8 @@ TEST_CASE("testing Kdtree") {
 
 
     ///@todo muse push these into topology aswell!
-    inv->push_back(nearestInPath);
-    inv->push_back(nearestInPath2);
+    topInv->push_back(nearestInPath);
+    topInv->push_back(nearestInPath2);
 
     Point<T> search{13.38, 1.337};
 
