@@ -823,8 +823,6 @@ TEST_CASE("testing Kdtree") {
     REQUIRE(nearestInPath == inv->get_point(find[0][0]));
     REQUIRE(nearestInPath2 == inv->get_point(find[1][0]));
 
-    ///@TODO BELOW CAUSING CRASHES
-    //auto find2 = tree2.nearest(search);
-
-    //REQUIRE(nearestInPath == find2);
+    auto find2 = tree2.nearest(search);
+    REQUIRE(nearestInPath == topInv->get_tpoint(find2));
 }

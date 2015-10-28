@@ -124,6 +124,8 @@ public:
             idBest = left->nearest(search);
         else if(comp == RIGHT && right)
             idBest = right->nearest(search);
+        else
+            return pId;
 
         if(search.sqr_distance_to(val) < search.sqr_distance_to(parent->get_point(idBest)))
             idBest = pId; //make this value the best if it is closer than the checked side
@@ -144,10 +146,11 @@ public:
             }
         }
         else if (comp == RIGHT && left) {
-            if(borderLeft <= val[dimension])
+            if(borderLeft <= val[dimension]) {
                 idOtherBest = left->nearest(search);
                 if(search.sqr_distance_to(parent->get_point(idOtherBest)) < search.sqr_distance_to(parent->get_point(idBest)))
                     idBest = idOtherBest;
+            }
         }
 
         return idBest;
