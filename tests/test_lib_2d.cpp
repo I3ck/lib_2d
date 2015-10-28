@@ -794,8 +794,8 @@ TEST_CASE("testing cosine interpolation") {
 }
 
 TEST_CASE("testing Kdtree") {
-    std::shared_ptr<InvolutCircle<T>> inv = std::make_shared<InvolutCircle<T>>(1.0, 100);
-    std::shared_ptr<TopologicalPointCloud<T>> topInv = std::make_shared<TopologicalPointCloud<T>>(inv);
+    auto inv = std::make_shared<InvolutCircle<T>>(1.0, 100);
+    auto topInv = std::make_shared<TopologicalPointCloud<T>>(inv);
 
     KdTree<T> tree(topInv);
 
