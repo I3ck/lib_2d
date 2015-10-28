@@ -42,7 +42,7 @@ class Topology {
 protected:
     std::vector < Element > elements;
 public:
-    Topology(){};
+    Topology(){}
 
     Topology(Element e) {
         elements.push_back(e);
@@ -60,7 +60,7 @@ public:
         }
     }
 
-    ~Topology(){};
+    ~Topology(){}
 
 //------------------------------------------------------------------------------
 

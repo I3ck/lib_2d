@@ -40,10 +40,11 @@ class TopologicalPointCloud {
 
     using Element = std::array<size_t, 1>;
 
-protected:
+public:
+    ///@todo leave these public or write wrappers?
     Topology<1> topology;
     std::shared_ptr<PointCloud<T>> pc;
-public:
+
     TopologicalPointCloud() {};
 
     TopologicalPointCloud(std::shared_ptr<PointCloud<T>> points)
@@ -128,6 +129,32 @@ public:
     void push_back(Point<T> p) {
         pc->push_back(p);
         push_back_id(pc->size() - 1);
+    }
+
+//------------------------------------------------------------------------------
+
+    typename std::vector <Element>::iterator begin() {
+        return topology.begin();
+    }
+
+    typename std::vector <Element>::iterator end() {
+        return topology.end();
+    }
+
+    typename std::vector <Element>::const_iterator cbegin() const {
+        return topology.cbegin();
+    }
+
+    typename std::vector <Element>::const_iterator cend() const {
+        return topology.cend();
+    }
+
+    typename std::vector <Element>::reverse_iterator rbegin() {
+        return topology.rbegin();
+    }
+
+    typename std::vector <Element>::reverse_iterator rend() {
+        return topology.rend();
     }
 
 };
