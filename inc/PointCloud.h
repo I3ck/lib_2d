@@ -40,12 +40,12 @@ class PointCloud {
 protected:
     std::vector < Point <T> > ps;
 
-    T ccw(const Point<T> &p1,const Point<T> &p2, const Point<T> &p3) const {
+    T ccw(const Point<T> &p1,const Point<T> &p2, const Point<T> &p3) const { ///@todo move somewhere else
         return (p2.x - p1.x)*(p3.y - p1.y) - (p2.y - p1.y)*(p3.x - p1.x);
     }
 
 public:
-    PointCloud(){};
+    PointCloud(){}
 
     PointCloud(unsigned int nPoints) {
         reserve(nPoints);
@@ -62,7 +62,7 @@ public:
     PointCloud(const std::vector < Point <T> > &points) :
         ps(points){}
 
-    ~PointCloud(){};
+    ~PointCloud(){}
 
 //------------------------------------------------------------------------------
 
@@ -394,7 +394,7 @@ public:
 //------------------------------------------------------------------------------
 
     //Andrew's monotone chain convex hull algorithm
-    PointCloud convex_hull(bool closePath = true) const {
+    PointCloud convex_hull(bool closePath = true) const { ///@todo move to factory and return topological pc
         int n = size();
         PointCloud<T> path = *this;
 
@@ -473,10 +473,10 @@ public:
     }
 //------------------------------------------------------------------------------
 
-    T average_distance() const {
+    T average_distance() const { ///@todo move to tpc
         if(size() < 2)
             return 0;
-        return length() / (size()-1);
+        return length() / (size()-1); ///@todo move length method there aswell
     }
 
 //------------------------------------------------------------------------------
@@ -517,21 +517,21 @@ public:
 
 //------------------------------------------------------------------------------
 
-    PointCloud& reverse() {
+    PointCloud& reverse() { ///@todo move to tpc
         std::reverse(ps.begin(), ps.end());
         return *this;
     }
 
 //------------------------------------------------------------------------------
 
-    PointCloud& remove_from(unsigned int index) {
+    PointCloud& remove_from(unsigned int index) { ///@todo move to tpc
         if(size() < index)
             return *this;
         ps.erase(ps.begin() + index, ps.end());
         return *this;
     }
 
-    PointCloud& remove_until(unsigned int index) {
+    PointCloud& remove_until(unsigned int index) { ///@todo move to tpc
         if(size() < index)
             clear();
         else
@@ -686,6 +686,7 @@ public:
 
 //------------------------------------------------------------------------------
 
+    ///@todo remove all nearest methods since these should be performed by the kdtree
     int closest(const Point<T> &other) const {
         int closestIndex(-1);
         if(size() == 0)
@@ -756,7 +757,7 @@ public:
 //------------------------------------------------------------------------------
 
     //this method should be kept similar to "intersects_with"
-    PointCloud intersections_with(const PointCloud &other) const {
+    PointCloud intersections_with(const PointCloud &other) const { ///@todo should be moved to tpc
 
         PointCloud intersections;
 
@@ -776,7 +777,7 @@ public:
 //------------------------------------------------------------------------------
 
     //this method should be kept similar to "intersections_with"
-    bool intersects_with(const PointCloud &other) const {
+    bool intersects_with(const PointCloud &other) const { ///@todo should be moved to tpc
 
         if(size() < 2 || other.size() < 2)
             return false;
@@ -803,13 +804,13 @@ public:
 
 //------------------------------------------------------------------------------
 
-    PointCloud& sort_x() {
+    PointCloud& sort_x() { ///@todo move to tpc
         if(!empty())
             sort(ps.begin(), ps.end(), compare_x);
         return *this;
     }
 
-    PointCloud& sort_y() {
+    PointCloud& sort_y() { ///@todo move to tpc
         if(!empty())
             sort(ps.begin(), ps.end(), compare_y);
         return *this;
@@ -817,7 +818,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    PointCloud& range(unsigned int indexStart, unsigned int indexEnd) {
+    PointCloud& range(unsigned int indexStart, unsigned int indexEnd) { ///@todo move to tpc
         if(indexStart > indexEnd)
             return *this;
 
@@ -932,6 +933,7 @@ private:
     }
 
     //using http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm
+    ///@todo move to tpc or even line topology class (if it is ever added)
     PointCloud<T> douglas_peucker(PointCloud<T> path, T epsilon) const { ///@todo rename variables to make it more readable
         T dmax = 0;
         unsigned int index = 0;
