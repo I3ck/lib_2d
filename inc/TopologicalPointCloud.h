@@ -133,6 +133,29 @@ public:
 
 //------------------------------------------------------------------------------
 
+    std::string to_string(std::string divider = " ") const {
+        std::string output("");
+
+        for(size_t i = 0; i < n_elements; ++i) {
+            output += get_tpoint(i).to_string(divider) + "\n";
+        }
+
+        return output;
+    }
+
+//------------------------------------------------------------------------------
+
+    bool to_file(const std::string &path) const {
+        std::ofstream out(path.c_str());
+        if(!out.good())
+        return false;
+        out << to_string() << "\n";
+        out.close();
+        return true;
+    }
+
+//------------------------------------------------------------------------------
+
     typename std::vector <Element>::iterator begin() {
         return topology.begin();
     }
