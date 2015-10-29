@@ -42,6 +42,8 @@ class TopologicalPointCloud {
 
 public:
     ///@todo leave these public or write wrappers?
+    ///@todo clean up this file
+    ///@todo const correctness
     Topology<1> topology;
     std::shared_ptr<PointCloud<T>> pc;
 
@@ -53,6 +55,10 @@ public:
         for(size_t i = 0; i < points->size(); ++i)
             topology.push_back(Element{i});
     }
+
+    TopologicalPointCloud(std::shared_ptr<PointCloud<T> > points, Topology<1> top) :
+        topology(top),
+        pc(points) {}
 
     void push_back(size_t pId) {
         topology.push_back(Element{pId});
@@ -117,11 +123,11 @@ public:
         return topology[i][0];
     }
 
-    inline Point<T> get_tpoint(size_t tId) {
+    inline Point<T> get_tpoint(size_t tId) const {
         return get_point(topology[tId][0]);
     }
 
-    inline Point<T> get_point(size_t pId) {
+    inline Point<T> get_point(size_t pId) const {
         return (*pc)[pId];
     }
 
@@ -136,8 +142,9 @@ public:
     std::string to_string(std::string divider = " ") const {
         std::string output("");
 
-        for(size_t i = 0; i < n_elements; ++i) {
-            output += get_tpoint(i).to_string(divider) + "\n";
+        for(size_t i = 0; i < n_elements(); ++i) {
+            auto p = get_tpoint(i);
+            output += p.to_string(divider) + "\n";
         }
 
         return output;
