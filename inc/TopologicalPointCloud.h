@@ -45,6 +45,7 @@ public:
     ///@todo leave these public or write wrappers?
     ///@todo clean up this file
     ///@todo const correctness
+    ///@todo make it possible to create subsets of subsets
     Topology<1> topology;
     std::shared_ptr<PointCloud<T>> pc;
 

@@ -56,9 +56,9 @@ public:
 
         const KdTree<T> tree(path);
 
-        const size_t start = 0;
+        const size_t start = path->get_id(0);
         size_t prev = start;
-        hull.push_back_id(1);
+        hull.push_back_id(path->get_id(1));
         for(int i = 2; maxIter == -1 || i < maxIter ; ++i) {
             auto pPrev = path->get_point(prev);
             if(dbg) std::cout << i << std::endl;
@@ -108,7 +108,7 @@ public:
             if(next == start) break;
         }
         hull.push_back_id(start);
-        hull.push_back_id(0); ///@todo add a "close" boolean flag?
+        hull.push_back_id(path->get_id(0)); ///@todo add a "close" boolean flag?
         return hull;
     }
 };
