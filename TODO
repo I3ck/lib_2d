@@ -19,6 +19,8 @@ BEFORE NEXT RELEASE
 
     add to_file etc to topological containers (add interfaces for these methods since they are used heavily)
 
+    use inline in all often-called methods
+
     cleanup all code
     get rid of debug outputs
     switch to lgpl?

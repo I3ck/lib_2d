@@ -31,7 +31,8 @@
 #include <array>
 #include <memory>
 
-#include "Point.h"
+#include "PointCloud.h"
+#include "Topology.h"
 
 namespace lib_2d {
 
@@ -47,7 +48,7 @@ public:
     Topology<1> topology;
     std::shared_ptr<PointCloud<T>> pc;
 
-    TopologicalPointCloud() {};
+    TopologicalPointCloud() {}
 
     TopologicalPointCloud(std::shared_ptr<PointCloud<T>> points)
         : pc(points) {
@@ -60,7 +61,7 @@ public:
         topology(top),
         pc(points) {}
 
-    void push_back(size_t pId) {
+    inline void push_back(size_t pId) {
         topology.push_back(Element{pId});
     }
 
@@ -83,43 +84,43 @@ public:
         return *this;
     }
 
-    Point<T> first() const {
+    inline Point<T> first() const {
         return get_tpoint(0);
     }
 
-    size_t first_id() const {
+    inline size_t first_id() const {
         return topology[0][0];
     }
 
-    Point<T> last() const {
+    inline Point<T> last() const {
         return get_tpoint(topology.n_elements() - 1);
     }
 
-    size_t last_id() const {
+    inline size_t last_id() const {
         return topology[topology.n_elements() - 1][0];
     }
 
-    std::shared_ptr<PointCloud<T>> get_parent() {
+    inline std::shared_ptr<PointCloud<T>> get_parent() {
         return pc;
     }
 
-    void set_parent(std::shared_ptr<PointCloud<T>> p) {
+    inline void set_parent(std::shared_ptr<PointCloud<T>> p) {
         pc = p;
     }
 
-    size_t n_elements() const {
+    inline size_t n_elements() const {
         return topology.n_elements();
     }
 
-    void reserve(size_t n) {
+    inline void reserve(size_t n) {
         topology.reserve_elements(n);
     }
 
-    void push_back_id(size_t i) {
+    inline void push_back_id(size_t i) {
         topology.emplace_back(Element{i});
     }
 
-    size_t get_id(size_t i) const {
+    inline size_t get_id(size_t i) const {
         return topology[i][0];
     }
 
@@ -132,7 +133,7 @@ public:
     }
 
     ///@todo add all other analog methods and return this
-    void push_back(Point<T> p) {
+    inline void push_back(Point<T> p) {
         pc->push_back(p);
         push_back_id(pc->size() - 1);
     }

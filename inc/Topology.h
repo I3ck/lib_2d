@@ -95,7 +95,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-    size_t n_elements() const {
+    inline size_t n_elements() const {
         return elements.size();
     }
 
