@@ -502,7 +502,6 @@ public:
     }
 
 //------------------------------------------------------------------------------
-
     PointCloud& reserve(size_t i) {
         ps.reserve(i);
         return *this;
@@ -540,15 +539,9 @@ public:
     }
 
     PointCloud& remove_right_of(T x) {
-        for(auto i = ps.begin(); i!= ps.end();) {
-            bool deleted(false);
-            if(i->x > x) {
-                deleted = true;
-                i = ps.erase(i);
-            }
-            if(!deleted)
-                ++i;
-        }
+        ps.erase(
+            std::remove_if(ps.begin(), ps.end(), [x](const Point<T> &p){return p.x > x;}),
+            ps.end());
         return *this;
     }
 
@@ -558,15 +551,9 @@ public:
     }
 
     PointCloud& remove_left_of(T x) {
-        for(auto i = ps.begin(); i!= ps.end();) {
-            bool deleted(false);
-            if(i->x < x) {
-                deleted = true;
-                i = ps.erase(i);
-            }
-            if(!deleted)
-                ++i;
-        }
+        ps.erase(
+            std::remove_if(ps.begin(), ps.end(), [x](const Point<T> &p){return p.x < x;}),
+            ps.end());
         return *this;
     }
 
@@ -576,15 +563,9 @@ public:
     }
 
     PointCloud& remove_above_of(T y) {
-        for(auto i = ps.begin(); i!= ps.end();) {
-            bool deleted(false);
-            if(i->y > y) {
-                deleted = true;
-                i = ps.erase(i);
-            }
-            if(!deleted)
-                ++i;
-        }
+        ps.erase(
+            std::remove_if(ps.begin(), ps.end(), [y](const Point<T> &p){return p.y > y;}),
+            ps.end());
         return *this;
     }
 
@@ -594,15 +575,9 @@ public:
     }
 
     PointCloud& remove_below_of(T y) {
-        for(auto i = ps.begin(); i!= ps.end();) {
-            bool deleted(false);
-            if(i->y < y) {
-                deleted = true;
-                i = ps.erase(i);
-            }
-            if(!deleted)
-                ++i;
-        }
+        ps.erase(
+            std::remove_if(ps.begin(), ps.end(), [y](const Point<T> &p){return p.y < y;}),
+            ps.end());
         return *this;
     }
 
@@ -612,28 +587,16 @@ public:
     }
 
     PointCloud& remove_closer_to_than(T distance, Point<T> other = Point<T>{}) {
-        for(auto i = ps.begin(); i!= ps.end();) {
-            bool deleted(false);
-            if(i->distance_to(other) < distance) {
-                deleted = true;
-                i = ps.erase(i);
-            }
-            if(!deleted)
-                ++i;
-        }
+        ps.erase(
+            std::remove_if(ps.begin(), ps.end(), [distance, &other](const Point<T> &p){return p.distance_to(other) < distance;}),
+            ps.end());
         return *this;
     }
 
     PointCloud& remove_further_apart_to_than(T distance, Point<T> other = Point<T>{}) {
-        for(auto i = ps.begin(); i!= ps.end();) {
-            bool deleted(false);
-            if(i->distance_to(other) > distance) {
-                deleted = true;
-                i = ps.erase(i);
-            }
-            if(!deleted)
-                ++i;
-        }
+        ps.erase(
+            std::remove_if(ps.begin(), ps.end(), [distance, &other](const Point<T> &p){return p.distance_to(other) > distance;}),
+            ps.end());
         return *this;
     }
 
