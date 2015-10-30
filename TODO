@@ -26,6 +26,8 @@ BEFORE NEXT RELEASE
     switch to lgpl?
     => V 1.0
 
+    ICP : iterative closest point
+
 
 FIXES / IMPROVEMENTS:
     test whether ellipse is actually rotated around its center instead of 0 0 (when constructing, same goes for others)
