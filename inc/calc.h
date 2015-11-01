@@ -35,8 +35,10 @@ namespace lib_2d {
         Point<T> pq = direction(p, q);
         Point<T> qr = direction(q, r);
 
-        if(cclockwise(pq, qr)) return 1;
-        if(clockwise(pq, qr)) return -1;
+        auto res = cross(pq, qr);
+
+        if(res > 0) return 1;
+        if(res < 0) return -1;
         else return 0;
     }
 

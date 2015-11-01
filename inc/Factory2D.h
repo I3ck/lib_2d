@@ -29,6 +29,7 @@
 #include <iostream>
 #include <memory>
 
+#include "calc.h"
 #include "Point.h"
 #include "PointCloud.h"
 #include "KdTree.h"
@@ -43,11 +44,9 @@ public:
 //------------------------------------------------------------------------------
 
     //gift wrapping combined with knearest
-    //(warning, needs more testing)
     ///@todo pass a normal PC and create the topological one inside?
     static TopologicalPointCloud<T> concave_hull(std::shared_ptr<TopologicalPointCloud<T>> path, size_t nNearest, int maxIter = -1, bool closePath = true) {
-        const bool dbg(false);
-        auto hull = TopologicalPointCloud<T>(); ///@todo only save ids
+        auto hull = TopologicalPointCloud<T>();
         hull.set_parent(path->get_parent());
         if(path->n_elements() < 3) return hull;
         if(nNearest > path->n_elements()) return hull;
@@ -61,16 +60,9 @@ public:
         hull.push_back_id(path->get_id(1));
         for(int i = 2; maxIter == -1 || i < maxIter ; ++i) {
             auto pPrev = path->get_point(prev);
-            if(dbg) std::cout << i << std::endl;
             size_t next;
 
-            if(dbg) std::cout << "before tree" << std::endl;
-            if(dbg) std::cout << "tree size: " << tree.size() << std::endl;
-            if(dbg) std::cout << "prev: " << prev << std::endl;
-            if(dbg) std::cout << "nNearest :" << nNearest << std::endl;
-
             auto candidates = tree.k_nearest(pPrev, nNearest);
-            if(dbg) std::cout << "after tree" << std::endl;
 
             std::sort(candidates.begin(), candidates.end(), [&](Element ip1, Element ip2){
                 auto p1 = path->get_point(ip1[0]);
@@ -91,9 +83,6 @@ public:
 
                 return true;
             });
-
-            if(dbg) std::cout << "AFTER SORT" << std::endl;
-
 
             if(candidates.n_elements() < 1) continue;
             next = candidates[0][0];
