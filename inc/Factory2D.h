@@ -45,7 +45,7 @@ public:
     //gift wrapping combined with knearest
     //(warning, needs more testing)
     ///@todo pass a normal PC and create the topological one inside?
-    static TopologicalPointCloud<T> concave_hull(std::shared_ptr<TopologicalPointCloud<T>> path, size_t nNearest, int maxIter = -1, bool closePath = true) { ///@todo use closePath
+    static TopologicalPointCloud<T> concave_hull(std::shared_ptr<TopologicalPointCloud<T>> path, size_t nNearest, int maxIter = -1, bool closePath = true) {
         const bool dbg(false);
         auto hull = TopologicalPointCloud<T>(); ///@todo only save ids
         hull.set_parent(path->get_parent());
@@ -68,18 +68,13 @@ public:
             if(dbg) std::cout << "tree size: " << tree.size() << std::endl;
             if(dbg) std::cout << "prev: " << prev << std::endl;
             if(dbg) std::cout << "nNearest :" << nNearest << std::endl;
-            //std::cout << tree.to_path() << std::endl;
-            auto candidates = tree.k_nearest(pPrev, nNearest); ///@todo exclude first, since it will be the search itself
+
+            auto candidates = tree.k_nearest(pPrev, nNearest);
             if(dbg) std::cout << "after tree" << std::endl;
-            //candidates.remove_until(1);
-            //if(dbg) std::cout << candidates << std::endl;
 
             std::sort(candidates.begin(), candidates.end(), [&](Element ip1, Element ip2){
                 auto p1 = path->get_point(ip1[0]);
                 auto p2 = path->get_point(ip2[0]);
-                //return true if p1 better than p2
-//                if(/*hull.size() > nNearest && */p1 == start) return false;
-//                if(/*hull.size() > nNearest && */p2 == start) return true;
 
                 bool p1Elem = any_of(hull.begin(), hull.end(), [&p1, &path](Element h){return path->get_point(h[0]) == p1;});
                 bool p2Elem = any_of(hull.begin(), hull.end(), [&p2, &path](Element h){return path->get_point(h[0]) == p2;});
@@ -107,8 +102,7 @@ public:
             prev = next;
             if(next == start) break;
         }
-        hull.push_back_id(start);
-        hull.push_back_id(path->get_id(0)); ///@todo add a "close" boolean flag?
+        if(closePath) hull.push_back_id(start);
         return hull;
     }
 };
