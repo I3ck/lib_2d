@@ -310,12 +310,11 @@ private:
 
 //------------------------------------------------------------------------------
 
+    ///@todo replace with heap
     static inline void sort_and_limit(Topology<1> &target, const std::shared_ptr<PointCloud<T>> pc, const Point<T> &search, size_t maxSize) { ///@todo rename
         if(target.n_elements() > maxSize) {
-            //auto uniqueIt = std::unique(target.begin(), target.end()); ///@todo might be quicker to use a set from the beginning
-            //target.remove_from( std::distance(target.begin(), uniqueIt));
             std::sort(target.begin(), target.end(),
-                [&search, &pc](Element a, Element b) {
+                [&search, &pc](const Element &a, const Element &b) {
                     return search.sqr_distance_to(pc->get_point(a[0])) < search.sqr_distance_to(pc->get_point(b[0]));
                 });
             target.remove_from(maxSize);
