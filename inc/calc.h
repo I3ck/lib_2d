@@ -31,38 +31,38 @@ namespace lib_2d {
 //------------------------------------------------------------------------------
 
     template <typename T>
-    int turn(const Point<T> &p, const Point<T> &q, const Point<T> &r) {
-        Point<T> pq = direction(p, q);
-        Point<T> qr = direction(q, r);
+    inline int turn(const Point<T> &p, const Point<T> &q, const Point<T> &r) {
+        const Point<T> pq = direction(p, q);
+        const Point<T> qr = direction(q, r);
 
-        auto res = cross(pq, qr);
+        const auto res = cross(pq, qr);
 
-        if(res > 0) return 1;
+        if(res > 0) return  1;
         if(res < 0) return -1;
-        else return 0;
+        else        return 0;
     }
 
 //------------------------------------------------------------------------------
 
     template <typename T>
-    bool clockwise(const Point<T> &dir1, const Point<T> &dir2) { ///@todo dir type
+    inline bool clockwise(const Point<T> &dir1, const Point<T> &dir2) { ///@todo dir type
         return cross(dir1, dir2) < 0;
     }
 
     template <typename T>
-    bool cclockwise(const Point<T> &dir1, const Point<T> &dir2) {
+    inline bool cclockwise(const Point<T> &dir1, const Point<T> &dir2) {
         return cross(dir1, dir2) > 0;
     }
 
     template <typename T>
-    bool colinear(const Point<T> &dir1, const Point<T> &dir2) {
+    inline bool colinear(const Point<T> &dir1, const Point<T> &dir2) {
         return cross(dir1, dir2) == 0;
     }
 
 //------------------------------------------------------------------------------
 
     template <typename T>
-    Point<T> direction(const Point<T> &p1, const Point<T> &p2) {
+    inline Point<T> direction(const Point<T> &p1, const Point<T> &p2) {
         Point<T> out({p2.x - p1.x, p2.y - p1.y});
         out.normalize();
         return out;
@@ -71,21 +71,21 @@ namespace lib_2d {
 //------------------------------------------------------------------------------
 
     template <typename T>
-    T dot(const Point<T> &p1, const Point<T> &p2) {
+    inline T dot(const Point<T> &p1, const Point<T> &p2) {
         return p1.x * p2.x + p1.y * p2.y;
     }
 
 //------------------------------------------------------------------------------
 
     template <typename T>
-    T cross(const Point<T> &p1, const Point<T> &p2) {
+    inline T cross(const Point<T> &p1, const Point<T> &p2) {
         return p1.x * p2.y - p2.x * p1.y;
     }
 
 //------------------------------------------------------------------------------
 
     template <typename T>
-    T distance_point_line(Point<T> p, Point<T> l1, Point<T> l2) {
+    inline T distance_point_line(Point<T> p, Point<T> l1, Point<T> l2) {
         T a1 = l1.x;
         T a2 = l1.y;
 
@@ -106,24 +106,24 @@ namespace lib_2d {
 //------------------------------------------------------------------------------
 
     template <typename T>
-    bool is_equal(const Point<T> &a, const Point<T> b) {
+    inline bool is_equal(const Point<T> &a, const Point<T> b) {
         return a.equal_to(b);
     }
 
     template <typename T>
-    bool is_equal(const PointCloud<T> &a, const PointCloud<T> b) {
+    inline bool is_equal(const PointCloud<T> &a, const PointCloud<T> b) {
         return a.equal_to(b);
     }
 
 //------------------------------------------------------------------------------
 
     template <typename T>
-    bool is_similar(const Point<T> &a, const Point<T> b, T maxDistance) {
+    inline bool is_similar(const Point<T> &a, const Point<T> b, T maxDistance) {
         return a.similar_to(b, maxDistance);
     }
 
     template <typename T>
-    bool is_similar(const PointCloud<T> &a, const PointCloud<T> b, T maxDistance) {
+    inline bool is_similar(const PointCloud<T> &a, const PointCloud<T> b, T maxDistance) {
         return a.similar_to(b, maxDistance);
     }
 
