@@ -44,8 +44,9 @@ public:
 //------------------------------------------------------------------------------
 
     //gift wrapping combined with knearest
-    ///@todo pass a normal PC and create the topological one inside?
-    static TopologicalPointCloud<T> concave_hull(std::shared_ptr<TopologicalPointCloud<T>> path, size_t nNearest, int maxIter = -1, bool closePath = true) {
+    ///@todo consider benchmarking against gift-opening algorithm
+    static TopologicalPointCloud<T> concave_hull(std::shared_ptr<PointCloud<T>> pc, size_t nNearest, int maxIter = -1, bool closePath = true) {
+        auto path = std::make_shared<TopologicalPointCloud<T>>(pc);
         auto hull = TopologicalPointCloud<T>();
         hull.set_parent(path->get_parent());
         if(path->n_elements() < 3) return hull;
