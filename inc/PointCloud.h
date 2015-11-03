@@ -587,15 +587,17 @@ public:
     }
 
     PointCloud& remove_closer_to_than(T distance, Point<T> other = Point<T>{}) {
+        const auto sqrDist(distance * distance);
         ps.erase(
-            std::remove_if(ps.begin(), ps.end(), [distance, &other](const Point<T> &p){return p.distance_to(other) < distance;}),
+            std::remove_if(ps.begin(), ps.end(), [sqrDist, &other](const Point<T> &p){return p.sqr_distance_to(other) < sqrDist;}),
             ps.end());
         return *this;
     }
 
     PointCloud& remove_further_apart_to_than(T distance, Point<T> other = Point<T>{}) {
+        const auto sqrDist(distance * distance);
         ps.erase(
-            std::remove_if(ps.begin(), ps.end(), [distance, &other](const Point<T> &p){return p.distance_to(other) > distance;}),
+            std::remove_if(ps.begin(), ps.end(), [sqrDist, &other](const Point<T> &p){return p.sqr_distance_to(other) > sqrDist;}),
             ps.end());
         return *this;
     }
@@ -621,8 +623,8 @@ public:
         T maxDistance(0);
         int furthestIndex(-1);
         for (unsigned int i = 0; i < size(); ++i) {
-            if(ps[i].distance_to(other) >= maxDistance) {
-                maxDistance = ps[i].distance_to(other);
+            if(ps[i].sqr_distance_to(other) >= maxDistance) {
+                maxDistance = ps[i].sqr_distance_to(other);
                 furthestIndex = i;
             }
         }
@@ -638,7 +640,7 @@ public:
         int furthestIndex(-1);
 
         for (unsigned int i = 0; i< size(); ++i) {
-            T distance = ps[i].distance_to( other[other.closest(ps[i])] );
+            T distance = ps[i].sqr_distance_to( other[other.closest(ps[i])] );
             if(maxDistance < distance) {
                 maxDistance = distance;
                 furthestIndex = i;
@@ -654,10 +656,10 @@ public:
         int closestIndex(-1);
         if(size() == 0)
             return closestIndex;
-        T minDistance = ps[0].distance_to(other);
+        T minDistance = ps[0].sqr_distance_to(other);
         for (unsigned int i = 0; i < size(); ++i) {
-            if(ps[i].distance_to(other) <= minDistance) {
-                minDistance = ps[i].distance_to(other);
+            if(ps[i].sqr_distance_to(other) <= minDistance) {
+                minDistance = ps[i].sqr_distance_to(other);
                 closestIndex = i;
             }
         }
@@ -672,9 +674,9 @@ public:
         int closestIndex(-1);
         if(size() == 0 || other.size() == 0)
             return closestIndex;
-        T minDistance = ps[0].distance_to(other[0]);
+        T minDistance = ps[0].sqr_distance_to(other[0]);
         for (unsigned int i = 0; i< size(); ++i) {
-            T distance = ps[i].distance_to( other[other.closest(ps[i])] );
+            T distance = ps[i].sqr_distance_to( other[other.closest(ps[i])] );
             if(minDistance > distance) {
                 minDistance = distance;
                 closestIndex = i;
