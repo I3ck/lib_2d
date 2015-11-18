@@ -208,19 +208,15 @@ public:
 //------------------------------------------------------------------------------
 
     Topology<1> in_circle(const Point<T> &search, T radius) const {
-        std::cout << "in circle" << std::endl;
         if(radius <= 0.0) return Topology<1>(); //no real search if radius <= 0
-        std::cout << "past radius check" << std::endl;
 
         auto val = parent->get_point(pId);
-        std::cout << "past val check" << std::endl;
 
         Topology<1> res; //all points within the sphere
         if(search.distance_to(val) <= radius)
             res += Element({pId}); //add current node if it is within the search radius
 
         if(is_leaf()) return res; //no children, return result
-        std::cout << "past is leaf check" << std::endl;
 
         //decide which side to check and recurse into it
         auto comp = dimension_compare(search, val, dimension);
