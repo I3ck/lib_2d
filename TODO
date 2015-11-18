@@ -1,32 +1,31 @@
 BEFORE NEXT RELEASE
     remove all topological dependend methods from PointCloud
 
-    Topology => size_t vec which defines how "big" an element is
+    rename TPC to OrderedPointCloud
 
-    PointCloud <- Path <- SpecificPath
-    PC => only points
-    Path => path from Point1 to PointN
-    SpecifictPath => some path using some Points (e.g. convexHull of a PC)
+    delete copy and assign of all types with pointers (topological may should simply copy the old topology and the shared ptr to parent, since this is fine)
+
+    cleanup all code
+    get rid of debug outputs
+    => V 1.0
+
+
+LATER
+
+    use inline in all often-called methods
+
+    there are still missing spline algorithms
+
+    make parent a const in topolocial container?
+
+    Topology<2> PC => LineSegments
 
     todo all algorithms using topological containers should only use points marked within these
     this way, it is really easy to combine filters etc.
 
-    delete copy and assign of all types with pointers (topological may should simply copy the old topology and the shared ptr to parent, since this is fine)
-
-    make parent a const in topolocial container?
-
-    there are still missing spline algorithms
-
     add to_file etc to topological containers (add interfaces for these methods since they are used heavily)
 
-    use inline in all often-called methods
-
-    cleanup all code
-    get rid of debug outputs
-    switch to lgpl?
-    => V 1.0
-
-    ICP : iterative closest point
+    ICP : iterative closest point (might be reasonable to combine this with cppOpt (or in higher order lib)
 
 
 FIXES / IMPROVEMENTS:
