@@ -12,6 +12,8 @@ BEFORE NEXT RELEASE
 
 LATER
 
+    make it possible to create subsets of subsets
+
     use inline in all often-called methods
 
     there are still missing spline algorithms

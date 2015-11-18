@@ -42,10 +42,6 @@ class OrderedPointCloud {
     using Element = std::array<size_t, 1>;
 
 public:
-    ///@todo leave these public or write wrappers?
-    ///@todo clean up this file
-    ///@todo const correctness
-    ///@todo make it possible to create subsets of subsets
     Topology<1> topology;
     std::shared_ptr<PointCloud<T>> pc;
 
@@ -66,18 +62,22 @@ public:
 
     OrderedPointCloud& operator=(const OrderedPointCloud&) = delete;
     OrderedPointCloud(const OrderedPointCloud&) = delete;
-    
+
 //------------------------------------------------------------------------------
 
-    inline void push_back(size_t pId) {
+    inline void push_back(size_t pId) { ///@todo same as push_back_id?
         topology.push_back(Element{pId});
     }
+
+//------------------------------------------------------------------------------
 
     PointCloud<T> as_pointcloud() const {
         PointCloud<T> result;
         for (size_t i = 0; i < topology.n_elements(); ++i)
             result.push_back(get_tpoint(i));
     }
+
+//------------------------------------------------------------------------------
 
     ///@todo remove from PC once solely used from here
     OrderedPointCloud& sort_x() {
@@ -91,6 +91,8 @@ public:
             [this](Element lhs, Element rhs){return get_point(lhs[0]).y < get_point(rhs[0]).y; });
         return *this;
     }
+
+//------------------------------------------------------------------------------
 
     inline Point<T> first() const {
         return get_tpoint(0);
@@ -108,6 +110,8 @@ public:
         return topology[topology.n_elements() - 1][0];
     }
 
+//------------------------------------------------------------------------------
+
     inline std::shared_ptr<PointCloud<T>> get_parent() {
         return pc;
     }
@@ -116,17 +120,25 @@ public:
         pc = p;
     }
 
+//------------------------------------------------------------------------------
+
     inline size_t n_elements() const {
         return topology.n_elements();
     }
+
+//------------------------------------------------------------------------------
 
     inline void reserve(size_t n) {
         topology.reserve_elements(n);
     }
 
+//------------------------------------------------------------------------------
+
     inline void push_back_id(size_t i) {
         topology.emplace_back(Element{i});
     }
+
+//------------------------------------------------------------------------------
 
     inline size_t get_id(size_t i) const {
         return topology[i][0];
@@ -139,6 +151,8 @@ public:
     inline Point<T> get_point(size_t pId) const {
         return (*pc)[pId];
     }
+
+//------------------------------------------------------------------------------
 
     ///@todo add all other analog methods and return this
     inline void push_back(Point<T> p) {
