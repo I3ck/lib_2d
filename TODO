@@ -1,8 +1,7 @@
-BEFORE NEXT RELEASE
-    update readme
-
 1.0
     remove all sorting and topology-related methods from PC
+    remove all todos (and solve them)
+    decide on whether shapes like arc etc. shall be sorted or not
     1.0
 
 
