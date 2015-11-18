@@ -17,7 +17,7 @@
  * \author  Martin Buck
  * \date    October 2015
  * \version 1.0
- * \brief   contains the class OrderedPointCloud which is used to only mark certain points of a PointCloud
+ * \brief   contains the class OrderedPointCloud which is used to only mark certain points of a PointCloud in an ordered fashion
  */
 
 #ifndef ORDERED_POINTCLOUD_H_INCLUDED
@@ -61,6 +61,13 @@ public:
     OrderedPointCloud(std::shared_ptr<PointCloud<T> > points, Topology<1> top) :
         topology(top),
         pc(points) {}
+
+//------------------------------------------------------------------------------
+
+    OrderedPointCloud& operator=(const OrderedPointCloud&) = delete;
+    OrderedPointCloud(const OrderedPointCloud&) = delete;
+    
+//------------------------------------------------------------------------------
 
     inline void push_back(size_t pId) {
         topology.push_back(Element{pId});

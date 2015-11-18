@@ -51,7 +51,7 @@ private:
 
     size_t pId;
 
-    std::shared_ptr<OrderedPointCloud<T>> parent; ///@todo rename to tpc or similar
+    std::shared_ptr<OrderedPointCloud<T>> parent;
 
     const int dimension;
 
