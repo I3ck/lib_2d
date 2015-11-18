@@ -29,7 +29,6 @@
 #include <algorithm>
 #include <memory>
 #include <utility>
-#include <iostream> ///@todo remove after debugging
 
 #include "Point.h"
 #include "OrderedPointCloud.h"
@@ -42,6 +41,8 @@ class KdTree {
 using Element = std::array<size_t, 1>;
 
 private:
+
+//------------------------------------------------------------------------------
 
     enum Compare {LEFT, RIGHT};
 
@@ -63,7 +64,10 @@ public:
 
 //------------------------------------------------------------------------------
 
-    KdTree(std::shared_ptr<OrderedPointCloud<T>> tpc, int dim = 0) : dimension(dim % 2), parent(tpc) {
+    KdTree(std::shared_ptr<OrderedPointCloud<T>> tpc, int dim = 0) :
+        dimension(dim % 2),
+        parent(tpc) {
+
         if(tpc->n_elements() == 1)
             pId = tpc->first_id();
 
@@ -310,8 +314,7 @@ private:
 
 //------------------------------------------------------------------------------
 
-    ///@todo replace with heap
-    static inline void sort_and_limit(Topology<1> &target, const std::shared_ptr<PointCloud<T>> pc, const Point<T> &search, size_t maxSize) { ///@todo rename
+    static inline void sort_and_limit(Topology<1> &target, const std::shared_ptr<PointCloud<T>> pc, const Point<T> &search, size_t maxSize) {
         if(target.n_elements() > maxSize) {
             std::sort(target.begin(), target.end(),
                 [&search, &pc](const Element &a, const Element &b) {
