@@ -45,10 +45,10 @@ public:
 
     //gift wrapping combined with knearest
     ///@todo consider benchmarking against gift-opening algorithm
-    static OrderedPointCloud<T> concave_hull(std::shared_ptr<PointCloud<T>> pc, size_t nNearest, int maxIter = -1, bool closePath = true) {
+    static std::unique_ptr<OrderedPointCloud<T>> concave_hull(std::shared_ptr<PointCloud<T>> pc, size_t nNearest, int maxIter = -1, bool closePath = true) {
         auto path = std::make_shared<OrderedPointCloud<T>>(pc);
-        auto hull = OrderedPointCloud<T>();
-        hull.set_parent(path->get_parent());
+        auto hull = std::unique_ptr<OrderedPointCloud<T>>(new OrderedPointCloud<T>());
+        hull->set_parent(path->get_parent());
         if(path->n_elements() < 3) return hull;
         if(nNearest > path->n_elements()) return hull;
 
@@ -58,7 +58,7 @@ public:
 
         const size_t start = path->get_id(0);
         size_t prev = start;
-        hull.push_back_id(path->get_id(1));
+        hull->push_back_id(path->get_id(1));
         for(int i = 2; maxIter == -1 || i < maxIter ; ++i) {
             auto pPrev = path->get_point(prev);
             size_t next;
@@ -69,8 +69,8 @@ public:
                 auto p1 = path->get_point(ip1[0]);
                 auto p2 = path->get_point(ip2[0]);
 
-                bool p1Elem = any_of(hull.begin(), hull.end(), [&p1, &path](Element h){return path->get_point(h[0]) == p1;});
-                bool p2Elem = any_of(hull.begin(), hull.end(), [&p2, &path](Element h){return path->get_point(h[0]) == p2;});
+                bool p1Elem = any_of(hull->begin(), hull->end(), [&p1, &path](Element h){return path->get_point(h[0]) == p1;});
+                bool p2Elem = any_of(hull->begin(), hull->end(), [&p2, &path](Element h){return path->get_point(h[0]) == p2;});
 
                 if      (p1Elem && !p2Elem) return false;
                 else if (!p1Elem && p2Elem) return true;
@@ -88,11 +88,11 @@ public:
             if(candidates.n_elements() < 1) continue;
             next = candidates[0][0];
 
-            hull.push_back_id(next);
+            hull->push_back_id(next);
             prev = next;
             if(next == start) break;
         }
-        if(closePath) hull.push_back_id(start);
+        if(closePath) hull->push_back_id(start);
         return hull;
     }
 };
