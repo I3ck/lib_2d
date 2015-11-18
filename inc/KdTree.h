@@ -32,7 +32,7 @@
 #include <iostream> ///@todo remove after debugging
 
 #include "Point.h"
-#include "TopologicalPointCloud.h"
+#include "OrderedPointCloud.h"
 
 namespace lib_2d {
 
@@ -51,7 +51,7 @@ private:
 
     size_t pId;
 
-    std::shared_ptr<TopologicalPointCloud<T>> parent; ///@todo rename to tpc or similar
+    std::shared_ptr<OrderedPointCloud<T>> parent; ///@todo rename to tpc or similar
 
     const int dimension;
 
@@ -63,15 +63,15 @@ public:
 
 //------------------------------------------------------------------------------
 
-    KdTree(std::shared_ptr<TopologicalPointCloud<T>> tpc, int dim = 0) : dimension(dim % 2), parent(tpc) {
+    KdTree(std::shared_ptr<OrderedPointCloud<T>> tpc, int dim = 0) : dimension(dim % 2), parent(tpc) {
         if(tpc->n_elements() == 1)
             pId = tpc->first_id();
 
         else if(tpc->n_elements() > 1) {
             size_t median = tpc->n_elements() / 2;
-            std::shared_ptr<TopologicalPointCloud<T>>
-                tpcL = std::make_shared<TopologicalPointCloud<T>>(),
-                tpcR = std::make_shared<TopologicalPointCloud<T>>();
+            std::shared_ptr<OrderedPointCloud<T>>
+                tpcL = std::make_shared<OrderedPointCloud<T>>(),
+                tpcR = std::make_shared<OrderedPointCloud<T>>();
             tpcL->set_parent(tpc->get_parent());
             tpcR->set_parent(tpc->get_parent());
 
@@ -292,7 +292,7 @@ private:
 
 //------------------------------------------------------------------------------
 
-    static inline void dimension_sort(std::shared_ptr<TopologicalPointCloud<T>> path, size_t dimension) {
+    static inline void dimension_sort(std::shared_ptr<OrderedPointCloud<T>> path, size_t dimension) {
         if(dimension == 0)
             path->sort_x();
         else

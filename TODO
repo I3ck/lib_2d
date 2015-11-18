@@ -1,12 +1,12 @@
 BEFORE NEXT RELEASE
     remove all topological dependend methods from PointCloud
 
-    rename TPC to OrderedPointCloud
-
     delete copy and assign of all types with pointers (topological may should simply copy the old topology and the shared ptr to parent, since this is fine)
 
     cleanup all code
     get rid of debug outputs
+
+    update readme
     => V 1.0
 
 

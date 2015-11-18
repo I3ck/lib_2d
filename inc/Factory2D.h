@@ -45,9 +45,9 @@ public:
 
     //gift wrapping combined with knearest
     ///@todo consider benchmarking against gift-opening algorithm
-    static TopologicalPointCloud<T> concave_hull(std::shared_ptr<PointCloud<T>> pc, size_t nNearest, int maxIter = -1, bool closePath = true) {
-        auto path = std::make_shared<TopologicalPointCloud<T>>(pc);
-        auto hull = TopologicalPointCloud<T>();
+    static OrderedPointCloud<T> concave_hull(std::shared_ptr<PointCloud<T>> pc, size_t nNearest, int maxIter = -1, bool closePath = true) {
+        auto path = std::make_shared<OrderedPointCloud<T>>(pc);
+        auto hull = OrderedPointCloud<T>();
         hull.set_parent(path->get_parent());
         if(path->n_elements() < 3) return hull;
         if(nNearest > path->n_elements()) return hull;

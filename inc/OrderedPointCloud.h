@@ -13,15 +13,15 @@
 */
 
 /**
- * \file    TopologicalPointCloud.h
+ * \file    OrderedPointCloud.h
  * \author  Martin Buck
  * \date    October 2015
  * \version 1.0
- * \brief   contains the class TopologicalPointCloud which is used to only mark certain points of a PointCloud
+ * \brief   contains the class OrderedPointCloud which is used to only mark certain points of a PointCloud
  */
 
-#ifndef TOPOLOGICALPOINTCLOUD_H_INCLUDED
-#define TOPOLOGICALPOINTCLOUD_H_INCLUDED
+#ifndef ORDERED_POINTCLOUD_H_INCLUDED
+#define ORDERED_POINTCLOUD_H_INCLUDED
 
 #include <vector>
 #include <set>
@@ -37,7 +37,7 @@
 namespace lib_2d {
 
 template <typename T>
-class TopologicalPointCloud {
+class OrderedPointCloud {
 
     using Element = std::array<size_t, 1>;
 
@@ -49,16 +49,16 @@ public:
     Topology<1> topology;
     std::shared_ptr<PointCloud<T>> pc;
 
-    TopologicalPointCloud() {}
+    OrderedPointCloud() {}
 
-    TopologicalPointCloud(std::shared_ptr<PointCloud<T>> points)
+    OrderedPointCloud(std::shared_ptr<PointCloud<T>> points)
         : pc(points) {
         topology.reserve_elements(points->size());
         for(size_t i = 0; i < points->size(); ++i)
             topology.push_back(Element{i});
     }
 
-    TopologicalPointCloud(std::shared_ptr<PointCloud<T> > points, Topology<1> top) :
+    OrderedPointCloud(std::shared_ptr<PointCloud<T> > points, Topology<1> top) :
         topology(top),
         pc(points) {}
 
@@ -73,13 +73,13 @@ public:
     }
 
     ///@todo remove from PC once solely used from here
-    TopologicalPointCloud& sort_x() {
+    OrderedPointCloud& sort_x() {
         std::sort(topology.begin(), topology.end(),
             [this](Element lhs, Element rhs){return get_point(lhs[0]).x < get_point(rhs[0]).x; });
         return *this;
     }
 
-    TopologicalPointCloud& sort_y() {
+    OrderedPointCloud& sort_y() {
         std::sort(topology.begin(), topology.end(),
             [this](Element lhs, Element rhs){return get_point(lhs[0]).y < get_point(rhs[0]).y; });
         return *this;
@@ -188,9 +188,8 @@ public:
     typename std::vector <Element>::reverse_iterator rend() {
         return topology.rend();
     }
-
 };
 
 } //lib_2d
 
-#endif // TOPOLOGICALPOINTCLOUD_H_INCLUDED
+#endif // ORDERED_POINTCLOUD_H_INCLUDED
