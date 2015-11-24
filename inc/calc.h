@@ -70,6 +70,15 @@ namespace lib_2d {
 
 //------------------------------------------------------------------------------
 
+    ///@todo rename or merge with direction
+    ///@todo or overload "-" of Point
+    template <typename T>
+    inline Point<T> vect(const Point<T> &p1, const Point<T> &p2) {
+        return Point<T>({p2.x - p1.x, p2.y - p1.y});
+    }
+
+//------------------------------------------------------------------------------
+
     template <typename T>
     inline T dot(const Point<T> &p1, const Point<T> &p2) {
         return p1.x * p2.x + p1.y * p2.y;
