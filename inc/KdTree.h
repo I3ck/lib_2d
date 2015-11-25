@@ -120,6 +120,12 @@ public:
 
 //------------------------------------------------------------------------------
 
+    std::shared_ptr<OrderedPointCloud<T>> get_parent() const {
+        return parent;
+    }
+
+//------------------------------------------------------------------------------
+
     size_t nearest(const Point<T> &search) const {
         if(is_leaf()) return pId; //reached the end, return current value
         auto val = parent->get_point(pId);
