@@ -138,11 +138,15 @@ public:
         else
             return pId;
 
-        if(search.sqr_distance_to(val) < search.sqr_distance_to(parent->get_point(idBest)))
+        T distanceBest 	= search.distance_to(parent->get_point(idBest));
+        T distanceThis  = search.sqr_distance_to(val);
+
+        if(distanceThis < distanceBest) {
+            distanceBest = distanceThis;
             idBest = pId; //make this value the best if it is closer than the checked side
+        }
 
         //check whether other side might have candidates aswell
-        T distanceBest 	= search.distance_to(parent->get_point(idBest));
         T borderLeft 	= search[dimension] - distanceBest;
         T borderRight 	= search[dimension] + distanceBest;
         size_t idOtherBest;
