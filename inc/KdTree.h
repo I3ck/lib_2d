@@ -318,7 +318,7 @@ private:
 
     static inline void sort_and_limit(Topology<1> &target, const std::shared_ptr<PointCloud<T>> pc, const Point<T> &search, size_t maxSize) {
         if(target.n_elements() > maxSize) {
-            std::sort(target.begin(), target.end(),
+            std::partial_sort(target.begin(), target.begin() + maxSize, target.end(),
                 [&search, &pc](const Element &a, const Element &b) {
                     return search.sqr_distance_to(pc->get_point(a[0])) < search.sqr_distance_to(pc->get_point(b[0]));
                 });
