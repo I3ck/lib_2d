@@ -303,10 +303,8 @@ private:
 //------------------------------------------------------------------------------
 
     static inline void dimension_sort(std::shared_ptr<OrderedPointCloud<T>> path, size_t dimension) {
-        if(dimension == 0)
-            path->sort_x();
-        else
-            path->sort_y();
+        std::nth_element(path->begin(), path->begin() + path->n_elements()/2, path->end(),
+                         [&path, dimension] (Element lhs, Element rhs){return path->get_point(lhs[0])[dimension] < path->get_point(rhs[0])[dimension]; });
     }
 
     static inline T dimension_dist(const Point<T> &lhs, const Point<T> &rhs, size_t dimension) {
