@@ -82,7 +82,7 @@ public:
             tpcL->reserve(median - 1);
             tpcR->reserve(median - 1);
 
-            dimension_sort(tpc, dimension);
+            median_dimension_sort(tpc, dimension);
 
             for(size_t i = 0; i < tpc->n_elements(); ++i) {
                 if(i < median)
@@ -302,7 +302,7 @@ private:
 
 //------------------------------------------------------------------------------
 
-    static inline void dimension_sort(std::shared_ptr<OrderedPointCloud<T>> path, size_t dimension) {
+    static inline void median_dimension_sort(std::shared_ptr<OrderedPointCloud<T>> path, size_t dimension) {
         std::nth_element(path->begin(), path->begin() + path->n_elements()/2, path->end(),
                          [&path, dimension] (Element lhs, Element rhs){return path->get_point(lhs[0])[dimension] < path->get_point(rhs[0])[dimension]; });
     }
