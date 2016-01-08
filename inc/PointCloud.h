@@ -311,8 +311,9 @@ public:
     int get_min_x_index() const {
         if(size() == 0)
             return -1;
-        T minX(ps[0].x);
-        unsigned int index;
+
+        unsigned int index(0);
+        T minX(ps[index].x);
 
         for(unsigned int i = 0; i < size(); ++i) {
             if(ps[i].x < minX) {
@@ -326,8 +327,9 @@ public:
     int get_max_x_index() const {
         if(size() == 0)
             return -1;
-        T maxX(ps[0].x);
-        unsigned int index;
+
+        unsigned int index(0);
+        T maxX(ps[index].x);
 
         for(unsigned int i = 0; i < size(); ++i) {
             if(ps[i].x > maxX) {
@@ -341,8 +343,9 @@ public:
     int get_min_y_index() const {
         if(size() == 0)
             return -1;
-        T minY(ps[0].y);
-        unsigned int index;
+
+        unsigned int index(0);
+        T minY(ps[index].y);
 
         for(unsigned int i = 0; i < size(); ++i) {
             if(ps[i].y < minY) {
@@ -356,8 +359,9 @@ public:
     int get_max_y_index() const {
         if(size() == 0)
             return -1;
-        T maxY(ps[0].y);
-        unsigned int index;
+
+        unsigned int index(0);
+        T maxY(ps[index].y);
 
         for(unsigned int i = 0; i < size(); ++i) {
             if(ps[i].y > maxY) {
