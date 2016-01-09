@@ -1,6 +1,6 @@
 CC = g++
 DEBUG ?= 0
-CFLAGS = -std=c++11 -Wall -Wextra -fmax-errors=10
+CFLAGS = -std=c++11 -Wall -Wextra -Werror -fmax-errors=10
 
 .PHONY: tests, run_tests
 

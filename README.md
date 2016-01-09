@@ -2,7 +2,7 @@
 A c++ library for anything related to points within the 2d space (using floating point data types)  
 using Catch as testing framework https://github.com/philsquared/Catch  
 
-##version 0.9
+##version 0.9.1
 
 ##templated  
 tested for:  
