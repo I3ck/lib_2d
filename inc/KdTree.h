@@ -52,9 +52,9 @@ private:
 
     size_t pId;
 
-    std::shared_ptr<OrderedPointCloud<T>> parent;
-
     const int dimension;
+
+    std::shared_ptr<OrderedPointCloud<T>> parent;
 
 //------------------------------------------------------------------------------
 
